@@ -7,7 +7,7 @@ verify_ssl = true
 fabric = "*"
 
 [packages]
-Django = "==2.2"
+django = "==2.2"
 django-allauth = "*"
 docker-compose = "*"
 requests = "*"
