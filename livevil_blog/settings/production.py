@@ -9,3 +9,5 @@ DEBUG = False
 ALLOWED_HOSTS = ['106.13.5.251']
 
 INTERNAL_IPS = ['106.13.5.251']
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
