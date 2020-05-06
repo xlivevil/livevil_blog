@@ -1,0 +1,242 @@
+{% load static %}
+{% load blog_extra %}
+{% load cache %}
+{#TODO: pace bootstrap jquery modernizr 上线时改用CDN#}
+{# TODO: editor.md min化 #}
+{# TODO: 完善head meta信息 关键字 摘要 爬虫协议 #}
+{# TODO: editor.md 移动端切换模式 #}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+    <title>{% block head_title %}
+        Black &amp; White
+    {% endblock %}</title>
+
+
+    <!-- meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="http://127.0.0.1/favicon.ico" type="image/x-icon"/>
+
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{% static 'css/pace.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+    <!-- js -->
+    <script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/pace.min.js' %}"></script>
+    <script src="{% static 'js/modernizr.custom.js' %}"></script>
+    {% block extra_js %}
+
+    {% endblock %}
+</head>
+{% block bodyid %}
+    <body>
+{% endblock %}
+{% block container %}
+
+    <div class="container">
+        <header id="site-header">
+            <div class="row">
+                <div class="col-md-4 col-sm-5 col-xs-8">
+                    <div class="logo">
+                        <h1><a href="{% url 'blog:index' %}">Xlivevil</a></h1>
+                    </div>
+                </div><!-- col-md-4 -->
+
+                <div class="col-md-8 col-sm-7 col-xs-4">
+                    {% cache 500 'cache_container' %}
+                        <nav class="main-nav" role="navigation">
+                            <div class="navbar-header">
+                                <button type="button" id="trigger-overlay" class="navbar-toggle">
+                                    <span class="ion-navicon"></span>
+                                </button>
+                            </div>
+
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a>
+                                    </li>
+                                    <li class="cl-effect-11"><a href="{% url 'blog:full_width' %}"
+                                                                data-hover="博客">博客</a>
+                                    </li>
+                                    <li class="cl-effect-11"><a href="{% url 'blog:about' %}" data-hover="关于">关于</a>
+                                    </li>
+                                    <li class="cl-effect-11"><a href="{% url 'blog:contact' %}" data-hover="联系">联系</a>
+                                    </li>
+                                </ul>
+                            </div><!-- /.navbar-collapse -->
+                        </nav>
+                        <div id="header-search-box">
+                            <a id="search-menu" href="#"><span id="search-icon"
+                                                               class="ion-ios-search-strong"></span></a>
+                            <div id="search-form" class="search-form">
+                                <form role="search" method="get" id="searchform"
+                                      action="{% url 'blog:haystack_search' %}">
+
+                                    <input type="search" name="q" placeholder="搜索" required>
+
+                                    <button type="submit"><span class="ion-ios-search-strong"></span></button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endcache %}
+                    <div class="login-menu-box" onmouseleave="show_menu1()">
+                        {#                    TODO: 加入账户图片、下拉菜单、登陆控制#}
+                        {#                    登录后为头像，下拉为账户信息登出#}
+                        {#                    未登录为登陆标志，下拉为登录注册#}
+                        {% if user.is_authenticated %}
+                            <a href="#" onclick="show_menu()" title="用户中心">
+                            {#                    TODO: 头像显示#}
+                                <div class="ion-log-in login-menu"></div>
+                            </a>
+                            <ul id="user-login-menu">
+                                <li>
+                                    <a href="{% url 'users:profile' %}?next={{ request.path }}">用户信息</a>
+
+                                </li>
+                                <li>
+                                    <a href="{% url 'account_logout' %}?next={{ request.path }}">退出登录</a>
+                                </li>
+                            </ul>
+
+                        {% else %}
+                            <a href="#" onclick="show_menu()" title="请登录">
+                                <div class="ion-log-in login-menu"></div>
+                            </a>
+                            <ul id="user-login-menu">
+                                <li>
+                                    <a href="{% url 'account_login' %}?next={{ request.path }}">登录</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'account_signup' %}?next={{ request.path }}">注册</a>
+                                </li>
+                            </ul>
+
+                        {% endif %}
+
+                </div>
+
+                </div><!-- col-md-8 -->
+            </div>
+        </header>
+    </div>
+
+<div class="content-body">
+    <div class="container">
+    {% if messages %}
+        <div class="col-md-9" id="messages">
+
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
+
+        <div class="row">
+            {% block content %}
+                <main class="col-md-9">
+                    {% for post in post_list %}
+                        <article class="post post-{{ post.pk }}">
+                            <header class="entry-header">
+                                <h1 class="entry-title">
+                                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                </h1>
+                                <div class="entry-meta">
+                                    <span class="post-category"><a
+                                            href="{% url 'blog:category' post.category.name %}">{{ post.category }}</a></span>
+                                    <span class="post-date"><a href="{{ post.get_absolute_url }}"><time
+                                            class="entry-date ion-calendar"
+                                            datetime="{{ post.create_time|date:'Y-m-d' }}"> {{ post.create_time|date:'Y-m-d' }}</time></a></span>
+                                    {#                            <span class="post-author"><a href="#">{{ post.author }}</a></span>#}
+                                    <span class="comments-link"><a
+                                            href="{{ post.get_absolute_url }}#comment-list" class="ion-chatbubble"> {{ post.comment_set.count }}</a></span>
+                                    <span class="views-count"><a
+                                            href="{{ post.get_absolute_url }}"
+                                            class="ion-eye"> {{ post.get_view_num }}</a></span>
+                                </div>
+                            </header>
+                            <div class="entry-content clearfix">
+                                <a href="{{ post.get_absolute_url }}"><p class="excerpt">{{ post.excerpt }}</p></a>
+                                <div class="read-more cl-effect-14">
+                                    <a href="{{ post.get_absolute_url }}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+                                </div>
+                            </div>
+                        </article>
+                    {% empty %}
+                        <div class="no-post">暂时还没有文章</div>
+                    {% endfor %}
+
+
+
+                    <div class="pagination-simple">
+                        {% if is_paginated %}
+
+                            {{ page_obj.render }}
+                        {% endif %}
+
+                    </div>
+                </main>
+            {% endblock %}
+
+            <aside class="col-md-3">
+                {% block aside %}
+                    {% cache 500 'cache_aside' %}
+                        {% show_recent_posts %}
+                        {% show_archives %}
+                        {% show_categories %}
+                        {% show_tags %}
+                    {% endcache %}
+                    <div class="rss">
+                        <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                    </div>
+                {% endblock %}
+            </aside>
+
+        </div>
+    </div>
+</div>
+{% block footer %}
+    {% cache 500 'cache_footer' %}
+        <footer id="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="copyright">&copy; 2017 - 采集自<a href="http://www.cssmoban.com/"
+                                                                 target="_blank" title="模板之家">模板之家</a>
+                            - 由<a href="http://zmrenwu.com/" title="网页模板" target="_blank">追梦人物的博客</a>修改
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    {% endcache %}
+{% endblock %}
+{% block mobile_menu %}
+    {% cache 500 'cache_mobile_menu' %}
+        <!-- Mobile Menu -->
+        <div class="overlay overlay-hugeinc">
+            <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="full-width.html">博客</a></li>
+                    <li><a href="about.html">关于</a></li>
+                    <li><a href="contact.html">联系</a></li>
+                </ul>
+            </nav>
+        </div>
+    {% endcache %}
+{% endblock %}
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+
+</html>

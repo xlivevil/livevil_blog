@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% crispy registerform registerform_helper %}
+{% block title %}
+    <title>Xlivevil</title>
+    <style type="text/css">
+    .form-control
+    {width: auto!important;}
+    </style>
+{% endblock %}
+{% block bodyid %}
+<body>
+{% endblock %}
+{% block container %}
+{{ block.super }}
+{% endblock %}
+{% block content %}
+<div class="account center-block">
+        <h1>用户信息</h1>
+{#    {% crispy form %}#}
+待加入第三方登录模块
+</div>
+{% endblock %}
+{% block aside %}
+
+{% endblock %}
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+{% block mobile_menu %}
+{% include 'moblie menu.html' %}
+{% endblock %}

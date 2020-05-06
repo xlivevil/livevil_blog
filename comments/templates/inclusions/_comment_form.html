@@ -1,0 +1,19 @@
+{% load static %}
+{#{% if user.is_authenticated %}#}
+<form action="{% url 'comments:comment' post.pk %}" method="post">
+{% csrf_token %}
+        <div id="div_id_body" class="form-group">
+{#        <label for="id_body" class="control-label  requiredField">#}
+{#            {{ form.body.label }}<span class="asteriskField">*</span>#}
+{#        </label>#}
+        <div class="controls " id="editor">
+           {{ form.body }}
+        </div>
+    </div>
+
+     <input type="submit" name="btn-default" value="发表" class="btn btn-primary" id="submit-id-btn-default">
+</form>
+{#{% else %}#}
+{#<div><a href="{% url 'login' %}"> <span>请登录</span></a></div>#}
+{#{% endif %}#}
+

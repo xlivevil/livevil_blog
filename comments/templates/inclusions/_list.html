@@ -1,0 +1,24 @@
+
+
+
+            <div class="comment-list-panel" id="comment-list">
+                <h3>评论列表，共 <span>{{ comment_count }}</span> 条评论</h3>
+                <ul class="comment-list list-unstyled">
+                    {% for comment in comment_list %}
+                    <li class="comment-item">
+                        <span class="nickname">{{ comment.user.username }}</span>
+                        <time class="submit-date" datetime="{{ comment.create_time }}">{{ comment.create_time }}</time>
+                        <div class="text">
+                            {{ comment.body_html|safe }}
+                        </div>
+                    </li>
+                    {% empty %}
+                        <li class="comment-item">
+                        <div class="text">暂无评论
+                        </div>
+                    </li>
+                    {% endfor %}
+
+
+                </ul>
+            </div>
