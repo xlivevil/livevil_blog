@@ -27,7 +27,7 @@ services:
     image: livevil_blog_nginx
     container_name: livevil_blog_nginx
     volumes:
-      - static:/apps/livevil_blog/static
+      - static:/apps/livevil_blog/blog/static
     ports:
       - "80:80"
       - "443:443"

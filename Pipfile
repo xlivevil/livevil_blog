@@ -23,6 +23,7 @@ mysqlclient = "*"
 markdown = "*"
 django-redis = "*"
 django-filter = "*"
+supervisor = "*"
 
 [requires]
 python_version = "3.7"
