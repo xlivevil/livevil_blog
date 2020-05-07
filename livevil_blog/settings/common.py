@@ -85,24 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'livevil_blog.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blog',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'OPTION': {
-            'charset': 'utf8mb4',
-            'autocommit': True,
-            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
-        }
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -198,6 +180,7 @@ EMAIL_HOST_PASSWORD = 'gs$1@OzBca'
 EMAIL_USE_SSL = True
 EMAIL_FROM = 'xlivevil@aliyun.com'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# TODO: 转移至local和.production
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -236,13 +219,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"  # 设置退出登录后跳转链接
 # APPEND_SLASH=False
 
 # haystack
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch5_backend.Elasticsearch5SearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
-        'INDEX_NAME': 'xlivevil'
-    },
-}
+
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_CUSTOM_HIGHLIGHTER = 'blog.utils.Highlighter'

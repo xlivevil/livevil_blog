@@ -264,3 +264,5 @@ _credentials.py
 .idea/
 
 .envs
+
+livevil_blog/settings/local.py
