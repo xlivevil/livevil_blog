@@ -1,0 +1,18 @@
+version: '3'
+
+volumes:
+  database_local:
+
+services:
+  hellodjango_blog_tutorial_local:
+    build:
+      context: .
+      dockerfile: ./compose/local/Dockerfile
+    image: livevil_blog
+    container_name: livevil_blog
+    working_dir: /apps
+    volumes:
+      - .:/apps
+    ports:
+      - "8000:8000"
+    command: /start.sh

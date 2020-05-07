@@ -259,4 +259,8 @@ dmypy.json
 
 fabfile.py
 
+_credentials.py
+
 .idea/
+
+.envs
