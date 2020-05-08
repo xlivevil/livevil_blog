@@ -266,3 +266,5 @@ _credentials.py
 .envs
 
 livevil_blog/settings/local.py
+
+compose/production/mysql/privileges.sql
