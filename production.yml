@@ -5,33 +5,6 @@ volumes:
   database:
 
 services:
-  livevil_blog:
-    build:
-      context: .
-      dockerfile: compose/production/django/Dockerfile
-    image: livevil_blog
-    container_name: livevil_blog
-    working_dir: /apps
-    volumes:
-      - static:/apps/static
-    env_file:
-      - .envs/.production
-    ports:
-      - "8000:8000"
-    command: /start.sh
-
-  nginx:
-    build:
-      context: .
-      dockerfile: compose/production/nginx/Dockerfile
-    image: livevil_blog_nginx
-    container_name: livevil_blog_nginx
-    volumes:
-      - static:/apps/livevil_blog/blog/static
-    ports:
-      - "80:80"
-      - "443:443"
-
   elasticsearch:
     build:
       context: .
@@ -65,3 +38,38 @@ services:
     command: /setup.sh
 
   redis:
+    build:
+      context: .
+      dockerfile: compose/production/redis/Dockerfile
+    image: livevil_blog_redis
+    container_name: livevil_blog_redis
+    working_dir: /apps
+    ports:
+      - "6379:6379"
+
+  livevil_blog:
+    build:
+      context: .
+      dockerfile: compose/production/django/Dockerfile
+    image: livevil_blog
+    container_name: livevil_blog
+    working_dir: /apps
+    volumes:
+      - static:/apps/static
+    env_file:
+      - .envs/.production
+    ports:
+      - "8000:8000"
+    command: /start.sh
+
+  nginx:
+    build:
+      context: .
+      dockerfile: compose/production/nginx/Dockerfile
+    image: livevil_blog_nginx
+    container_name: livevil_blog_nginx
+    volumes:
+      - static:/apps/livevil_blog/blog/static
+    ports:
+      - "80:80"
+      - "443:443"
