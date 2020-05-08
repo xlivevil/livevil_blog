@@ -31,3 +31,37 @@ services:
     ports:
       - "80:80"
       - "443:443"
+
+  elasticsearch:
+    build:
+      context: .
+      dockerfile: ./compose/production/elasticsearch/Dockerfile
+    image: liveivl_blog_elasticsearch
+    container_name: liveivl_blog_elasticsearch
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nproc: 65536
+      nofile:
+        soft: 65536
+        hard: 65536
+
+  mysql:
+    build:
+      context: .
+      dockerfile: compose/production/mysql/Dockerfile
+    image: livevil_blog_mysql
+    container_name: livevil_blog_mysql
+    working_dir: /apps
+    ports:
+      - "3306:3306"
+    command: /setup.sh
+
+  redis:

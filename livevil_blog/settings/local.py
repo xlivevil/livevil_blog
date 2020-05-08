@@ -38,3 +38,25 @@ HAYSTACK_CONNECTIONS = {
         'INDEX_NAME': 'xlivevil'
     },
 }
+
+# email设定
+
+EMAIL_HOST = 'smtp.aliyun.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'xlivevil@aliyun.com'
+EMAIL_HOST_PASSWORD = 'gs$1@OzBca'
+# EMAIL_USE_TLS = True  # 是否使用TLS安全传输协议
+EMAIL_USE_SSL = True
+EMAIL_FROM = 'xlivevil@aliyun.com'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# redis缓存
+CACHES = {
+    'default': {
+        "BACKEND": 'django_redis.cache.RedisCache',
+        "LOCATION": 'redis://127.0.0.1:6379/1',
+        "OPTION": {
+            "CLIENT_CLASS": 'django_redis.client.DefaultClient',
+        }
+    }
+}

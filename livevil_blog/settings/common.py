@@ -142,16 +142,7 @@ PAGINATION_SETTINGS = {
     'SHOW_FIRST_PAGE_WHEN_INVALID': True,
 }
 
-# redis缓存
-CACHES = {
-    'default': {
-        "BACKEND": 'django_redis.cache.RedisCache',
-        "LOCATION": 'redis://127.0.0.1:6379/1',
-        "OPTION": {
-            "CLIENT_CLASS": 'django_redis.client.DefaultClient',
-        }
-    }
-}
+
 
 # allauth
 SITE_ID = 1
@@ -170,17 +161,6 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # 可以邮箱或用户名登�
 ACCOUNT_EMAIL_REQUIRED = True
 LOGIN_REDIRECT_URL = '/'  # 设置登录后跳转链接
 LOGOUT_REDIRECT_URL = '/'  # 设置登出后跳转链接
-
-
-EMAIL_HOST = 'smtp.aliyun.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'xlivevil@aliyun.com'
-EMAIL_HOST_PASSWORD = 'gs$1@OzBca'
-# EMAIL_USE_TLS = True  # 是否使用TLS安全传输协议
-EMAIL_USE_SSL = True
-EMAIL_FROM = 'xlivevil@aliyun.com'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-# TODO: 转移至local和.production
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
