@@ -1,12 +1,8 @@
-FROM centos:7.5
+FROM centos:7.5.1804
 
-#安装YUM源
-RUN yum -y update && yum -y install epel-release && yum -y install redis
+RUN yum -y update &&  yum -y install epel-release && yum -y install redis && yum -y install net-tools
 
 EXPOSE 6379
-
-#安装清理缓存文件
-RUN yum clean all
 
 #修改绑定IP地址
 RUN sed -i -e 's@bind 127.0.0.1@bind 0.0.0.0@g' /etc/redis.conf
