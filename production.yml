@@ -67,7 +67,7 @@ services:
       - redis
       - elasticsearch
     depends_on:
-      elasticsearch:
+      - elasticsearch
 
   nginx:
     build:
