@@ -8,15 +8,11 @@ RUN ./configure LD_RUN_PATH=/usr/local/lib LDFLAGS="-L/usr/local/lib" CPPFLAGS="
 
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /app
+WORKDIR /apps
 
-RUN pip3 install pipenv
+RUN pip3 install 'django==2.2' markdown gunicorn django-pure-pagination 'elasticsearch>=5,<6' 'django-haystack==3.0.0b2' django-allauth requests pillow django-debug-toolbar djangorestframework django-crispy-forms django-reversion django-pure-pagination mysqlclient django-redis django-filter supervisor
 
-COPY Pipfile /app/Pipfile
-RUN pipenv install
-
-COPY . /app
-
+COPY . /apps
 COPY ./compose/production/django/start.sh /start.sh
 RUN sed -i 's/\r//' /start.sh
 RUN chmod +x /start.sh

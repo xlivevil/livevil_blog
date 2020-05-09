@@ -7,7 +7,7 @@ verify_ssl = true
 fabric = "*"
 
 [packages]
-django = "==2.2"
+Django = "==2.2"
 django-allauth = "*"
 docker-compose = "*"
 requests = "*"
@@ -24,6 +24,7 @@ markdown = "*"
 django-redis = "*"
 django-filter = "*"
 supervisor = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
