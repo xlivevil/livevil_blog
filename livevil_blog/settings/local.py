@@ -11,6 +11,8 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 INTERNAL_IPS = ['127.0.0.1']
 
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -18,9 +20,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'USER': 'django',
+        'PASSWORD': 'IGFfhsl64deet%##@',
+        'HOST': '172.17.0.1',
         'PORT': '3306',
         'OPTION': {
             'charset': 'utf8mb4',
@@ -54,7 +56,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CACHES = {
     'default': {
         "BACKEND": 'django_redis.cache.RedisCache',
-        "LOCATION": 'redis://127.0.0.1:6379/1',
+        "LOCATION": 'redis://ser2etg#!ss@127.0.0.1:6379/0',
         "OPTION": {
             "CLIENT_CLASS": 'django_redis.client.DefaultClient',
         }

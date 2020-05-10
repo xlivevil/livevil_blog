@@ -4,11 +4,11 @@ from .common import *
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['106.13.5.251']
+ALLOWED_HOSTS = ['xlivevil.com']
 
-INTERNAL_IPS = ['106.13.5.251']
+INTERNAL_IPS = ['170.106.13.74']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -20,9 +20,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
-        'USER': 'root',
+        'USER': 'django',
         'PASSWORD': os.environ['DJANGO_MYSQL_PASSWORD'],
-        'HOST': '127.0.0.1',
+        'HOST': '172.17.0.1',
         'PORT': '3306',
         'OPTION': {
             'charset': 'utf8mb4',
