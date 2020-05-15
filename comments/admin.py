@@ -3,21 +3,21 @@ from django.contrib import admin
 # Register your models here.
 from reversion.admin import VersionAdmin
 
-from comments.models import Comment
+from comments.models import PostComment
 
 
-@admin.register(Comment)
+@admin.register(PostComment)
 class CommentAdmin(VersionAdmin):
     # 排序
     date_hierarchy = 'create_time'
     # 显示列表显示项
-    list_display = ('user', 'create_time', 'modified_time', 'post', )
+    list_display = ('user', 'create_time', 'submit_date',)
     # 过滤器
-    list_filter = ('user', 'create_time', 'modified_time', 'post')
+    list_filter = ('user', 'create_time', 'submit_date', )
     #
     list_per_page = 20
 
-    fields = ('user', 'create_time', 'modified_time', 'post', 'body', 'parent')
+    fields = ('user', 'create_time', 'submit_date', 'comment', 'parent', 'content_type',)
     # 分类排列
     # fieldsets =
     # 左右多选框

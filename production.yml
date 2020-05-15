@@ -9,8 +9,8 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/elasticsearch/Dockerfile
-    image: liveivl_blog_elasticsearch
-    container_name: liveivl_blog_elasticsearch
+    image: livevil_blog_elasticsearch
+    container_name: livevil_blog_elasticsearch
     volumes:
       - esdata:/usr/share/elasticsearch/data
     ports:

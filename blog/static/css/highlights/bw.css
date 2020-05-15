@@ -1,10 +1,10 @@
 .codehilite .hll { background-color: #ffffcc }
-.codehilite .c { font-style: italic } /* Comment */
+.codehilite .c { font-style: italic } /* PostComment */
 .codehilite .err { border: 1px solid #FF0000 } /* Error */
 .codehilite .k { font-weight: bold } /* Keyword */
-.codehilite .cm { font-style: italic } /* Comment.Multiline */
-.codehilite .c1 { font-style: italic } /* Comment.Single */
-.codehilite .cs { font-style: italic } /* Comment.Special */
+.codehilite .cm { font-style: italic } /* PostComment.Multiline */
+.codehilite .c1 { font-style: italic } /* PostComment.Single */
+.codehilite .cs { font-style: italic } /* PostComment.Special */
 .codehilite .ge { font-style: italic } /* Generic.Emph */
 .codehilite .gh { font-weight: bold } /* Generic.Heading */
 .codehilite .gp { font-weight: bold } /* Generic.Prompt */

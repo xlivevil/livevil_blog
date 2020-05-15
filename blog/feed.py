@@ -12,7 +12,7 @@ class AllPostsRssFeed(Feed):
     # 网址
     link = "/"
     # 描述信息
-    description ="Xlivevil 的全部文章"
+    description = "Xlivevil 的全部文章"
 
     # 显示内容
     def items(self):
@@ -20,7 +20,7 @@ class AllPostsRssFeed(Feed):
 
     # 内容条目的标题
     def item_title(self, item):
-        return "[%s]%s" %(item.category, item.title)
+        return "[%s]%s" % (item.category, item.title)
 
     # 描述
     def item_description(self, item):

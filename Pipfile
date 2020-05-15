@@ -25,6 +25,9 @@ django-redis = "*"
 django-filter = "*"
 supervisor = "*"
 gunicorn = "*"
+django-mptt = "*"
+django-comments-xtd = "*"
+django-contrib-comments = "*"
 
 [requires]
 python_version = "3.7"

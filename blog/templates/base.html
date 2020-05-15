@@ -4,6 +4,7 @@
 {# TODO: editor.md min化 #}
 {# TODO: 完善head meta信息 关键字 摘要 爬虫协议 #}
 {# TODO: editor.md 移动端切换模式 #}
+{# TODO: 右下角回到最上 #}
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -20,7 +21,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://lib.baomitu.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{% static 'css/pace.css' %}">
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 
@@ -91,7 +92,7 @@
                         {% if user.is_authenticated %}
                             <a href="#" onclick="show_menu()" title="用户中心">
                             {#                    TODO: 头像显示#}
-                                <div class="ion-log-in login-menu"></div>
+                                <div class="ion-log-out login-menu"></div>
                             </a>
                             <ul id="user-login-menu">
                                 <li>
@@ -129,7 +130,7 @@
     <div class="container">
     {% if messages %}
         <div class="col-md-9" id="messages">
-
+{# TODO: msg改为可视固定位置弹出并消失  #}
             <ul>
                 {% for message in messages %}
                     <li>{{ message }}</li>

@@ -91,7 +91,7 @@ class Post(models.Model):
         self.modified_time = timezone.now()
 
         if self.excerpt == '':
-            self.excerpt = strip_tags(self.rich_content.get("content", ""))[:53]
+            self.excerpt = strip_tags(self.rich_content.get("content", ""))[:200]
         super().save()
 
     class Meta:
@@ -100,7 +100,7 @@ class Post(models.Model):
         ordering = ['-create_time']
 
     def __str__(self):
-        return self.title
+        return "blog-"+self.title
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={'pk': self.pk})

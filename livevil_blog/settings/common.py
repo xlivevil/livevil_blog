@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+from django.utils.translation import gettext_lazy as _
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -31,21 +31,21 @@ INSTALLED_APPS = [
 
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
+    'comments.apps.BlogCommentsConfig',
 
+    'django_comments',
     'crispy_forms',
     'reversion',
     'debug_toolbar',
     'pure_pagination',
-
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.weibo',
-    # 'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.weibo',
+    'allauth.socialaccount.providers.github',
     'haystack',
     'rest_framework',
-
-    'comments.apps.CommentsConfig',
+    'mptt',
 
 
 ]
@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -78,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -143,7 +145,6 @@ PAGINATION_SETTINGS = {
 }
 
 
-
 # allauth
 SITE_ID = 1
 
@@ -206,3 +207,17 @@ HAYSTACK_CUSTOM_HIGHLIGHTER = 'blog.utils.Highlighter'
 
 
 SECURE_BROWSER_XSS_FILTER = True
+
+# i18n
+
+LANGUAGES = (
+    ('zh-hans', _('中文简体')),
+    ('en-us', _('English')),
+    ('ja-jp', _('日本語'))
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
+COMMENTS_APP = 'comments'

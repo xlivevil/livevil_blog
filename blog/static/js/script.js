@@ -169,3 +169,13 @@ function show_menu1() {
         menu.style.display="none";
         login_menu_flag=true;
 }
+
+const iframe_list=document.getElementsByName("reply_iframe");
+
+const hide = (el) => Array.from(el).forEach(e => (e.style.display = 'none'));
+function show_reply(x) {
+    let box=document.getElementById("iframe"+x);
+        console.log(iframe_list);
+        hide(iframe_list);
+        box.style.display="block";
+}

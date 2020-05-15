@@ -1,0 +1,54 @@
+{% load comments i18n %}
+{% load static %}
+<script src="https://lib.baomitu.com/jquery/2.1.3/jquery.min.js"></script>
+<script src="{% static 'editor.md/editormd.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'editor.md/css/editormd.min.css' %}"/>
+
+<form action="{% comment_form_target %}" method="post">
+    {% csrf_token %}
+
+    <input type="hidden" name="next" value="{{ request.path }}"/>
+
+    {% for field in form %}
+        {% ifequal field.name "comment" %}
+            <div class="form-group">
+                <div class="controls " id="editor">
+                    {{ field }}
+                </div>
+            </div>
+        {% endifequal %}
+        {% if field.is_hidden %}
+            <div>{{ field }}</div>
+        {% else %}
+            {% if field.errors %}{{ field.errors }}{% endif %}
+            {% if field.errors %}
+                <p class="error">
+                    {{ field.label_tag }} {{ field }}
+                </p>
+            {% endif %}
+
+            {% ifequal field.name "honeypot" %}
+                <p style="display:none;">
+                    {{ field.label_tag }} {{ field }}
+                </p>{% endifequal %}
+
+        {% endif %}
+
+    {% endfor %}
+    <p class="submit">
+        <input type="button" name="post" class="submit-post" value="{% trans "Post" %}" onclick="this.form.submit()"/>
+    </p>
+</form>
+
+
+    <script type="text/javascript">
+        $(function () {
+            let  editor = editormd("editor", {
+                // width: "100%",var
+                height: 200,
+                // markdown: "xxxx",     // dynamic set Markdown text
+
+                path: "{% static 'editor.md/lib/' %}"  // Autoload modules mode, codemirror, marked... dependents libs path
+            });
+        });
+    </script>

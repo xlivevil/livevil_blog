@@ -1,3 +1,4 @@
+django-contrib-comments
 fabric
 coverage
 django~=2.2
@@ -20,3 +21,5 @@ mysqlclient
 django-redis
 django-filter
 supervisor
+django-mptt
+gettext

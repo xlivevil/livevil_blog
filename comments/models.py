@@ -1,56 +1,68 @@
 from django.core.cache import cache
 from django.db import models
-
-# Create your models here.
 from django.utils import timezone
 from django.utils.functional import cached_property
+from django.utils.translation import gettext_lazy as _
+from django_comments.abstracts import CommentAbstractModel
+from django_comments.managers import CommentManager
+from mptt.managers import TreeManager
+from mptt.models import MPTTModel, TreeForeignKey
+from mptt.querysets import TreeQuerySet
 
-from blog.models import Post
-from users.models import User
 from utils.rich_content import generate_rich_content
 
 
-class Comment(models.Model):
-    # TODO: 加入点赞数，回复
-    # 正文
-    body = models.TextField('内容')
+class BlogCommentQuerySet(TreeQuerySet):
+
+    def visible(self):
+        return self.filter(is_public=True, is_removed=False)
+
+    def roots(self):
+        return self.visible().filter(parent__isnull=True)
+
+
+class BlogCommentManager(TreeManager, CommentManager):
+    pass
+
+
+class PostComment(MPTTModel, CommentAbstractModel):
+    # TODO: 加入点赞数
 
     # 时间信息
-    create_time = models.DateTimeField('创建时间', default=timezone.now)
-    modified_time = models.DateTimeField('修改时间')
+    create_time = models.DateTimeField(_('创建时间'), default=timezone.now)
 
-    # 作者关系
-    user = models.ForeignKey(User, verbose_name='评论者', on_delete=models.DO_NOTHING)
-    post = models.ForeignKey(Post, verbose_name='文章', on_delete=models.DO_NOTHING)
-    parent = models.ForeignKey('self', verbose_name='父评论', null=True, blank=True, on_delete=models.DO_NOTHING)
+    # 层级关系
+    parent = TreeForeignKey('self', verbose_name=_('父评论'), null=True, blank=True,
+                            on_delete=models.DO_NOTHING, related_name='children')
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        self.modified_time = timezone.now()
-        super().save()
+    objects = BlogCommentManager.from_queryset(BlogCommentQuerySet)()
 
-    class Meta:
-        verbose_name = '评论'
-        verbose_name_plural = verbose_name
-        ordering = ['-create_time']
+    class Meta(CommentAbstractModel.Meta):
+        verbose_name = _("comment")
+        verbose_name_plural = _("comments")
+        db_table = 'Blog_comments'
+
+    class MPTTMeta:
+        # 必须加入 user_id，否则在调用 mptt 的 get_queryset_descendants 时，
+        # 确保 select_related user 时 user_id 字段已经 load，否则会报错：
+        # Field %s.%s cannot be both deferred and traversed using select_related at the same time.
+        order_insertion_by = ["-submit_date", "user_id"]
 
     def __str__(self):
-        return '{}:{}'.format(self.user, self.body[:40])
+        return f'{self.user}:{self.comment[:40]}'
 
-#     def get_absolute_url(self):
-#         return reverse('comments', kwargs={'post': self.post,})
     @property
-    def body_html(self):
+    def comment_html(self):
         return self.rich_content.get("content", "")
 
     @cached_property
     def rich_content(self):
-        ud = self.modified_time.strftime("%Y%m%d%H%M%S")
+        ud = self.submit_date.strftime("%Y%m%d%H%M%S")
         md_key = 'comment{}_md_{}'.format(self.id, ud)
         cache_md = cache.get(md_key)
         if cache_md:
             rich_content = cache_md
         else:
-            rich_content = generate_rich_content(self.body)
+            rich_content = generate_rich_content(self.comment)
             cache.set(md_key, rich_content, 60*60*12)
         return rich_content

@@ -1,5 +1,5 @@
 .codehilite .hll { background-color: #ffffcc }
-.codehilite .c { color: #8f5902; font-style: italic } /* Comment */
+.codehilite .c { color: #8f5902; font-style: italic } /* PostComment */
 .codehilite .err { color: #a40000; border: 1px solid #ef2929 } /* Error */
 .codehilite .g { color: #000000 } /* Generic */
 .codehilite .k { color: #204a87; font-weight: bold } /* Keyword */
@@ -8,10 +8,10 @@
 .codehilite .o { color: #ce5c00; font-weight: bold } /* Operator */
 .codehilite .x { color: #000000 } /* Other */
 .codehilite .p { color: #000000; font-weight: bold } /* Punctuation */
-.codehilite .cm { color: #8f5902; font-style: italic } /* Comment.Multiline */
-.codehilite .cp { color: #8f5902; font-style: italic } /* Comment.Preproc */
-.codehilite .c1 { color: #8f5902; font-style: italic } /* Comment.Single */
-.codehilite .cs { color: #8f5902; font-style: italic } /* Comment.Special */
+.codehilite .cm { color: #8f5902; font-style: italic } /* PostComment.Multiline */
+.codehilite .cp { color: #8f5902; font-style: italic } /* PostComment.Preproc */
+.codehilite .c1 { color: #8f5902; font-style: italic } /* PostComment.Single */
+.codehilite .cs { color: #8f5902; font-style: italic } /* PostComment.Special */
 .codehilite .gd { color: #a40000 } /* Generic.Deleted */
 .codehilite .ge { color: #000000; font-style: italic } /* Generic.Emph */
 .codehilite .gr { color: #ef2929 } /* Generic.Error */

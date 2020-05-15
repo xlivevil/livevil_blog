@@ -1,5 +1,5 @@
 .codehilite .hll { background-color: #222222 }
-.codehilite .c { color: #000080 } /* Comment */
+.codehilite .c { color: #000080 } /* PostComment */
 .codehilite .err { color: #cccccc; border: 1px solid #FF0000 } /* Error */
 .codehilite .g { color: #cccccc } /* Generic */
 .codehilite .k { color: #cdcd00 } /* Keyword */
@@ -8,10 +8,10 @@
 .codehilite .o { color: #3399cc } /* Operator */
 .codehilite .x { color: #cccccc } /* Other */
 .codehilite .p { color: #cccccc } /* Punctuation */
-.codehilite .cm { color: #000080 } /* Comment.Multiline */
-.codehilite .cp { color: #000080 } /* Comment.Preproc */
-.codehilite .c1 { color: #000080 } /* Comment.Single */
-.codehilite .cs { color: #cd0000; font-weight: bold } /* Comment.Special */
+.codehilite .cm { color: #000080 } /* PostComment.Multiline */
+.codehilite .cp { color: #000080 } /* PostComment.Preproc */
+.codehilite .c1 { color: #000080 } /* PostComment.Single */
+.codehilite .cs { color: #cd0000; font-weight: bold } /* PostComment.Special */
 .codehilite .gd { color: #cd0000 } /* Generic.Deleted */
 .codehilite .ge { color: #cccccc; font-style: italic } /* Generic.Emph */
 .codehilite .gr { color: #FF0000 } /* Generic.Error */

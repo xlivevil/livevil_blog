@@ -27,12 +27,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('users/', include('django.contrib.auth.urls')),
-    path('comment/', include('comments.urls')),
+    path('comments/', include('comments.urls')),
     path('', include('blog.urls')),
     path('accounts/', include('allauth.urls')),
     path('all/rss', AllPostsRssFeed(), name="rss"),
     path("api/", include(router.urls)),
     path("api/auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path('comments/', include('django_comments.urls')),
 
 ]
 

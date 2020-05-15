@@ -1,10 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-
-# Create your views here.
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView

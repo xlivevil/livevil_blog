@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 {% load cache %}
-{% load comments_extras %}
+{% load comments_extras i18n %}
+{% load comments i18n %}
+{% load mptt_tags %}
 {% block head_title %}
     Xlivevil{% endblock %}
 {#    TODO: 加入赞赏功能#}
 {% block extra_js %}
-    <link href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/zenburn.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'editor.md/css/editormd.min.css' %}"/>
-        <style type="text/css">
+    <link href="https://lib.baomitu.com/highlight.js/9.18.1/styles/zenburn.min.css" rel="stylesheet">
+    <style type="text/css">
         /* for block of numbers */
         .hljs-ln-numbers {
             -webkit-touch-callout: none;
@@ -20,8 +21,7 @@
 
             text-align: center;
             color: #ccc;
-            {#border-right: 1px solid #CCC; #}
-            vertical-align: top;
+        {#border-right: 1px solid #CCC; #} vertical-align: top;
             padding-right: 5px !important;
 
             /* your custom style here */
@@ -32,7 +32,7 @@
         {#    padding-left: 10px;#}
         {#{#}
 
-        </style>
+    </style>
 {% endblock %}
 {% block bodyid %}
     <body id="single">
@@ -49,8 +49,9 @@
                     <span class="post-category"><a href="#">{{ post.category }}</a></span>
                     <span class="post-date"><a href="#"><time class="entry-date ion-calendar"
                                                               datetime="{{ post.create_time|date:'Y-m-d' }}"> {{ post.create_time|date:'Y-m-d' }}</time></a></span>
-{#                    <span class="post-author"><a href="#">{{ post.author }}</a></span>#}
-                    <span class="comments-link"><a href="#comment-list" class="ion-chatbubble"> {{ post.comment_set.count }} </a></span>
+                    {#                    <span class="post-author"><a href="#">{{ post.author }}</a></span>#}
+                    <span class="comments-link"><a href="#comment-list"
+                                                   class="ion-chatbubble"> {{ post.comment_set.count }} </a></span>
                     <span class="views-count"><a href="#" class="ion-eye"> {{ post.get_view_num }}</a></span>
                 </div>
             </header>
@@ -61,16 +62,33 @@
         </article>
         <section class="comment-area" id="comment-area ">
             <hr>
-            <h3>发表评论</h3>
+            <h3>{% trans "发表评论" %}</h3>
             {% if user.is_authenticated %}
-                {% show_comment_form post %}
+                {% render_post_comment_form for post %}
+
             {% else %}
-                <div><a href="{% url 'login' %}"> <span>请登录</span></a></div>
+                <div><a href="{% url 'login' %}"> <span>{% trans "请登录" %}</span></a></div>
             {% endif %}
 
             <hr>
-{#        加入回复、点赞、浏览器、头像显示#}
-            {% show_comments post %}
+
+            <div class="comment-list-panel" id="comment-list">
+
+                {% get_comment_count for post as comment_count %}
+                {% if comment_count %}
+                    {% blocktrans %}
+                        <h3>评论列表，共 <span>{{ comment_count }} </span> 条评论</h3>
+                    {% endblocktrans %}
+
+                    {% render_comment_list for post %}
+
+                {% else %}
+                    <h3>{% trans "暂无评论" %}</h3>
+                {% endif %}
+
+
+
+            </div>
 
 
         </section>
@@ -79,7 +97,7 @@
 {% block aside %}
     {% if post.toc %}
         <div class="widget widget-content">
-            <h3 class="widget-title">文章目录</h3>
+            <h3 class="widget-title">{% trans "文章目录" %}</h3>
 
             {{ post.toc|safe }}
 
@@ -91,21 +109,8 @@
 {% block footer %}
     {% include 'footer.html' %}
 
-    <script src="{% static 'editor.md/editormd.min.js' %}"></script>
-    <script type="text/javascript">
-        $(function () {
-            var editor = editormd("editor", {
-                // width: "100%",
-                height: 200,
-                // markdown: "xxxx",     // dynamic set Markdown text
-
-                path: "{% static 'editor.md/lib/' %}"  // Autoload modules mode, codemirror, marked... dependents libs path
-            });
-        });
-    </script>
-
-    <script src="https://cdn.bootcss.com/highlight.js/9.18.1/highlight.min.js"></script>
-    <script src="https://cdn.bootcss.com/highlightjs-line-numbers.js/2.7.0/highlightjs-line-numbers.min.js"></script>
+    <script src="https://lib.baomitu.com/highlight.js/9.18.1/highlight.min.js"></script>
+    <script src="https://lib.baomitu.com/highlightjs-line-numbers.js/2.7.0/highlightjs-line-numbers.min.js"></script>
     <script>
         hljs.initHighlightingOnLoad();
         hljs.initLineNumbersOnLoad();

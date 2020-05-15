@@ -1,11 +1,11 @@
 .codehilite .hll { background-color: #ffffcc }
-.codehilite .c { color: #888888 } /* Comment */
+.codehilite .c { color: #888888 } /* PostComment */
 .codehilite .err { color: #a61717; background-color: #e3d2d2 } /* Error */
 .codehilite .k { color: #008800; font-weight: bold } /* Keyword */
-.codehilite .cm { color: #888888 } /* Comment.Multiline */
-.codehilite .cp { color: #cc0000; font-weight: bold } /* Comment.Preproc */
-.codehilite .c1 { color: #888888 } /* Comment.Single */
-.codehilite .cs { color: #cc0000; font-weight: bold; background-color: #fff0f0 } /* Comment.Special */
+.codehilite .cm { color: #888888 } /* PostComment.Multiline */
+.codehilite .cp { color: #cc0000; font-weight: bold } /* PostComment.Preproc */
+.codehilite .c1 { color: #888888 } /* PostComment.Single */
+.codehilite .cs { color: #cc0000; font-weight: bold; background-color: #fff0f0 } /* PostComment.Special */
 .codehilite .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
 .codehilite .ge { font-style: italic } /* Generic.Emph */
 .codehilite .gr { color: #aa0000 } /* Generic.Error */

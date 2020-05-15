@@ -20,9 +20,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
-        'USER': 'django',
-        'PASSWORD': 'IGFfhsl64deet%##@',
-        'HOST': '172.17.0.1',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTION': {
             'charset': 'utf8mb4',
@@ -56,7 +56,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CACHES = {
     'default': {
         "BACKEND": 'django_redis.cache.RedisCache',
-        "LOCATION": 'redis://ser2etg#!ss@127.0.0.1:6379/0',
+        "LOCATION": 'redis://@127.0.0.1:6379/0',
         "OPTION": {
             "CLIENT_CLASS": 'django_redis.client.DefaultClient',
         }

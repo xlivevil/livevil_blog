@@ -4,6 +4,7 @@ from comments import views
 
 app_name = 'comments'
 urlpatterns = [
-    path('<int:pk>', views.comment_preview, name='comment'),
+    path('', include('django_comments.urls')),
+    path('reply/<int:parent>', views.ReplyView.as_view(), name='post_comments_reply'),
 
 ]

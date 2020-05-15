@@ -1,12 +1,12 @@
 .codehilite .hll { background-color: #ffffcc }
-.codehilite .c { color: #0099FF; font-style: italic } /* Comment */
+.codehilite .c { color: #0099FF; font-style: italic } /* PostComment */
 .codehilite .err { color: #AA0000; background-color: #FFAAAA } /* Error */
 .codehilite .k { color: #006699; font-weight: bold } /* Keyword */
 .codehilite .o { color: #555555 } /* Operator */
-.codehilite .cm { color: #0099FF; font-style: italic } /* Comment.Multiline */
-.codehilite .cp { color: #009999 } /* Comment.Preproc */
-.codehilite .c1 { color: #0099FF; font-style: italic } /* Comment.Single */
-.codehilite .cs { color: #0099FF; font-weight: bold; font-style: italic } /* Comment.Special */
+.codehilite .cm { color: #0099FF; font-style: italic } /* PostComment.Multiline */
+.codehilite .cp { color: #009999 } /* PostComment.Preproc */
+.codehilite .c1 { color: #0099FF; font-style: italic } /* PostComment.Single */
+.codehilite .cs { color: #0099FF; font-weight: bold; font-style: italic } /* PostComment.Special */
 .codehilite .gd { background-color: #FFCCCC; border: 1px solid #CC0000 } /* Generic.Deleted */
 .codehilite .ge { font-style: italic } /* Generic.Emph */
 .codehilite .gr { color: #FF0000 } /* Generic.Error */
