@@ -67,7 +67,7 @@
                 {% render_post_comment_form for post %}
 
             {% else %}
-                <div><a href="{% url 'login' %}"> <span>{% trans "请登录" %}</span></a></div>
+                <div><a href="{% url 'account_login' %}"> <span>{% trans "请登录" %}</span></a></div>
             {% endif %}
 
             <hr>
