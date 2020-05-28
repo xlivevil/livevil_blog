@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-14 23:25+0800\n"
+"POT-Creation-Date: 2020-05-28 18:27+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: .\blog\templates\single.html:67
+#: .\blog\templates\about.html:20
+msgid "About Me"
+msgstr ""
+
+#: .\blog\templates\about.html:26
+msgid ""
+"\n"
+"                                    我是一名python学习者\n"
+"                                "
+msgstr ""
+
+#: .\blog\templates\about.html:30
+msgid ""
+"\n"
+"                                    本站基于python3.7，使用django2.2框架。主"
+"要用于个人学习编程的技术实践与经验记录。\n"
+"                                "
+msgstr ""
+
+#: .\blog\templates\about.html:35
+msgid "Social"
+msgstr ""
+
+#: .\blog\templates\single.html:65
 msgid "发表评论"
 msgstr "Post Comment"
 
-#: .\blog\templates\single.html:72
+#: .\blog\templates\single.html:70
 msgid "请登录"
 msgstr ""
 
-#: .\blog\templates\single.html:81
+#: .\blog\templates\single.html:79
 #, python-format
 msgid ""
 "\n"
@@ -35,19 +58,30 @@ msgid ""
 "                    "
 msgstr ""
 "\n"
-"                        <h3>Comment-list，total <span>%(comment_count)s </span> comments"
-"</h3>\n"
+"                        <h3>Comment-list，total <span>%(comment_count)s </"
+"span> comments</h3>\n"
 "                    "
-#: .\blog\templates\single.html:88
+
+#: .\blog\templates\single.html:86
 msgid "暂无评论"
 msgstr ""
 
-#: .\blog\templates\single.html:102
+#: .\blog\templates\single.html:100
 msgid "文章目录"
 msgstr ""
 
 #: .\comments\apps.py:7
 msgid "评论"
+msgstr "comments"
+
+#: .\comments\models.py:32
+msgid "创建时间"
+msgstr ""
+
+#: .\comments\models.py:35
+#, fuzzy
+#| msgid "评论"
+msgid "父评论"
 msgstr "comments"
 
 #: .\comments\models.py:41
@@ -115,13 +149,13 @@ msgstr ""
 msgid "Thanks for flagging"
 msgstr ""
 
-#: .\comments\templates\comments\form.html:34
+#: .\comments\templates\comments\form.html:38
 #: .\comments\templates\comments\preview.html:36
 msgid "Post"
 msgstr ""
 
 #: .\comments\templates\comments\list.html:13
-#: .\comments\templates\comments\list.html:16
+#: .\comments\templates\comments\list.html:18
 msgid "reply"
 msgstr ""
 
@@ -161,15 +195,15 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:214
+#: .\livevil_blog\settings\common.py:215
 msgid "中文简体"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:215
+#: .\livevil_blog\settings\common.py:216
 msgid "English"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:216
+#: .\livevil_blog\settings\common.py:217
 msgid "日本語"
 msgstr ""
 
@@ -319,13 +353,17 @@ msgid "Forgot Password?"
 msgstr ""
 
 #: .\users\templates\account\login.html:29
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "没有账号？<a href=\"%(signup_url)s\">注册</a>\n"
+#| " %(site_name)s"
 msgid ""
-"没有账号？<a href=\"%(signup_url)s\">注册</a>\n"
-" %(site_name)s"
+"没有账号？<a class=\"border-info\" href=\"%(signup_url)s\">注册</a>\n"
+" %(site_name)s账号"
 msgstr ""
 "没有账号？<a href=\"%(signup_url)s\">signup</a>\n"
 " %(site_name)s"
+
 #: .\users\templates\account\login.html:45
 #, python-format
 msgid ""
@@ -389,8 +427,8 @@ msgid "Your primary e-mail address must be verified."
 msgstr ""
 
 #: .\users\templates\account\password_change.html:5
-#: .\users\templates\account\password_change.html:8
-#: .\users\templates\account\password_change.html:13
+#: .\users\templates\account\password_change.html:9
+#: .\users\templates\account\password_change.html:14
 #: .\users\templates\account\password_reset_from_key.html:4
 #: .\users\templates\account\password_reset_from_key.html:7
 #: .\users\templates\account\password_reset_from_key_done.html:4
@@ -525,6 +563,30 @@ msgstr ""
 
 #: .\users\templates\openid\login.html:9
 msgid "OpenID Sign In"
+msgstr ""
+
+#: .\users\templates\profile.html:20
+msgid "用户信息"
+msgstr ""
+
+#: .\users\templates\profile.html:22
+msgid "用户名："
+msgstr ""
+
+#: .\users\templates\profile.html:23
+msgid "电子邮箱："
+msgstr ""
+
+#: .\users\templates\profile.html:23
+msgid "修改"
+msgstr ""
+
+#: .\users\templates\profile.html:24
+msgid "修改密码"
+msgstr ""
+
+#: .\users\templates\profile.html:26
+msgid "第三方账号绑定"
 msgstr ""
 
 #: .\users\templates\socialaccount\authentication_error.html:5

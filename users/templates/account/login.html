@@ -26,8 +26,8 @@
 
     {% if socialaccount_providers %}
         <hr>
-<p>{% blocktrans with site.name as site_name %}没有账号？<a href="{{ signup_url }}">注册</a>
- {{ site_name }}{% endblocktrans %}</p>
+<p>{% blocktrans with site.name as site_name %}没有账号？<a class="border-info" href="{{ signup_url }}">注册</a>
+ {{ site_name }}账号{% endblocktrans %}</p>
         <p class="center">或</p>
         <p class="center">使用第三方快捷登录：</p>
 

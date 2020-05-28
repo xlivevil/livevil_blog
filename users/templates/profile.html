@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% crispy registerform registerform_helper %}
-{% block title %}
-    <title>Xlivevil</title>
+{% block head_title %}
+{% trans "用户信息" %}
+{% endblock %}
+{% block extra_js %}
     <style type="text/css">
     .form-control
     {width: auto!important;}
@@ -16,9 +19,14 @@
 {% endblock %}
 {% block content %}
 <div class="account center-block">
-        <h1>用户信息</h1>
-{#    {% crispy form %}#}
-待加入第三方登录模块
+        <h1>{% trans "用户信息" %}</h1>
+    <br>
+<p>{% trans "用户名：" %}{{ user.username }}</p>
+<p>{% trans "电子邮箱：" %}{{ user.email }}&nbsp;<a class="text-primary" href="{% url "account_email" %}">{% trans "修改" %}</a></p>
+<a class="text-primary" href="{% url 'account_change_password' %}">{% trans "修改密码" %}</a>
+<div>
+    {% trans "第三方账号绑定" %}
+</div>
 </div>
 {% endblock %}
 {% block aside %}

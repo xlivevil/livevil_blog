@@ -25,7 +25,7 @@ urlpatterns = [
     path('index', views.IndexView.as_view(), name='index'),
     path('', views.blank),
     path('contact', views.contact, name='contact'),
-    path('full-width', views.full_width, name='full_width'),
+    path('full-width', views.FullWidthView.as_view(), name='full_width'),
     path('about', views.about, name='about'),
     path('posts/<int:pk>', views.PostDetailView.as_view(), name='detail'),
     path('posts/archives/<int:year>/<int:month>', cache_page(60*15)(views.ArchiveView.as_view()), name='archive'),

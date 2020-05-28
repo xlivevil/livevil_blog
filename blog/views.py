@@ -90,8 +90,8 @@ def about(request):
     return render(request, 'about.html')
 
 
-def full_width(request):
-    return render(request, 'full-width.html')
+class FullWidthView(IndexView):
+    template_name = 'full-width.html'
 
 
 def blank(request):

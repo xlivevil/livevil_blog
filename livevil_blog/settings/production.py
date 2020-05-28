@@ -52,6 +52,9 @@ EMAIL_USE_SSL = True
 EMAIL_FROM = 'xlivevil@aliyun.com'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+ADMINS = [('admin', 'xf_hyl@qq.com'), ]
+SERVER_MAIL = 'xlivevil@aliyun.com'
+
 # redis缓存
 CACHES = {
     'default': {
@@ -61,4 +64,29 @@ CACHES = {
             "CLIENT_CLASS": 'django_redis.client.DefaultClient',
         }
     }
+}
+
+# 日志配置
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'mail_admins'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
 }

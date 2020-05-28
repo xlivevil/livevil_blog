@@ -961,7 +961,7 @@ img {
  */
 
 .account {
-    margin: 0 auto;
+    margin: 20px auto;
     border: 1px solid #6A6A6A;
     width: 300px;
     padding: 30px;
@@ -991,4 +991,14 @@ img {
     float: right;
     position: relative;
     height: auto;
+}
+
+.signup p {
+    text-align: justify;
+    text-align-last: justify;
+}
+
+.password_change p {
+    text-align: justify;
+    text-align-last: justify;
 }

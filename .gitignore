@@ -268,3 +268,6 @@ _credentials.py
 livevil_blog/settings/local.py
 
 compse
+
+.vscode
+
