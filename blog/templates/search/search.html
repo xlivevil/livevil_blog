@@ -23,6 +23,7 @@
 {{ form.q }}
                     <input type="submit" value="搜索">
         </form>
+                    <main class="col-md-auto">
     {% if query %}
         {% for result in page.object_list %}
             <article class="post post-{{ result.object.pk }}">
@@ -56,7 +57,7 @@
                 </div>
             </article>
         {% empty %}
-            <div class="no-post">没有搜索到你想要的结果！</div>
+            <div class="post no-post">没有搜索到你想要的结果！</div>
         {% endfor %}
 
         {% if page.has_previous or page.has_next %}
@@ -70,8 +71,11 @@
             </div>
         {% endif %}
     {% else %}
+                 <div class="post no-post">
         请输入搜索关键词，例如 django
+                        </div>
     {% endif %}
+                    </main>
 {% endblock %}
 {% block aside %}
 

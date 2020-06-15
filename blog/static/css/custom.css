@@ -58,10 +58,14 @@ a:hover, a:focus {
 ::selection {
     background-color: #eee;
 }
-
+html {
+    min-height: 100%;
+}
 body {
     color: #444;
     font-family: 'Lato', sans-serif;
+    background: linear-gradient(125deg, #ECFCFF 0%, #ECFCFF 40%, #B2FCFF calc(40% + 1px), #B2FCFF 60%, #5EDFFF calc(60% + 1px), #5EDFFF 72%, #3E64FF calc(72% + 1px), #3E64FF 100%);
+    /*height: 100%;*/
 }
 
 p {
@@ -105,10 +109,17 @@ img {
  */
 
 #site-header {
-    background-color: #FFF;
-    padding: 25px 20px;
+    /*background-color: #FFF;*/
+    padding: 15px 20px;
     margin-bottom: 40px;
     border-bottom: 1px solid #e7e7e7;
+}
+
+#site-header .row{
+    display: flex;
+    align-content: space-between;
+    flex-direction: row;
+    align-items: center;
 }
 
 .copyrights {
@@ -143,24 +154,24 @@ img {
  */
 
 .main-nav {
-    margin-top: 11px;
+    margin-top: 10px;
     max-width: 95%;
 }
 
 .main-nav a {
-    color: #000000 !important;
+    color: #2d5f98 !important;
     padding: 0 0 5px 0 !important;
     margin-right: 30px;
     font-family: 'Lato', sans-serif;
     font-weight: 300;
-    font-size: 24px;
+    font-size: 30px;
 }
 
 .main-nav a:active,
 .main-nav a:focus,
 .main-nav a:hover {
     background-color: transparent !important;
-    border-bottom: 0;
+    border-bottom: 1px;
 }
 
 .navbar-toggle {
@@ -188,13 +199,13 @@ img {
 
 .cl-effect-11 a::before {
     position: absolute;
-    top: 0;
+    top: -5px;
     left: 0;
     overflow: hidden;
-    padding: 0 0 5px 0 !important;
+    padding: 5px 0 8px 0 !important;
     max-width: 0;
-    border-bottom: 1px solid #000;
-    color: #000;
+    border-bottom: 1px solid #fff;
+    color: #fff;
     content: attr(data-hover);
     white-space: nowrap;
     -webkit-transition: max-width 0.5s;
@@ -216,14 +227,13 @@ img {
 }
 
 .post {
-    background: #fff;
+    /*background: #fff;*/
     padding: 30px 30px 0;
 }
 
 .entry-title {
     text-align: center;
     font-size: 1.9em;
-    margin-bottom: 20px;
     line-height: 1.6;
     padding: 10px 20px 0;
     word-break: break-word;
@@ -233,7 +243,7 @@ img {
     text-align: center;
     color: #DDDDDD;
     font-size: 13px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .entry-content {
@@ -244,6 +254,7 @@ img {
     word-wrap: break-word;
     word-break: break-all;
     overflow: hidden;
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .excerpt {
@@ -269,7 +280,7 @@ img {
     word-spacing: 1px;
     letter-spacing: 0.01em;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .cl-effect-14 a {
@@ -347,7 +358,7 @@ img {
  */
 
 .widget {
-    background: #fff;
+    /*background: #fff;*/
     padding: 30px 0 0;
 }
 
@@ -470,7 +481,14 @@ img {
     padding: 0 0 1.5em 0;
 }
 
-.copyright {
+#site-footer div div div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#site-footer div div div .copyright {
     text-align: center;
     padding-top: 1em;
     margin: 0;
@@ -478,14 +496,22 @@ img {
     color: #666;
 }
 
+#site-footer div div div p {
+    margin: 0;
+}
+
 /**
  * 7.0 - Header Search Bar
  */
 
+.header-search-box {
+    margin-top: -11px;
+    width: 52.5px;
+}
+
 #header-search-box {
-    position: absolute;
+    /*position: absolute;*/
     right: 45px;
-    top: 8px;
 }
 
 .search-form {
@@ -494,11 +520,11 @@ img {
     position: absolute;
     min-width: 200px;
     right: -6px;
-    top: 33px;
+    top: 40px;
 }
 
 #search-menu span {
-    font-size: 20px;
+    /*font-size: 20px;*/
 }
 
 #searchform {
@@ -531,10 +557,10 @@ img {
 }
 
 #search-menu span.ion-ios-close-empty {
-    font-size: 40px;
+    font-size: 37px;
     line-height: 0;
     position: relative;
-    top: -6px;
+    top: 2px;
 }
 
 /**
@@ -548,6 +574,7 @@ img {
     top: 0;
     left: 0;
     background: #fff;
+    z-index: 1000;
 }
 
 .overlay .overlay-close {
@@ -790,7 +817,7 @@ img {
 
 @media (max-width: 991px) {
     .main-nav a {
-        margin-right: 20px;
+        margin-right: 14px;
     }
 
     #header-search-box {
@@ -825,7 +852,7 @@ img {
     }
 
     .post {
-        background: #fff;
+        /*background: #fff;*/
         padding: 0 10px 0;
     }
 
@@ -872,10 +899,14 @@ img {
     margin-top: 15px;
 }
 
-.comment-item:not(:last-child) {
+.comment-item {
     border-bottom: 1px #ccc solid;
+    padding: 5px;
     margin-bottom: 20px;
-    padding-bottom: 20px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.comment-item:not(:last-child) {
 }
 
 .comment-item .nickname,
@@ -919,8 +950,8 @@ img {
  */
 .login-menu-box {
     position: absolute;
-    right: 0;
-    top: 4px;
+    right: 2vw;
+    top: 1.5px;
     height: 25px;
     width: 25px;
     font-size: 25px;
@@ -950,10 +981,14 @@ img {
 #messages{
     color: red;
     background-color: pink;
+    position: absolute;
+    margin-top: 30px;
 }
 
 #messages ul{
     list-style: none;
+    padding: 5px 10px;
+    margin: 0px;
 }
 
 /**
@@ -962,11 +997,11 @@ img {
 
 .account {
     margin: 20px auto;
-    border: 1px solid #6A6A6A;
+    border: 1px solid #fff;
     width: 300px;
     padding: 30px;
     border-radius: 10px;
-
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .account h1{

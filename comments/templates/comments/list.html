@@ -3,40 +3,43 @@
 {% load mptt_tags %}
 {% load i18n %}
 {% load static %}
-{% get_comment_list  for post as comment_list  %}
+{% get_comment_list for post as comment_list %}
 <dl class="comment-list list-unstyled" id="comments">
-{% recursetree comment_list %}
-                    <dt class="comment-item" id="c{{ node.id }}">
-                        <span class="nickname">{{ node.user.username }}</span>
-                        <time class="create_time" datetime="{{ node.create_time }}">{{ node.create_time }}</time>
+    {% recursetree comment_list %}
+        <dt class="comment-item" id="c{{ node.id }}">
+            {% if user.socialaccount %}
+                <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}"/>
+            {% endif %}
+            <span class="nickname">{{ node.user.username }}</span>
+            <time class="create_time" datetime="{{ node.create_time }}">{{ node.create_time }}</time>
 
-                        {% if node.parent %}<span>{% trans "reply" %}{{ node.parent }}</span>{% endif %}
-                        <div class="text">
-                            <div class="reply">
-                                <button id="reply-btn{{ node.pk }}"
-                                        onclick="show_reply({{ node.pk }});">
-                                    {% trans "reply" %}</button>
-                            </div>
-                            {{ node.comment_html|safe }}
-                        </div>
-                        <iframe src="{% url 'comments:post_comments_reply' node.pk %}"
-                                class="reply-box"
-                                height="300"
-                                width="100%"
-                                frameborder="0"
-                                scrolling="0"
-                                style="display: none"
-                                id="iframe{{ node.pk }}"
-                                name="reply_iframe"
-    ></iframe>
-                    </dt>
+            {% if node.parent %}<span>{% trans "reply" %}{{ node.parent }}</span>{% endif %}
+            <div class="text">
+                <div class="reply">
+                    <button id="reply-btn{{ node.pk }}"
+                            onclick="show_reply({{ node.pk }});">
+                        {% trans "reply" %}</button>
+                </div>
+                {{ node.comment_html|safe }}
+            </div>
+            <iframe src="{% url 'comments:post_comments_reply' node.pk %}"
+                    class="reply-box"
+                    height="300"
+                    width="100%"
+                    frameborder="0"
+                    scrolling="0"
+                    style="display: none"
+                    id="iframe{{ node.pk }}"
+                    name="reply_iframe"
+            ></iframe>
+        </dt>
 
-    {% if not node.is_leaf_node %}
-      <dl class="children" style="margin-left: 40px">
-        {{ children }}
-      </dl>
-    {% endif %}
+        {% if not node.is_leaf_node %}
+            <dl class="children" style="margin-left: 40px">
+                {{ children }}
+            </dl>
+        {% endif %}
 
-{% endrecursetree %}
+    {% endrecursetree %}
 </dl>
 {# FIXME: 点回复弹出md回复框 回复键位置调整 回复跳转为本页刷新并msg  #}

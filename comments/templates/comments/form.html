@@ -40,14 +40,14 @@
 </form>
 
 
-    <script type="text/javascript">
-        $(function () {
-            let  editor = editormd("editor", {
-                // width: "100%",var
-                height: 200,
-                // markdown: "xxxx",     // dynamic set Markdown text
+<script type="text/javascript">
+    $(function () {
+        let editor = editormd("editor", {
+            // width: "100%",var
+            height: 200,
+            // markdown: "xxxx",     // dynamic set Markdown text
 
-                path: "{% static 'editor.md/lib/' %}"  // Autoload modules mode, codemirror, marked... dependents libs path
-            });
+            path: "{% static 'editor.md/lib/' %}"  // Autoload modules mode, codemirror, marked... dependents libs path
         });
-    </script>
+    });
+</script>

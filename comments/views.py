@@ -13,9 +13,6 @@ from comments.models import PostComment
 def comment_preview(request, pk):
     post = get_object_or_404(Post, pk=pk)
     form = CommentForm(request.POST)
-    # print(request.POST)
-    # print(form)
-    # print(post)
     if form.is_valid():
         comment = form.save(commit=False)
         comment.post = post

@@ -44,10 +44,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.weibo',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.windowslive',
+    'allauth.socialaccount.providers.baidu',
     'haystack',
     'rest_framework',
     'mptt',
-
+    'drf_yasg'
 
 ]
 
@@ -125,6 +126,8 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+
 # 增加第三方登录支持
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -158,7 +161,8 @@ SITE_ID = 1
 #         }
 #     }
 # }
-
+# SOCIALACCOUNT_ADAPTER = "users.adapter.SocialAccountAdapter"
+# ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # 可以邮箱或用户名登录
 ACCOUNT_EMAIL_REQUIRED = True
 LOGIN_REDIRECT_URL = '/'  # 设置登录后跳转链接
@@ -222,3 +226,21 @@ LOCALE_PATHS = (
 )
 
 COMMENTS_APP = 'comments'
+
+# rest_framework
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ],
+    'EXCEPTION_HANDLER': [
+        'rest_framework.views.exception_handler'
+    ]
+}

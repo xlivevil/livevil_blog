@@ -1,6 +1,8 @@
 {% load static %}
 {% load blog_extra %}
 {% load cache %}
+{% load comments_extras i18n %}
+{% load comments i18n %}
 {# TODO: editor.md min化 #}
 {# TODO: 完善head meta信息 关键字 摘要 爬虫协议 #}
 {# TODO: editor.md 移动端切换模式 #}
@@ -17,7 +19,14 @@
     <!-- meta -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% static 'img/favicon/favicon.ico' %}" type="image/x-icon"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'img/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 
     <!-- css -->
     <link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/3.3.2/css/bootstrap.min.css">
@@ -42,12 +51,13 @@
     <div class="container">
         <header id="site-header">
             <div class="row">
+            {% cache 500 'cache_logo' %}
                 <div class="col-md-4 col-sm-5 col-xs-8">
                     <div class="logo">
-                        <h1><a href="{% url 'blog:index' %}">Xlivevil</a></h1>
+                        <a href="{% url 'blog:index' %}"><img src="{% static 'img/logo/vector/default-monochrome.svg' %}"></img></a>
                     </div>
                 </div><!-- col-md-4 -->
-
+            {% endcache %}
                 <div class="col-md-8 col-sm-7 col-xs-4">
                     {% cache 500 'cache_container' %}
                         <nav class="main-nav" role="navigation">
@@ -68,10 +78,7 @@
                                     </li>
                                     <li class="cl-effect-11"><a href="{% url 'blog:contact' %}" data-hover="联系">联系</a>
                                     </li>
-                                </ul>
-                            </div><!-- /.navbar-collapse -->
-                        </nav>
-                        <div id="header-search-box">
+                                    <li class="cl-effect-11 header-search-box"><div id="header-search-box">
                             <a id="search-menu" href="#"><span id="search-icon"
                                                                class="ion-ios-search-strong"></span></a>
                             <div id="search-form" class="search-form">
@@ -83,7 +90,10 @@
                                     <button type="submit"><span class="ion-ios-search-strong"></span></button>
                                 </form>
                             </div>
-                        </div>
+                        </div></li>
+                                </ul>
+                            </div><!-- /.navbar-collapse -->
+                        </nav>
                     {% endcache %}
                     <div class="login-menu-box" onmouseleave="show_menu1()">
                         {#                    TODO: 加入账户图片、下拉菜单、登陆控制#}
@@ -92,7 +102,11 @@
                         {% if user.is_authenticated %}
                             <a href="#" onclick="show_menu()" title="用户中心">
                             {#                    TODO: 头像显示#}
-                                <div class="ion-log-out login-menu"></div>
+                                <div class="ion-log-out login-menu">
+                                    {% if user.socialaccount %}
+                                    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+                                    {% endif %}
+                                </div>
                             </a>
                             <ul id="user-login-menu">
                                 <li>
@@ -123,13 +137,9 @@
 
                 </div><!-- col-md-8 -->
             </div>
-        </header>
-    </div>
-
-<div class="content-body">
-    <div class="container">
-    {% if messages %}
-        <div class="col-md-9" id="messages">
+{#        TODO: 加入animate #}
+            {% if messages %}
+        <div class="messages" id="messages">
 {# TODO: msg改为可视固定位置弹出并消失  #}
             <ul>
                 {% for message in messages %}
@@ -138,12 +148,17 @@
             </ul>
         </div>
     {% endif %}
+        </header>
+    </div>
 {% endblock %}
 
+<div class="content-body">
+    <div class="container">
         <div class="row">
             {% block content %}
                 <main class="col-md-9">
                     {% for post in post_list %}
+                        {% get_comment_count for post as comment_count %}
                         <article class="post post-{{ post.pk }}">
                             <header class="entry-header">
                                 <h1 class="entry-title">
@@ -157,7 +172,7 @@
                                             datetime="{{ post.create_time|date:'Y-m-d' }}"> {{ post.create_time|date:'Y-m-d' }}</time></a></span>
                                     {#                            <span class="post-author"><a href="#">{{ post.author }}</a></span>#}
                                     <span class="comments-link"><a
-                                            href="{{ post.get_absolute_url }}#comment-list" class="ion-chatbubble"> {{ post.comment_set.count }}</a></span>
+                                            href="{{ post.get_absolute_url }}#comment-list" class="ion-chatbubble"> {{comment_count}}</a></span>
                                     <span class="views-count"><a
                                             href="{{ post.get_absolute_url }}"
                                             class="ion-eye"> {{ post.get_view_num }}</a></span>

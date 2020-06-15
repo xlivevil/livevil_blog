@@ -12,6 +12,7 @@ INTERNAL_IPS = ['170.106.13.74']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -90,3 +91,5 @@ LOGGING = {
         },
     },
 }
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"

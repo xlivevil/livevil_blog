@@ -49,7 +49,7 @@ class Post(models.Model):
     body = models.TextField('正文')
 
     # 时间信息
-    create_time = models.DateTimeField('创建时间', default=timezone.now)
+    create_time = models.DateTimeField('创建时间', default=timezone.now)    # 可以使用auto_now_add=True
     modified_time = models.DateTimeField('修改时间')
 
     # 摘要

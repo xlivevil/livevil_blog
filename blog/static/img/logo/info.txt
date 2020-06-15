@@ -1,0 +1,14 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Archivo-SemiBoldItalic
+font link: https://fonts.google.com/specimen/Archivo
+font author: Omnibus-Type
+font author site: http://www.omnibus-type.com/
+
+
+icon designer: Ben Davis
+icon designer link: /smashicons
+        
+{"bg":"transparent","icon-gradient-0":"#08C7D6","icon-gradient-1":"#02023E","font":"#000000","slogan":"#141414"}
+      

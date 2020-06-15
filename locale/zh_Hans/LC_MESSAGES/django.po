@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-28 18:27+0800\n"
+"POT-Creation-Date: 2020-06-13 22:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,7 +118,7 @@ msgid "Really remove this comment?"
 msgstr ""
 
 #: .\comments\templates\comments\delete.html:13
-#: .\users\templates\account\email.html:36
+#: .\users\templates\account\email.html:38
 #: .\users\templates\socialaccount\connections.html:35
 msgid "Remove"
 msgstr "删除"
@@ -148,8 +148,8 @@ msgstr ""
 msgid "Post"
 msgstr ""
 
-#: .\comments\templates\comments\list.html:13
-#: .\comments\templates\comments\list.html:18
+#: .\comments\templates\comments\list.html:16
+#: .\comments\templates\comments\list.html:21
 msgid "reply"
 msgstr "回复"
 
@@ -189,15 +189,15 @@ msgstr ""
 msgid "Preview"
 msgstr "预览"
 
-#: .\livevil_blog\settings\common.py:215
+#: .\livevil_blog\settings\common.py:220
 msgid "中文简体"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:216
+#: .\livevil_blog\settings\common.py:221
 msgid "English"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:217
+#: .\livevil_blog\settings\common.py:222
 msgid "日本語"
 msgstr ""
 
@@ -214,53 +214,53 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
-#: .\users\templates\account\email.html:8
+#: .\users\templates\account\email.html:9
 msgid "E-mail Addresses"
 msgstr "电子邮箱地址"
 
-#: .\users\templates\account\email.html:10
+#: .\users\templates\account\email.html:12
 msgid "The following e-mail addresses are associated with your account:"
 msgstr ""
 
-#: .\users\templates\account\email.html:24
+#: .\users\templates\account\email.html:26
 msgid "Verified"
 msgstr ""
 
-#: .\users\templates\account\email.html:26
+#: .\users\templates\account\email.html:28
 msgid "Unverified"
 msgstr ""
 
-#: .\users\templates\account\email.html:28
+#: .\users\templates\account\email.html:30
 msgid "Primary"
 msgstr ""
 
-#: .\users\templates\account\email.html:34
+#: .\users\templates\account\email.html:36
 msgid "Make Primary"
 msgstr ""
 
-#: .\users\templates\account\email.html:35
+#: .\users\templates\account\email.html:37
 msgid "Re-send Verification"
 msgstr ""
 
-#: .\users\templates\account\email.html:43
+#: .\users\templates\account\email.html:45
 msgid "Warning:"
 msgstr ""
 
-#: .\users\templates\account\email.html:43
+#: .\users\templates\account\email.html:45
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
 "an e-mail address so you can receive notifications, reset your password, etc."
 msgstr ""
 
-#: .\users\templates\account\email.html:48
+#: .\users\templates\account\email.html:50
 msgid "Add E-mail Address"
 msgstr ""
 
-#: .\users\templates\account\email.html:53
+#: .\users\templates\account\email.html:55
 msgid "Add E-mail"
 msgstr ""
 
-#: .\users\templates\account\email.html:62
+#: .\users\templates\account\email.html:65
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr ""
 
@@ -361,12 +361,12 @@ msgid ""
 msgstr ""
 
 #: .\users\templates\account\logout.html:5
-#: .\users\templates\account\logout.html:8
-#: .\users\templates\account\logout.html:17
+#: .\users\templates\account\logout.html:9
+#: .\users\templates\account\logout.html:18
 msgid "Sign Out"
 msgstr "登出"
 
-#: .\users\templates\account\logout.html:10
+#: .\users\templates\account\logout.html:11
 msgid "Are you sure you want to sign out?"
 msgstr ""
 
@@ -554,27 +554,27 @@ msgstr ""
 msgid "OpenID Sign In"
 msgstr ""
 
-#: .\users\templates\profile.html:20
+#: .\users\templates\profile.html:6 .\users\templates\profile.html:22
 msgid "用户信息"
 msgstr ""
 
-#: .\users\templates\profile.html:22
+#: .\users\templates\profile.html:24
 msgid "用户名："
 msgstr ""
 
-#: .\users\templates\profile.html:23
+#: .\users\templates\profile.html:25
 msgid "电子邮箱："
 msgstr ""
 
-#: .\users\templates\profile.html:23
+#: .\users\templates\profile.html:25
 msgid "修改"
 msgstr ""
 
-#: .\users\templates\profile.html:24
+#: .\users\templates\profile.html:26
 msgid "修改密码"
 msgstr ""
 
-#: .\users\templates\profile.html:26
+#: .\users\templates\profile.html:28
 msgid "第三方账号绑定"
 msgstr ""
 
