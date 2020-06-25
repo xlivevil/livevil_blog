@@ -247,6 +247,7 @@ img {
 }
 
 .entry-content {
+    padding: 10px;
     font-size: 18px;
     line-height: 1.9;
     font-weight: 300;

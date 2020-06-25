@@ -42,6 +42,7 @@ class Post(models.Model):
     """
 
     """
+    # TODO: 保存同时刷新缓存
     # 标题
     title = models.CharField('标题', max_length=30)
 
@@ -113,6 +114,7 @@ class Post(models.Model):
 
 
 class PostViewInfo(models.Model):
+    # TODO: 加入记录间隔
     post = models.ForeignKey(Post, verbose_name='文章', on_delete=models.CASCADE)
 
     view_time = models.DateTimeField('浏览时间', default=timezone.now)

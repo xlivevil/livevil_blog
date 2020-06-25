@@ -11,8 +11,10 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /apps
 
 RUN pip3 install 'django==2.2' markdown gunicorn django-pure-pagination 'elasticsearch>=5,<6' 'django-haystack==3.0.0b2' django-allauth requests pillow django-debug-toolbar djangorestframework django-crispy-forms django-reversion django-pure-pagination mysqlclient django-redis django-filter supervisor
-RUN pip3 install django-contrib-comments django-mptt
+RUN pip3 install django-contrib-comments django-mptt drf-yasg
 RUN yum -y install gettext
+RUN pip3 intsall django_compressor beautifulsoup4 html5lib slimit calmjs.parse csscompressor brotli django-grappelli
+RUN STATIC_DEPS=true pip3 install lxml
 COPY . /apps
 COPY ./compose/production/django/start.sh /start.sh
 RUN sed -i 's/\r//' /start.sh

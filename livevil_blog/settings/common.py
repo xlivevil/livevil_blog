@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from django.utils.translation import gettext_lazy as _
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -48,8 +49,10 @@ INSTALLED_APPS = [
     'haystack',
     'rest_framework',
     'mptt',
-    'drf_yasg'
-
+    'drf_yasg',
+    'django_filters',
+    "compressor",
+    'grappelli',
 ]
 
 MIDDLEWARE = [
@@ -88,7 +91,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'livevil_blog.wsgi.application'
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -147,7 +149,6 @@ PAGINATION_SETTINGS = {
     'MARGIN_PAGES_DISPLAYED': 2,
     'SHOW_FIRST_PAGE_WHEN_INVALID': True,
 }
-
 
 # allauth
 SITE_ID = 1
@@ -210,7 +211,6 @@ HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_CUSTOM_HIGHLIGHTER = 'blog.utils.Highlighter'
 
-
 SECURE_BROWSER_XSS_FILTER = True
 
 # i18n
@@ -244,3 +244,23 @@ REST_FRAMEWORK = {
         'rest_framework.views.exception_handler'
     ]
 }
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
+
+# django-compressor
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
+COMPRESS_CSS_FILTERS = [
+    # creates absolute urls from relative ones
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    # css minimizer
+    'compressor.filters.cssmin.CSSMinFilter'
+]
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter'
+]

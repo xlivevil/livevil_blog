@@ -1,7 +1,10 @@
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework import response
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import response, status
+from rest_framework.decorators import action
+from rest_framework.fields import DateField
 from rest_framework.generics import ListAPIView
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.pagination import PageNumberPagination
@@ -19,6 +22,7 @@ from rest_framework.views import APIView
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
+from api.filter import PostFilter
 from api.serializers import PostSerializer
 from blog.models import Post
 
@@ -82,5 +86,14 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
     permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PostFilter
 
-
+    @action(
+        methods=["GET"], detail=False, url_path="archive/dates", url_name="archive-date"
+    )
+    def list_archive_dates(self, request, *args, **kwargs):
+        dates = Post.objects.dates("create_time", "month", order="DESC")
+        date_field = DateField()
+        data = [date_field.to_representation(date) for date in dates]
+        return Response(data=data, status=status.HTTP_200_OK)

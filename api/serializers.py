@@ -48,6 +48,8 @@ class PostSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     author = UserSerializer()
     tags = TagSerializer(many=True)
+    toc = serializers.CharField()
+    body_html = serializers.CharField()
 
     class Meta:
         model = Post
@@ -58,13 +60,17 @@ class PostSerializer(serializers.ModelSerializer):
             "author",
             "excerpt",
             "tags",
-            "rich_content",
+            "toc",
+            "body_html",
         ]
         extra_kwargs = {
             "id": {
                 'read_only': True
-        },
+            },
             "rich_content": {
-                'read_only': True
+                'body_html': True
+            },
+            "toc": {
+                'body_html': True
             }
         }

@@ -4,11 +4,13 @@
 {% load comments_extras i18n %}
 {% load comments i18n %}
 {% load mptt_tags %}
+{% load compress %}
 {% block head_title %}
     Xlivevil{% endblock %}
 {#    TODO: 加入赞赏功能#}
 {% block extra_js %}
     <link href="https://lib.baomitu.com/highlight.js/9.15.10/styles/zenburn.min.css" rel="stylesheet">
+    {% compress css %}
     <style type="text/css">
         /* for block of numbers */
         .hljs-ln-numbers {
@@ -33,6 +35,7 @@
         {#{#}
 
     </style>
+    {% endcompress %}
 {% endblock %}
 {% block bodyid %}
     <body id="single">
