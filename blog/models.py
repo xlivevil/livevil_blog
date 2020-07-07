@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.core.cache import cache
 from django.db import models
 # Create your models here.
@@ -6,6 +7,7 @@ from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 
+from comments.models import PostComment
 from users.models import User
 from utils.rich_content import generate_rich_content
 
@@ -44,7 +46,7 @@ class Post(models.Model):
     """
     # TODO: 保存同时刷新缓存
     # 标题
-    title = models.CharField('标题', max_length=30)
+    title = models.CharField('标题', max_length=70)
 
     # 正文
     body = models.TextField('正文')

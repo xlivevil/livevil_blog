@@ -32,17 +32,6 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PostComment
-        fields = [
-            "id",
-            "comment",
-            "parent"
-
-        ]
-
-
 class PostSerializer(serializers.ModelSerializer):
     # TODO: 整合序列化反序列化
     category = CategorySerializer()
@@ -74,3 +63,23 @@ class PostSerializer(serializers.ModelSerializer):
                 'body_html': True
             }
         }
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostComment
+        fields = [
+            "user_id",
+            "user_name",
+            "user_email",
+            "user_url",
+            "comment",
+            "created_time",
+            "parent",
+            "content_type",
+            "object_pk"
+        ]
+        read_only_fields = [
+            "created_time",
+        ]
+        extra_kwargs = {"post": {"write_only": True}}

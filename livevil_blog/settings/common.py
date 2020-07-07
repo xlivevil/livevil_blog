@@ -141,7 +141,7 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = 'users.User'
 
 # crispy-forms的模式
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # django-pure-pagination设置
 PAGINATION_SETTINGS = {
@@ -152,18 +152,6 @@ PAGINATION_SETTINGS = {
 
 # allauth
 SITE_ID = 1
-
-# SOCIALACCOUNT_PROVIDERS = {
-#     'github': {
-#         'APP': {
-#             'cilent_id': '',
-#             'secret': '',
-#             'key': '',
-#         }
-#     }
-# }
-# SOCIALACCOUNT_ADAPTER = "users.adapter.SocialAccountAdapter"
-# ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # 可以邮箱或用户名登录
 ACCOUNT_EMAIL_REQUIRED = True
 LOGIN_REDIRECT_URL = '/'  # 设置登录后跳转链接

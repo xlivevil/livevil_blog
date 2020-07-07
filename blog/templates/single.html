@@ -8,7 +8,7 @@
 {% block head_title %}
     Xlivevil{% endblock %}
 {#    TODO: 加入赞赏功能#}
-{% block extra_js %}
+{% block extra_css %}
     <link href="https://lib.baomitu.com/highlight.js/9.15.10/styles/zenburn.min.css" rel="stylesheet">
     {% compress css %}
     <style type="text/css">
@@ -118,11 +118,8 @@
     <script>
         hljs.initHighlightingOnLoad();
         hljs.initLineNumbersOnLoad();
-
     </script>
 {% endblock %}
-{% block mobile_menu %}
-    {% include 'moblie menu.html' %}
-{% endblock %}
+
 
 

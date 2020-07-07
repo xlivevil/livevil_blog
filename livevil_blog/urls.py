@@ -20,11 +20,12 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import routers, permissions
 
-from api.views import PostViewSet
+from api.views import PostViewSet, CommentViewSet
 from blog.feed import AllPostsRssFeed
 
 router = routers.DefaultRouter()
 router.register(r'posts', PostViewSet, basename='post')
+router.register(r"comments", CommentViewSet, basename="comment")
 
 schema_view = get_schema_view(
    openapi.Info(

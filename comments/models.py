@@ -29,7 +29,7 @@ class PostComment(MPTTModel, CommentAbstractModel):
     # TODO: 加入点赞数
 
     # 时间信息
-    create_time = models.DateTimeField(_('创建时间'), default=timezone.now)
+    created_time = models.DateTimeField(_('创建时间'), default=timezone.now)
 
     # 层级关系
     parent = TreeForeignKey('self', verbose_name=_('父评论'), null=True, blank=True,
