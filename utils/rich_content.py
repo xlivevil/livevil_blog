@@ -8,6 +8,8 @@ def generate_rich_content(value):
 
     md = markdown.Markdown(extensions=[
         'markdown.extensions.extra',
+        'markdown.extensions.admonition',
+        
         TocExtension(slugify=slugify),
     ])
     content = md.convert(value)
@@ -15,5 +17,3 @@ def generate_rich_content(value):
     m = re.search(r'<div class="toc">\s*<ul>(.*)</ul>\s*</div>', md.toc, re.S)
     toc = m.group(1) if m is not None else ''
     return {"content": content, "toc": toc}
-
-

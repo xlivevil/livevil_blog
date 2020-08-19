@@ -23,3 +23,5 @@ django-filter
 supervisor
 django-mptt
 gettext
+subdomains
+uvicorn

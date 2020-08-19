@@ -179,6 +179,12 @@ function show_reply(x) {
             hide(iframe_list);
         }else{
             hide(iframe_list);
-            box.style.display="block";
+            box.style.display="block"
         }
+}
+
+function addFormClass() {
+    $('.account form p input[type!=checkbox]').addClass('form-control');
+    $('.account form p').addClass('form-group');
+    $('button').addClass('btn btn-primary');
 }

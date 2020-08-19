@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_filters',
     "compressor",
     'grappelli',
+    'subdomains',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'subdomains.middleware.SubdomainURLRoutingMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -70,6 +72,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'livevil_blog.urls'
+
+# A dictionary of urlconf module paths, keyed by their subdomain.
+SUBDOMAIN_URLCONFS = {
+    None: 'livevil_blog.urls',  # no subdomain, e.g. ``example.com``
+    'www': 'livevil_blog.urls',
+    'api': 'livevil_blog.urls.api',
+}
 
 TEMPLATES = [
     {
@@ -92,8 +101,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'livevil_blog.wsgi.application'
 
-# Password validation
-# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -179,7 +186,7 @@ ACCOUNT_SESSION_REMEMBER = None  # 控制会话的生命周期，可选项还有
 
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False  # 用户注册时是否需要输入邮箱两遍
 
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False  # 用户注册时是否需要用户输入两遍密码
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True  # 用户注册时是否需要用户输入两遍密码
 
 ACCOUNT_USERNAME_BLACKLIST = ['admin', ]  # 用户不能使用的用户名列表
 
@@ -197,7 +204,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"  # 设置退出登录后跳转链接
 
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
-HAYSTACK_CUSTOM_HIGHLIGHTER = 'blog.utils.Highlighter'
+HAYSTACK_CUSTOM_HIGHLIGHTER = 'blog.highlighter.Highlighter'
 
 SECURE_BROWSER_XSS_FILTER = True
 
