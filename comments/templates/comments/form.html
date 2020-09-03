@@ -2,8 +2,8 @@
 {% load static %}
 {% load compress %}
     <script crossorigin="anonymous" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" src="https://lib.baomitu.com/jquery/3.4.1/jquery.min.js"></script>
-<script src="{% static 'editor.md/editormd.min.js' %}"></script>
-<link rel="stylesheet" href="{% static 'editor.md/css/editormd.min.css' %}"/>
+<script src="{% static 'plugin/editor.md/editormd.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'plugin/editor.md/css/editormd.min.css' %}"/>
 <form action="{% comment_form_target %}" method="post">
     {% csrf_token %}
 
@@ -47,7 +47,7 @@
             // width: "100%",var
             height: 200,
             // markdown: "xxxx",     // dynamic set Markdown text
-            path: "{% static 'editor.md/lib/' %}"  // Autoload modules mode, codemirror, marked... dependents libs path
+            path: "{% static 'plugin/editor.md/lib/' %}"  // Autoload modules mode, codemirror, marked... dependents libs path
         });
     });
 </script>

@@ -22,6 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,7 +53,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     "compressor",
-    'grappelli',
     'subdomains',
 ]
 
@@ -259,3 +259,7 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_JS_FILTERS = [
     'compressor.filters.jsmin.JSMinFilter'
 ]
+
+# grappli
+ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"  # 把admin的静态文件,由原来的admin目录,改为映射到static目录下的
+GRAPPELLI_ADMIN_TITLE = '后台管理系统'  # 更改grappellie的登入title

@@ -1105,3 +1105,7 @@ img {
     text-indent: 100%;
     white-space: nowrap
 }
+
+.editormd-fullscreen {
+    z-index: 1001;
+}
