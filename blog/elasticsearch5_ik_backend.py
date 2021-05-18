@@ -11,5 +11,5 @@ class Elasticsearch5IkSearchBackend(Elasticsearch5SearchBackend):
         super(Elasticsearch5IkSearchBackend, self).__init__(*args, **kwargs)
 
 
-class Elasticsearch5IKSearchEngine(Elasticsearch5SearchEngine):
+class Elasticsearch5IkSearchEngine(Elasticsearch5SearchEngine):
     backend = Elasticsearch5IkSearchBackend

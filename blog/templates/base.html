@@ -48,9 +48,9 @@
     {% endcompress %}
 
 </head>
-{% block bodyid %}
-    <body>
-{% endblock %}
+
+    <body {% block bodyid %} {% endblock %}>
+
 {% block container %}
 
     <div class="container">
@@ -181,9 +181,9 @@
                     </div>
                 </main>
             {% endblock %}
-                {% block aside %}
-            <aside class="col-md-3">
 
+            <aside class="col-md-3">
+                {% block aside %}
                     {% cache 500 'cache_aside' %}
                         {% show_recent_posts %}
                         {% show_archives %}
@@ -193,9 +193,9 @@
                     <div class="rss">
                         <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                     </div>
-
-            </aside>
                 {% endblock %}
+            </aside>
+
         </div>
     </div>
 </div>

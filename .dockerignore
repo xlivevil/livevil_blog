@@ -2,3 +2,4 @@
 _credentials.py
 fabfile.py
 static/
+push.py

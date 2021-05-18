@@ -257,8 +257,6 @@ dmypy.json
 
 .pyre/
 
-fabfile.py
-
 _credentials.py
 
 .idea/
@@ -272,3 +270,7 @@ compse
 .vscode
 
 static/
+
+.history
+
+push.bat

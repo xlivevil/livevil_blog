@@ -17,7 +17,7 @@ from django.utils.translation import gettext_lazy as _
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # Application definition
 
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django_filters',
     "compressor",
     'subdomains',
+    'djongo',
 ]
 
 MIDDLEWARE = [
@@ -100,7 +101,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'livevil_blog.wsgi.application'
-
+ASGI_APPLICATION = 'livevil_blog.asgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -118,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/2.2/topics/i18n/
+# https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'zh-hans'
 
@@ -130,12 +131,27 @@ USE_L10N = True
 
 USE_TZ = False
 
+LANGUAGES = (
+    ('zh-hans', _('中文简体')),
+    ('en-us', _('English')),
+    ('ja-jp', _('日本語'))
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
+
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+# 多数据库联用
+
 
 # 增加第三方登录支持
 AUTHENTICATION_BACKENDS = [
@@ -208,17 +224,6 @@ HAYSTACK_CUSTOM_HIGHLIGHTER = 'blog.highlighter.Highlighter'
 
 SECURE_BROWSER_XSS_FILTER = True
 
-# i18n
-
-LANGUAGES = (
-    ('zh-hans', _('中文简体')),
-    ('en-us', _('English')),
-    ('ja-jp', _('日本語'))
-)
-
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
-)
 
 COMMENTS_APP = 'comments'
 
@@ -263,3 +268,10 @@ COMPRESS_JS_FILTERS = [
 # grappli
 ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"  # 把admin的静态文件,由原来的admin目录,改为映射到static目录下的
 GRAPPELLI_ADMIN_TITLE = '后台管理系统'  # 更改grappellie的登入title
+
+# session的存储配置
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
+
+# 设置session失效时间,单位为秒
+SESSION_COOKIE_AGE = 60*30

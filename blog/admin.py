@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from reversion.admin import VersionAdmin
 
-from blog.models import Post, Category, Tag, PostViewInfo
+from blog.models import Post, Category, Tag, PostViewInfo, PostBody
 
 
 @admin.register(Post)
@@ -24,6 +24,7 @@ class PostAdmin(VersionAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.author = request.user
+
         super().save_model(request, obj, form, change)
 
     def get_queryset(self, request):
@@ -48,6 +49,7 @@ class ViewInfoAdmin(VersionAdmin):
     # 分类排列
 
 
+admin.site.register(PostBody)
 admin.site.register(Category)
 admin.site.register(Tag)
 admin.site.site_header = '网站管理'

@@ -30,18 +30,41 @@ DATABASES = {
             'autocommit': True,
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
         }
+    },
+    'mongodb': {
+        'ENGINE': 'djongo',
+        'ENFORCE_SCHEMA': True,
+        'LOGGING': {
+            'version': 1,
+            'loggers': {
+                'djongo': {
+                    'level': 'DEBUG',
+                    'propogate': False,
+                }
+            },
+         },
+        'NAME': 'your-db-name',
+        'CLIENT': {
+            'host': 'host-name or ip address',
+            'port': port_number,
+            'username': 'db-username',
+            'password': 'password',
+            'authSource': 'db-name',
+            'authMechanism': 'SCRAM-SHA-1'
+        }
     }
 }
 
 # haystack
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.elasticsearch5_backend.Elasticsearch5SearchEngine',
+        'ENGINE': 'blog.elasticsearch5_ik_backend.Elasticsearch5IkSearchEngine',
         'URL': 'http://livevil_blog_elasticsearch:9200/',
         'INDEX_NAME': 'xlivevil'
     },
 }
-
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 # email设定
 
 EMAIL_HOST = 'smtp.aliyun.com'
