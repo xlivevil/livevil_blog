@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-19 16:53+0800\n"
+"POT-Creation-Date: 2021-06-09 12:48+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,36 +16,40 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: .\blog\templates\about.html:20
+#: .\blog\templates\about.html:17
 msgid "About Me"
 msgstr ""
 
-#: .\blog\templates\about.html:26
+#: .\blog\templates\about.html:23
 msgid ""
 "\n"
-"                                    我是一名python学习者\n"
-"                                "
+"                    我是一名python学习者\n"
+"                "
 msgstr ""
 
-#: .\blog\templates\about.html:30
+#: .\blog\templates\about.html:27
 msgid ""
 "\n"
-"                                    本站基于python3.7，使用django2.2框架。主"
-"要用于个人学习编程的技术实践与经验记录。\n"
-"                                "
+"                    本站基于python3.7，使用django2.2框架。主要用于个人学习编"
+"程的技术实践与经验记录。\n"
+"                "
 msgstr ""
 
-#: .\blog\templates\about.html:35
+#: .\blog\templates\about.html:32
 msgid "Social"
 msgstr ""
 
-#: .\blog\templates\footer.html:12
+#: .\blog\templates\contact_form\contact_form.html:14
+msgid "Contact"
+msgstr ""
+
+#: .\blog\templates\footer.html:10
 msgid "default avatar icon made by "
 msgstr ""
 
-#: .\blog\templates\footer.html:13
+#: .\blog\templates\footer.html:12
 msgid "from"
 msgstr ""
 
@@ -70,7 +74,7 @@ msgstr ""
 msgid "暂无评论"
 msgstr ""
 
-#: .\blog\templates\single.html:104
+#: .\blog\templates\single.html:103
 msgid "文章目录"
 msgstr ""
 
@@ -78,7 +82,7 @@ msgstr ""
 msgid "评论"
 msgstr ""
 
-#: .\comments\models.py:32
+#: .\comments\models.py:31
 msgid "创建时间"
 msgstr ""
 
@@ -86,11 +90,11 @@ msgstr ""
 msgid "父评论"
 msgstr ""
 
-#: .\comments\models.py:41
+#: .\comments\models.py:44
 msgid "comment"
 msgstr ""
 
-#: .\comments\models.py:42
+#: .\comments\models.py:45
 msgid "comments"
 msgstr ""
 
@@ -126,8 +130,8 @@ msgid "Really remove this comment?"
 msgstr ""
 
 #: .\comments\templates\comments\delete.html:13
-#: .\users\templates\account\email.html:39
-#: .\users\templates\socialaccount\connections.html:35
+#: .\users\templates\account\email.html:46
+#: .\users\templates\socialaccount\connections.html:37
 msgid "Remove"
 msgstr ""
 
@@ -151,8 +155,8 @@ msgstr ""
 msgid "Thanks for flagging"
 msgstr ""
 
-#: .\comments\templates\comments\form.html:39
-#: .\comments\templates\comments\preview.html:36
+#: .\comments\templates\comments\form.html:42
+#: .\comments\templates\comments\preview.html:37
 msgid "Post"
 msgstr ""
 
@@ -170,42 +174,44 @@ msgid "Thank you for your comment"
 msgstr ""
 
 #: .\comments\templates\comments\preview.html:4
-#: .\comments\templates\comments\preview.html:14
+#: .\comments\templates\comments\preview.html:15
 msgid "Preview your comment"
 msgstr ""
 
 #: .\comments\templates\comments\preview.html:12
 msgid "Please correct the error below"
-msgid_plural "Please correct the errors below"
+msgid_plural ""
+"Please\n"
+"                correct the errors below"
 msgstr[0] ""
 msgstr[1] ""
 
-#: .\comments\templates\comments\preview.html:17
+#: .\comments\templates\comments\preview.html:18
 msgid "and"
 msgstr ""
 
-#: .\comments\templates\comments\preview.html:18
+#: .\comments\templates\comments\preview.html:19
 msgid "Post your comment"
 msgstr ""
 
 #. Translators: This string follows the 'Post your comment' submit button.
-#: .\comments\templates\comments\preview.html:20
+#: .\comments\templates\comments\preview.html:21
 msgid "or make changes"
 msgstr ""
 
-#: .\comments\templates\comments\preview.html:37
+#: .\comments\templates\comments\preview.html:38
 msgid "Preview"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:214
+#: .\livevil_blog\settings\common.py:138
 msgid "中文简体"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:215
+#: .\livevil_blog\settings\common.py:139
 msgid "English"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:216
+#: .\livevil_blog\settings\common.py:140
 msgid "日本語"
 msgstr ""
 
@@ -230,45 +236,45 @@ msgstr ""
 msgid "The following e-mail addresses are associated with your account:"
 msgstr ""
 
-#: .\users\templates\account\email.html:27
+#: .\users\templates\account\email.html:30
 msgid "Verified"
 msgstr ""
 
-#: .\users\templates\account\email.html:29
+#: .\users\templates\account\email.html:32
 msgid "Unverified"
 msgstr ""
 
-#: .\users\templates\account\email.html:31
+#: .\users\templates\account\email.html:35
 msgid "Primary"
 msgstr ""
 
-#: .\users\templates\account\email.html:37
+#: .\users\templates\account\email.html:42
 msgid "Make Primary"
 msgstr ""
 
-#: .\users\templates\account\email.html:38
+#: .\users\templates\account\email.html:44
 msgid "Re-send Verification"
 msgstr ""
 
-#: .\users\templates\account\email.html:46
+#: .\users\templates\account\email.html:54
 msgid "Warning:"
 msgstr ""
 
-#: .\users\templates\account\email.html:46
+#: .\users\templates\account\email.html:54
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
 "an e-mail address so you can receive notifications, reset your password, etc."
 msgstr ""
 
-#: .\users\templates\account\email.html:51
+#: .\users\templates\account\email.html:60
 msgid "Add E-mail Address"
 msgstr ""
 
-#: .\users\templates\account\email.html:56
+#: .\users\templates\account\email.html:65
 msgid "Add E-mail"
 msgstr ""
 
-#: .\users\templates\account\email.html:66
+#: .\users\templates\account\email.html:75
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr ""
 
@@ -329,19 +335,22 @@ msgstr ""
 #: .\users\templates\account\email_confirm.html:17
 #, python-format
 msgid ""
-"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
-"address for user %(user_display)s."
+"Please confirm that\n"
+"                <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s\n"
+"                ."
 msgstr ""
 
-#: .\users\templates\account\email_confirm.html:21
+#: .\users\templates\account\email_confirm.html:23
 msgid "Confirm"
 msgstr ""
 
-#: .\users\templates\account\email_confirm.html:28
+#: .\users\templates\account\email_confirm.html:30
 #, python-format
 msgid ""
-"This e-mail confirmation link expired or is invalid. Please <a href="
-"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+"This e-mail confirmation link expired or is invalid. Please\n"
+"                <a href=\"%(email_url)s\">issue a new e-mail confirmation "
+"request</a>."
 msgstr ""
 
 #: .\users\templates\account\login.html:6
@@ -358,14 +367,14 @@ msgstr ""
 #, python-format
 msgid ""
 "没有账号？<a class=\"text-info\" href=\"%(signup_url)s\">注册</a>\n"
-" %(site_name)s账号"
+"                    %(site_name)s账号"
 msgstr ""
 
 #: .\users\templates\account\login.html:46
 #, python-format
 msgid ""
 "If you have not created an account yet, then please\n"
-"<a href=\"%(signup_url)s\">sign up</a> first."
+"                    <a href=\"%(signup_url)s\">sign up</a> first."
 msgstr ""
 
 #: .\users\templates\account\logout.html:5
@@ -457,7 +466,8 @@ msgstr ""
 #: .\users\templates\account\password_reset_done.html:16
 msgid ""
 "We have sent you an e-mail. Please contact us if you do not receive it "
-"within a few minutes."
+"within a few\n"
+"            minutes."
 msgstr ""
 
 #: .\users\templates\account\password_reset_from_key.html:8
@@ -468,15 +478,16 @@ msgstr ""
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
-"a>."
+"used.  Please\n"
+"                request a <a href=\"%(passwd_reset_url)s\">new password "
+"reset</a>."
 msgstr ""
 
-#: .\users\templates\account\password_reset_from_key.html:18
+#: .\users\templates\account\password_reset_from_key.html:19
 msgid "change password"
 msgstr ""
 
-#: .\users\templates\account\password_reset_from_key.html:21
+#: .\users\templates\account\password_reset_from_key.html:22
 #: .\users\templates\account\password_reset_from_key_done.html:9
 msgid "Your password is now changed."
 msgstr ""
@@ -493,17 +504,17 @@ msgid "Signup"
 msgstr ""
 
 #: .\users\templates\account\signup.html:11
-#: .\users\templates\account\signup.html:21
+#: .\users\templates\account\signup.html:22
 #: .\users\templates\socialaccount\signup.html:8
-#: .\users\templates\socialaccount\signup.html:19
+#: .\users\templates\socialaccount\signup.html:20
 msgid "Sign Up"
 msgstr ""
 
 #: .\users\templates\account\signup.html:13
 #, python-format
 msgid ""
-"Already have an account? Then please <a href=\"%(login_url)s\" class=\"text-"
-"info\">sign in</a>."
+"Already have an account? Then please\n"
+"                <a href=\"%(login_url)s\" class=\"text-info\">sign in</a>."
 msgstr ""
 
 #: .\users\templates\account\signup_closed.html:5
@@ -521,7 +532,9 @@ msgstr ""
 
 #: .\users\templates\account\snippets\already_logged_in.html:5
 #, python-format
-msgid "you are already logged in as %(user_display)s."
+msgid ""
+"you are already logged in as %(user_display)s\n"
+"    ."
 msgstr ""
 
 #: .\users\templates\account\verification_sent.html:5
@@ -534,56 +547,60 @@ msgstr ""
 #: .\users\templates\account\verification_sent.html:11
 msgid ""
 "We have sent an e-mail to you for verification. Follow the link provided to "
-"finalize the signup process. Please contact us if you do not receive it "
+"finalize the\n"
+"            signup process. Please contact us if you do not receive it "
 "within a few minutes."
 msgstr ""
 
 #: .\users\templates\account\verified_email_required.html:13
 msgid ""
 "This part of the site requires us to verify that\n"
-"you are who you claim to be. For this purpose, we require that you\n"
-"verify ownership of your e-mail address. "
+"            you are who you claim to be. For this purpose, we require that "
+"you\n"
+"            verify ownership of your e-mail address. "
 msgstr ""
 
 #: .\users\templates\account\verified_email_required.html:17
 msgid ""
 "We have sent an e-mail to you for\n"
-"verification. Please click on the link inside this e-mail. Please\n"
-"contact us if you do not receive it within a few minutes."
+"            verification. Please click on the link inside this e-mail. "
+"Please\n"
+"            contact us if you do not receive it within a few minutes."
 msgstr ""
 
 #: .\users\templates\account\verified_email_required.html:21
 #, python-format
 msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
-"mail address</a>."
+"mail address</a>\n"
+"            ."
 msgstr ""
 
 #: .\users\templates\openid\login.html:9
 msgid "OpenID Sign In"
 msgstr ""
 
-#: .\users\templates\profile.html:6 .\users\templates\profile.html:22
+#: .\users\templates\profile.html:6 .\users\templates\profile.html:23
 msgid "用户信息"
 msgstr ""
 
-#: .\users\templates\profile.html:24
+#: .\users\templates\profile.html:25
 msgid "用户名："
 msgstr ""
 
-#: .\users\templates\profile.html:25
+#: .\users\templates\profile.html:26
 msgid "电子邮箱："
 msgstr ""
 
-#: .\users\templates\profile.html:25
+#: .\users\templates\profile.html:27
 msgid "修改"
 msgstr ""
 
-#: .\users\templates\profile.html:26
+#: .\users\templates\profile.html:28
 msgid "修改密码"
 msgstr ""
 
-#: .\users\templates\profile.html:28
+#: .\users\templates\profile.html:30
 msgid "第三方账号绑定"
 msgstr ""
 
@@ -604,16 +621,16 @@ msgstr ""
 
 #: .\users\templates\socialaccount\connections.html:11
 msgid ""
-"You can sign in to your account using any of the following third party "
-"accounts:"
+"You can sign in to your account using any of the following third party\n"
+"            accounts:"
 msgstr ""
 
-#: .\users\templates\socialaccount\connections.html:43
+#: .\users\templates\socialaccount\connections.html:45
 msgid ""
 "You currently have no social network accounts connected to this account."
 msgstr ""
 
-#: .\users\templates\socialaccount\connections.html:46
+#: .\users\templates\socialaccount\connections.html:48
 msgid "Add a 3rd Party Account"
 msgstr ""
 
@@ -626,8 +643,8 @@ msgstr ""
 #, python-format
 msgid ""
 "You decided to cancel logging in to our site using one of your existing "
-"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s"
-"\">sign in</a>."
+"accounts. If this was a\n"
+"        mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
 
 #: .\users\templates\socialaccount\messages\account_connected.txt:2
@@ -645,6 +662,7 @@ msgstr ""
 #: .\users\templates\socialaccount\signup.html:10
 #, python-format
 msgid ""
-"You are about to use your %(provider_name)s account to login to\n"
-"%(site_name)s. As a final step, please complete the following form:"
+"You are about to use your\n"
+"        %(provider_name)s account to login to\n"
+"        %(site_name)s. As a final step, please complete the following form:"
 msgstr ""

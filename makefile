@@ -24,7 +24,7 @@ install: installdeps createmigrations
 
 migrate:
 	poetry run python manage.py migrate --database default
-	poetry run python manage.py migrate --database monogodb
+	poetry run python manage.py migrate --database mongodb
 
 dev:
 	poetry run python manage.py runserver

@@ -136,8 +136,8 @@ USE_TZ = False
 
 LANGUAGES = (
     ('zh-hans', _('中文简体')),
-    ('en-us', _('English')),
-    ('ja-jp', _('日本語'))
+    ('en', _('English')),
+    ('ja', _('日本語'))
 )
 
 LOCALE_PATHS = (

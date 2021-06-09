@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load comments_extras i18n %}
+{% load comments i18n %}
 {% block head_title %}
     Xlivevil
 {% endblock %}
@@ -24,7 +26,7 @@
 
                             <textarea name="body" rows="7" placeholder="Your Message" required></textarea>
                             <button type="submit" value="Submit" class="btn-send btn-5 btn-5b ion-ios-paperplane">
-                                <span>{% trans"Drop Me a Line" %}</span></button>
+                                <span>{% trans "Drop Me a Line" %}</span></button>
                         </div>
                     </div>
                 </form>

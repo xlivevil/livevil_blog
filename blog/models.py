@@ -153,7 +153,7 @@ class PostViewInfo(models.Model):
         max_length=200,
     )
 
-    ip = models.IPAddressField('IP', )
+    ip = models.GenericIPAddressField('IP', )
 
     class Meta:
         verbose_name = '浏览记录'
