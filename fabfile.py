@@ -9,12 +9,11 @@ def _get_github_auth_responders():
     """
     username_responder = Responder(
         pattern="Username for 'https://github.com':",
-        response='{}\n'.format(github_username)
-    )
+        response='{}\n'.format(github_username))
     password_responder = Responder(
-        pattern="Password for 'https://{}@github.com':".format(github_username),
-        response='{}\n'.format(github_password)
-    )
+        pattern="Password for 'https://{}@github.com':".format(
+            github_username),
+        response='{}\n'.format(github_password))
     return [username_responder, password_responder]
 
 
@@ -36,7 +35,8 @@ def deploy(c):
 
     # 先停止应用
     with c.cd(supervisor_conf_path):
-        cmd = '~/.local/bin/supervisorctl stop {}'.format(supervisor_program_name)
+        cmd = '~/.local/bin/supervisorctl stop {}'.format(
+            supervisor_program_name)
         c.run(cmd)
 
     project_root_path = '~/apps/livevil_blog/'
@@ -46,6 +46,11 @@ def deploy(c):
         cmd = 'git pull'
         responders = _get_github_auth_responders()
         c.run(cmd, watchers=responders)
+
+    # 进入 static/plugin 目录，拉取前端调用的的插件
+    with c.cd(project_root_path + 'static/plugin/'):
+        cmd = 'git clone https://github.com/pandao/editor.md.git'
+        c.run(cmd)
 
     # 进入项目根目录，构建docker-compose
     with c.cd(project_root_path):
@@ -60,5 +65,6 @@ def deploy(c):
 
     # 进入项目根目录，启动certbot
     with c.cd(project_root_path):
-        cmd = 'docker exec -it livevil_blog_nginx certbot --nginx -{} -A -y -2 -2'.format(certbot_email)
+        cmd = 'docker exec -it livevil_blog_nginx certbot --nginx -{} -A -y -2 -2'.format(
+            certbot_email)
         c.run(cmd)

@@ -11,30 +11,30 @@
 {% block extra_css %}
     <link href="https://lib.baomitu.com/highlight.js/9.15.10/styles/zenburn.min.css" rel="stylesheet">
     {% compress css %}
-    <style type="text/css">
-        /* for block of numbers */
-        .hljs-ln-numbers {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+        <style type="text/css">
+            /* for block of numbers */
+            .hljs-ln-numbers {
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
 
-            text-align: center;
-            color: #ccc;
-        {#border-right: 1px solid #CCC; #} vertical-align: top;
-            padding-right: 5px !important;
+                text-align: center;
+                color: #ccc;
+            {#border-right: 1px solid #CCC; #} vertical-align: top;
+                padding-right: 5px !important;
 
-            /* your custom style here */
-        }
+                /* your custom style here */
+            }
 
-        /* for block of code */
-        {#.hljs-ln-code {#}
-        {#    padding-left: 10px;#}
-        {#{#}
+            /* for block of code */
+            {#.hljs-ln-code {#}
+            {#    padding-left: 10px;#}
+            {#{#}
 
-    </style>
+        </style>
     {% endcompress %}
 {% endblock %}
 {% block bodyid %}
@@ -66,7 +66,7 @@
         <section class="comment-area" id="comment-area ">
             <hr>
             <h3>{% trans "发表评论" %}</h3>
-{#        TODO: 修改editor.md手机端emoji 代码块 符号 预览 全屏 及大小 手机层次在导航之上#}
+            {#        TODO: 修改editor.md手机端emoji 代码块 符号 预览 全屏 及大小 手机层次在导航之上#}
             {% if user.is_authenticated %}
                 {% render_post_comment_form for post %}
 
@@ -89,7 +89,6 @@
                 {% else %}
                     <h3>{% trans "暂无评论" %}</h3>
                 {% endif %}
-
 
 
             </div>
@@ -120,6 +119,3 @@
         hljs.initLineNumbersOnLoad();
     </script>
 {% endblock %}
-
-
-

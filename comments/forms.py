@@ -8,7 +8,12 @@ class PostCommentForm(CommentForm):
 
     parent = forms.IntegerField(required=False, widget=forms.HiddenInput)
 
-    def __init__(self, target_object, data=None, initial=None, parent=None, **kwargs):
+    def __init__(self,
+                 target_object,
+                 data=None,
+                 initial=None,
+                 parent=None,
+                 **kwargs):
         self.user = kwargs.pop('user', None)
         self.parent = parent
         if initial is None:

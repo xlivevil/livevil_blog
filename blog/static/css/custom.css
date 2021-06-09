@@ -19,6 +19,8 @@
  * 12.0 - PostComment
  * 13.0 - Pagination
  * 14.0 - login-menu
+ * 15.0 - accounts
+ * 16.0 - back-to-top
  */
 
 /**
@@ -1033,6 +1035,10 @@ img {
     text-align-last: justify;
 }
 
+/**
+ * 16.0 - back-to-top
+ */
+
 :root {
     --cd-color-1: hsl(53, 29%, 95%);
     --cd-color-1-h: 53;
@@ -1104,8 +1110,4 @@ img {
     color: transparent;
     text-indent: 100%;
     white-space: nowrap
-}
-
-.editormd-fullscreen {
-    z-index: 1001;
 }

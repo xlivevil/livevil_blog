@@ -4,10 +4,8 @@
 {% load comments_extras i18n %}
 {% load comments i18n %}
 {% load compress %}
-{# TODO: editor.md min化 #}
 {# TODO: 完善head meta信息 关键字 摘要 爬虫协议 #}
 {# TODO: editor.md 移动端切换模式 #}
-{# TODO: 右下角回到最上 #}
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -49,90 +47,90 @@
 
 </head>
 
-    <body {% block bodyid %} {% endblock %}>
+<body {% block bodyid %} {% endblock %}>
 
 {% block container %}
 
     <div class="container">
-        <header id="site-header">
-            {% cache 500 'cache_navbar' %}
-                <nav class="navbar navbar-expand-md" role="navigation">
-                <a class="col-md-4 col-sm-5 col-8 pl-0 logo" href="{% url 'blog:index' %}">
-                    <img src="{% static 'img/logo/vector/default-monochrome.svg' %}"/></a>
-                <button class="navbar-toggler navbar-light bg-light" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="true" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item cl-effect-11"><a class="nav-link" href="{% url 'blog:index' %}"
-                                                     data-hover="首页">首页</a>
-                </li>
-                <li class="nav-item cl-effect-11"><a class="nav-link" href="{% url 'blog:full_width' %}"
-                                                     data-hover="博客">博客</a>
-                </li>
-                <li class="nav-item cl-effect-11"><a class="nav-link" href="{% url 'blog:about' %}"
-                                                     data-hover="关于">关于</a>
-                </li>
-                <li class="nav-item cl-effect-11"><a class="nav-link" href="{% url 'blog:contact' %}"
-                                                     data-hover="联系">联系</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" id="search-menu" class="search-icon nav-link ion-ios-search-strong"></a>
-                    <div id="search-form" class="search-form">
-                        <form role="search" method="get" id="searchform"
-                              action="{% url 'blog:haystack_search' %}">
+    <header id="site-header">
+    {% cache 500 'cache_navbar' %}
+        <nav class="navbar navbar-expand-md" role="navigation">
+        <a class="col-md-4 col-sm-5 col-8 pl-0 logo" href="{% url 'blog:index' %}">
+            <img src="{% static 'img/logo/vector/default-monochrome.svg' %}"/></a>
+        <button class="navbar-toggler navbar-light bg-light" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="true" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item cl-effect-11"><a class="nav-link" href="{% url 'blog:index' %}"
+                                             data-hover="首页">首页</a>
+        </li>
+        <li class="nav-item cl-effect-11"><a class="nav-link" href="{% url 'blog:full_width' %}"
+                                             data-hover="博客">博客</a>
+        </li>
+        <li class="nav-item cl-effect-11"><a class="nav-link" href="{% url 'blog:about' %}"
+                                             data-hover="关于">关于</a>
+        </li>
+        <li class="nav-item cl-effect-11"><a class="nav-link" href="{% url 'contact_form' %}"
+                                             data-hover="联系">联系</a>
+        </li>
+        <li class="nav-item">
+            <a href="#" id="search-menu" class="search-icon nav-link ion-ios-search-strong"></a>
+            <div id="search-form" class="search-form">
+                <form role="search" method="get" id="searchform"
+                      action="{% url 'blog:haystack_search' %}">
 
-                            <input type="search" name="q" placeholder="搜索" required>
+                    <input type="search" name="q" placeholder="搜索" required>
 
-                            <button type="submit"><span class="ion-ios-search-strong"></span>
-                            </button>
-                        </form>
-                    </div>
-                </li>
-            {% endcache %}
-                <li class="nav-item dropdown">
-                {% if user.is_authenticated %}
-                    <a class="nav-link dropdown-toggle ion-log-out" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'users:profile' %}?next={{ request.path }}">用户信息</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'account_logout' %}?next={{ request.path }}">退出登录</a>
-                    </div>
-                {% else %}
-                    <a class="nav-link dropdown-toggle ion-log-in" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'account_login' %}?next={{ request.path }}">登录</a>
-                        <a class="dropdown-item" href="{% url 'account_signup' %}?next={{ request.path }}">注册</a>
-                    </div>
-                {% endif %}
-            </li>
+                    <button type="submit"><span class="ion-ios-search-strong"></span>
+                    </button>
+                </form>
+            </div>
+        </li>
+    {% endcache %}
+<li class="nav-item dropdown">
+    {% if user.is_authenticated %}
+        <a class="nav-link dropdown-toggle ion-log-out" href="#" id="navbarDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'users:profile' %}?next={{ request.path }}">用户信息</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'account_logout' %}?next={{ request.path }}">退出登录</a>
+        </div>
+    {% else %}
+        <a class="nav-link dropdown-toggle ion-log-in" href="#" id="navbarDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'account_login' %}?next={{ request.path }}">登录</a>
+            <a class="dropdown-item" href="{% url 'account_signup' %}?next={{ request.path }}">注册</a>
+        </div>
+    {% endif %}
+</li>
 
-            </ul>
-            </div><!-- /.navbar-collapse -->
-            </nav>
+</ul>
+</div><!-- /.navbar-collapse -->
+</nav>
 {% endblock %}
-        </header>
-    </div>
+</header>
+</div>
 
 
 <div class="content-body">
-<div class="container">
-                {% if messages %}
-                                {#        TODO: 加入animate #}
-                <div class="messages" id="messages">
-                    {# TODO: msg改为可视固定位置弹出并消失  #}
-                    <ul>
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-</div>
+    <div class="container">
+        {% if messages %}
+            {#        TODO: 加入animate #}
+            <div class="messages" id="messages">
+                {# TODO: msg改为可视固定位置弹出并消失  #}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
     <div class="container">
         <div class="row">
             {% block content %}

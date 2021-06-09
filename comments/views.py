@@ -18,7 +18,10 @@ def comment_preview(request, pk):
         comment.post = post
         comment.user = request.user
         comment.save()
-        messages.add_message(request, messages.SUCCESS, '评论成功！', extra_tags='success')
+        messages.add_message(request,
+                             messages.SUCCESS,
+                             '评论成功！',
+                             extra_tags='success')
         return redirect(post)
     else:
         print(form)

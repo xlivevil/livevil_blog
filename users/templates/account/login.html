@@ -7,46 +7,46 @@
 
 {% block content %}
     <main class="col-12">
-<div class="account center-block">
-<h1>{% trans "Sign In" %}</h1>
+        <div class="account center-block">
+            <h1>{% trans "Sign In" %}</h1>
 
-{% get_providers as socialaccount_providers %}
-
-
-
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-</form>
+            {% get_providers as socialaccount_providers %}
 
 
-    {% if socialaccount_providers %}
-        <hr>
-<p>{% blocktrans with site.name as site_name %}没有账号？<a class="text-info" href="{{ signup_url }}">注册</a>
- {{ site_name }}账号{% endblocktrans %}</p>
-        <p class="center">或</p>
-        <p class="center">使用第三方快捷登录：</p>
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <a class="button secondaryAction"
+                   href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+            </form>
 
-<div class="socialaccount_ballot">
 
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
+            {% if socialaccount_providers %}
+                <hr>
+                <p>{% blocktrans with site.name as site_name %}没有账号？<a class="text-info" href="{{ signup_url }}">注册</a>
+                    {{ site_name }}账号{% endblocktrans %}</p>
+                <p class="center">或</p>
+                <p class="center">使用第三方快捷登录：</p>
 
-</div>
+                <div class="socialaccount_ballot">
 
-{% include "socialaccount/snippets/login_extra.html" %}
+                    <ul class="socialaccount_providers">
+                        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                    </ul>
 
-{% else %}
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-{% endif %}
-</div>
+                </div>
+
+                {% include "socialaccount/snippets/login_extra.html" %}
+
+            {% else %}
+                <p>{% blocktrans %}If you have not created an account yet, then please
+                    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+            {% endif %}
+        </div>
     </main>
 {% endblock %}
 

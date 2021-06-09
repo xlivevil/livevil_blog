@@ -76,7 +76,8 @@ EMAIL_USE_SSL = True
 EMAIL_FROM = 'xlivevil@aliyun.com'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-ADMINS = [('admin', 'xf_hyl@qq.com'), ]
+ADMINS = [('admin', 'xf_hyl@qq.com'), ('su', 'xlivevil@163.com')]
+MANAGERS = ADMINS
 SERVER_MAIL = 'xlivevil@aliyun.com'
 
 # redis缓存

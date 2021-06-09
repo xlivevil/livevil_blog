@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block head_title %}
+    Xlivevil
+{% endblock %}
+{% block bodyid %}
+    id="page"
+{% endblock %}
+{% block container %}
+    {{ block.super }}
+{% endblock %}
+{% block content %}
+    {#    TODO: 完善联系界面#}
+    <main class="col-md-12">
+        <h1 class="page-title">{% trans "Contact" %}</h1>
+
+        <article class="post">
+            <div class="entry-content clearfix">
+                <form method="post" class="contact-form">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            {% csrf_token %}
+                            <input type="text" name="name" placeholder="Name" required>
+                            <input type="email" name="email" placeholder="Email" required>
+
+                            <textarea name="body" rows="7" placeholder="Your Message" required></textarea>
+                            <button type="submit" value="Submit" class="btn-send btn-5 btn-5b ion-ios-paperplane">
+                                <span>{% trans"Drop Me a Line" %}</span></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </article>
+
+    </main>
+{% endblock %}
+{% block aside %}
+
+{% endblock %}
+{% block footer %}
+    {% include 'footer.html' %}
+{% endblock %}

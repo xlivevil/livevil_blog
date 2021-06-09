@@ -1,7 +1,9 @@
 {% load comments i18n %}
 {% load static %}
 {% load compress %}
-    <script crossorigin="anonymous" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" src="https://lib.baomitu.com/jquery/3.4.1/jquery.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh"
+        src="https://lib.baomitu.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="{% static 'plugin/editor.md/editormd.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'plugin/editor.md/css/editormd.min.css' %}"/>
 <form action="{% comment_form_target %}" method="post">
@@ -36,7 +38,8 @@
 
     {% endfor %}
     <p class="submit">
-        <input type="button" name="post" class="submit-post" value="{% trans "Post" %}" onclick="this.form.submit()"/>
+        <input type="button" name="post" class="submit-post"
+                value="{% trans "Post" %}" onclick="this.form.submit()"/>
     </p>
 </form>
 

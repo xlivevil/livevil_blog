@@ -1,22 +1,27 @@
-{% load cache %}
-{% load i18n %}
-{% cache 500 'cache_footer' %}
-<footer id="site-footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <p class="copyright">&copy; 2020 - 采集自<a href="http://www.cssmoban.com/"
-                                                        target="_blank" title="模板之家">模板之家</a>
-                    - 由<a href="http://zmrenwu.com/" title="网页模板" target="_blank">追梦人物的博客</a>修改
-                </p>
-                <p class="icon_info">{% trans 'default avatar icon made by '%}<a href="https://www.flaticon.com/authors/freepik"
-                                                                    title="Freepik">Freepik</a> {% trans 'from' %}
-                    <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a>
-                </p>
-                <p class="powered_by">本站基于web框架<a href="https://www.djangoproject.com/">django2.2 </a> 关系数据库<a href="https://www.mysql.com/">mysql8.0 </a> 非关系数据库<a href="https://redis.io/">redis5.0 </a> 搜索服务器<a href="https://www.elastic.co/">elasticsearch5.6</a></p>
+{% load cache %} {% load i18n %} {% cache 500 'cache_footer' %}
+    <footer id="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="copyright">&copy; 2020 - 采集自<a href="http://www.cssmoban.com/" target="_blank"
+                                                             title="模板之家">模板之家</a> - 由<a href="http://zmrenwu.com/"
+                                                                                         title="网页模板" target="_blank">追梦人物的博客</a>修改
+                    </p>
+                    <p class="icon_info">{% trans 'default avatar icon made by ' %}<a
+                            href="https://www.flaticon.com/authors/freepik"
+                            title="Freepik">Freepik</a> {% trans 'from' %}
+                        <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+                    </p>
+                    <p class="powered_by"><a href="http://www.djangoproject.com/">
+                        <img src="https://www.djangoproject.com/m/img/badges/djangoproject120x25.gif"
+                             border="0" alt="A Django project." title="A Django project."/></a>
+                        关系数据库<a href="https://www.mysql.com/">mysql8.0 </a>
+                        非关系数据库<a href="https://redis.io/">redis5.0 </a>
+                        搜索服务器<a href="https://www.elastic.co/">elasticsearch5.6</a></p>
+
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
 {% endcache %}

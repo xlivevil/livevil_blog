@@ -11,16 +11,22 @@ class PostAdmin(VersionAdmin):
     # 排序
     date_hierarchy = 'create_time'
     # 显示列表显示项
-    list_display = ('title', 'create_time', 'modified_time', 'category', 'author', 'get_view_num')
+    list_display = ('title', 'create_time', 'modified_time', 'category',
+                    'author', 'get_view_num')
     # 过滤器
-    list_filter = ('create_time', 'category', 'tags',)
+    list_filter = (
+        'create_time',
+        'category',
+        'tags',
+    )
     #
     list_per_page = 20
 
-    fields = ('title', 'body', 'excerpt', 'category', 'tags', 'is_hidden', 'is_top')
+    fields = ('title', 'body', 'excerpt', 'category', 'tags', 'is_hidden',
+              'is_top')
     # 分类排列
     # fieldsets =
-    filter_horizontal = ('tags',)
+    filter_horizontal = ('tags', )
 
     def save_model(self, request, obj, form, change):
         obj.author = request.user

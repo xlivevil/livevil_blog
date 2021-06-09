@@ -257,6 +257,8 @@ dmypy.json
 
 .pyre/
 
+# custom
+
 _credentials.py
 
 .idea/
@@ -269,8 +271,12 @@ compse
 
 .vscode
 
-static/
+/static/*
 
 .history
 
 push.bat
+
+# plugin
+
+editor.md

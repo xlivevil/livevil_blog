@@ -22,6 +22,7 @@
                 </div>
                 {{ node.comment_html|safe }}
             </div>
+            {# TODO: 改掉这种回复框显示形式 js获取url并插入元素  #}
             <iframe src="{% url 'comments:post_comments_reply' node.pk %}"
                     class="reply-box"
                     height="300"

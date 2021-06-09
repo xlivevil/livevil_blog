@@ -8,7 +8,6 @@ authors = ["xlivevil <xlivevil@aliyun.com>"]
 python = "^3.9"
 Django = "^3.2.3"
 django-contrib-comments = "^2.1.0"
-coverage = "^5.5"
 django-haystack = "^3.0"
 django-allauth = "^0.44.0"
 requests = "^2.25.1"
@@ -28,11 +27,21 @@ django-compressor = "^2.4.1"
 daphne = "^3.0.2"
 gunicorn = "^20.1.0"
 elasticsearch = ">=5,<6"
+sqlparse = "0.2.4"
+graphene-django = "^2.15.0"
+django-contact-form = {extras = ["akismet"], version = "^1.8.2"}
 
 [tool.poetry.dev-dependencies]
 Faker = "^8.1.4"
 fabric = "^2.6.0"
 invoke = "^1.5.0"
+mypy = "^0.812"
+flake8 = "^3.9.2"
+yapf = "^0.31.0"
+coverage = "^5.5"
+isort = "^5.8.0"
+django-stubs = "^1.8.0"
+factory-boy = "^3.2.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

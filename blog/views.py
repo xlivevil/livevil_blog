@@ -24,26 +24,23 @@ class IndexView(PaginationMixin, ListView):
 class CategoryView(IndexView):
     def get_queryset(self):
         cate = get_object_or_404(Category, name=self.kwargs.get('name'))
-        return super().get_queryset().filter(category=cate).filter(is_hidden=False)
+        return super().get_queryset().filter(category=cate).filter(
+            is_hidden=False)
 
 
 class ArchiveView(IndexView):
     def get_queryset(self):
         year = self.kwargs.get('year')
         month = self.kwargs.get('month')
-        return super().get_queryset().filter(create_time__year=year,
-                                             create_time__month=month).filter(is_hidden=False)
+        return super().get_queryset().filter(
+            create_time__year=year,
+            create_time__month=month).filter(is_hidden=False)
 
 
 class TagView(IndexView):
     def get_queryset(self):
         t = get_object_or_404(Tag, name=self.kwargs.get('name'))
         return super().get_queryset().filter(tags=t).filter(is_hidden=False)
-
-
-@cache_page(60*15)
-def contact(request):
-    return render(request, 'contact.html')
 
 
 class PostDetailView(DetailView):
@@ -73,19 +70,24 @@ class PostDetailView(DetailView):
 #             error_msg = "请的输入搜索关键词"
 #             messages.add_message(request,)
 
+
 def search(request):
     q = request.GET.get('q')
 
     if not q:
         error_msg = '请输入搜索关键字'
-        messages.add_message(request, messages.ERROR, error_msg, extra_tags='danger')
+        messages.add_message(request,
+                             messages.ERROR,
+                             error_msg,
+                             extra_tags='danger')
         return redirect('blog:index')  # 以后改为跳转至前一页
 
-    post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q)).filter(is_hidden=False)
+    post_list = Post.objects.filter(
+        Q(title__icontains=q) | Q(body__icontains=q)).filter(is_hidden=False)
     return render(request, 'index.html', {'post_list': post_list})
 
 
-@cache_page(60*15)
+@cache_page(60 * 15)
 def about(request):
     return render(request, 'about.html')
 
@@ -97,5 +99,3 @@ class FullWidthView(IndexView):
 def blank(request):
     url = reverse('blog:index')
     return redirect(url)
-
-

@@ -1,52 +1,49 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block head_title %}
-Xlivevil
+    Xlivevil
 {% endblock %}
 {% block bodyid %}
-id="about"
+    id="about"
 {% endblock %}
 {% block container %}
-{{ block.super }}
+    {{ block.super }}
 {% endblock %}
 {% block content %}
-    {#    TODO: 完善关于界面#}
-{#    TODO: 建站时间线#}
+    {#    TODO: 完善关于界面 赞助 链接#}
+    {#    TODO: 建站时间线#}
 
-					<main class="col-md-12">
-						<h1 class="page-title">{% trans 'About Me' %}</h1>
-						<article class="post">
-							<div class="entry-content clearfix">
-								<figure class="img-responsive-center">
-{#									<img class="img-responsive" src="img/me.jpg" alt="Developer Image">#}
-								</figure>
-								<p>{% blocktrans %}
-                                    我是一名python学习者
-                                {% endblocktrans %}
-                                </p>
-								<p>{% blocktrans %}
-                                    本站基于python3.7，使用django2.2框架。主要用于个人学习编程的技术实践与经验记录。
-                                {% endblocktrans %}
-                                </p>
-								<div class="height-40px"></div>
-								<h2 class="title text-center">{% trans "Social" %}</h2>
-								<ul class="social">
-									<li class="facebook"><a href="#"><span class="ion-social-facebook"></span></a></li>
-									<li class="twitter"><a href="#"><span class="ion-social-twitter"></span></a></li>
-									<li class="google-plus"><a href="#"><span class="ion-social-googleplus"></span></a></li>
-									<li class="tumblr"><a href="#"><span class="ion-social-tumblr"></span></a></li>
-								</ul>
-							</div>
-						</article>
-					</main>
+    <main class="col-md-12">
+        <h1 class="page-title">{% trans 'About Me' %}</h1>
+        <article class="post">
+            <div class="entry-content clearfix">
+                <figure class="img-responsive-center">
+                    {#									<img class="img-responsive" src="img/me.jpg" alt="Developer Image">#}
+                </figure>
+                <p>{% blocktrans %}
+                    我是一名python学习者
+                {% endblocktrans %}
+                </p>
+                <p>{% blocktrans %}
+                    本站基于python3.7，使用django2.2框架。主要用于个人学习编程的技术实践与经验记录。
+                {% endblocktrans %}
+                </p>
+                <div class="height-40px"></div>
+                <h2 class="title text-center">{% trans "Social" %}</h2>
+                <ul class="social">
+                    <li class="facebook"><a href="#"><span class="ion-social-facebook"></span></a></li>
+                    <li class="twitter"><a href="#"><span class="ion-social-twitter"></span></a></li>
+                    <li class="google-plus"><a href="#"><span class="ion-social-googleplus"></span></a></li>
+                    <li class="tumblr"><a href="#"><span class="ion-social-tumblr"></span></a></li>
+                </ul>
+            </div>
+        </article>
+    </main>
 
 {% endblock %}
 {% block aside %}
 
 {% endblock %}
 {% block footer %}
-{% include 'footer.html' %}
+    {% include 'footer.html' %}
 {% endblock %}
-
-
-

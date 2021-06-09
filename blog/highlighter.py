@@ -6,7 +6,6 @@ class Highlighter(HaystackHighlighter):
     """
     自定义关键词高亮器，不截断过短的文本（例如文章标题）
     """
-
     def highlight(self, text_block):
         self.text_block = strip_tags(text_block)
         highlight_locations = self.find_highlightable_words()

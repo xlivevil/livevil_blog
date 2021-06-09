@@ -2,11 +2,12 @@
     <h3 class="widget-title">归档</h3>
     <ul>
         {% for date in date_list %}
-        <li>
-            <a href="{% url 'blog:archive' date.year date.month %}">{{ date.year }}年{{ date.month }}月<span class="post-count"></span></a>
-        </li>
+            <li>
+                <a href="{% url 'blog:archive' date.year date.month %}">{{ date.year }}年{{ date.month }}月<span
+                        class="post-count"></span></a>
+            </li>
         {% empty %}
-        暂无归档
+            暂无归档
         {% endfor %}
     </ul>
 </div>
