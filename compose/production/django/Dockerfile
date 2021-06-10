@@ -20,7 +20,7 @@ RUN pip3 install poetry
 
 COPY . /apps
 COPY ./compose/production/django/start.sh /start.sh
-RUN  poetry install --no-dev
+RUN poetry install --no-dev
 RUN sed -i 's/\r//' /start.sh
 RUN chmod +x /start.sh
 

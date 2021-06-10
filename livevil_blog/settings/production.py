@@ -43,14 +43,10 @@ DATABASES = {
                 }
             },
          },
-        'NAME': 'your-db-name',
+        'NAME': 'djongo',
         'CLIENT': {
-            'host': 'host-name or ip address',
-            'port': port_number,
-            'username': 'db-username',
-            'password': 'password',
-            'authSource': 'db-name',
-            'authMechanism': 'SCRAM-SHA-1'
+            'host': '127.0.0.1',
+            'port': 27017,
         }
     }
 }
