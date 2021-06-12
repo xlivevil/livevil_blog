@@ -20,10 +20,10 @@ RUN pip3 install poetry
 
 COPY . /apps
 COPY ./compose/production/django/start.sh /start.sh
+RUN poetry run pip3 install rcssmin --install-option="--without-c-extensions"
 RUN poetry install --no-dev
 RUN sed -i 's/\r//' /start.sh
 RUN chmod +x /start.sh
-
 
 # FROM python:3.9-alpine as builder
 
