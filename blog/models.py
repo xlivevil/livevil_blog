@@ -142,7 +142,7 @@ class Post(models.Model):
 
 class PostViewInfo(models.Model):
     # TODO: 加入记录间隔
-    post = models.OneToOneField(Post,
+    post = models.ForeignKey(Post,
                                 verbose_name='文章',
                                 on_delete=models.CASCADE)
 
