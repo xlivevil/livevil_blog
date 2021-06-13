@@ -13,7 +13,7 @@ class UserAdmin(VersionAdmin):
     # 显示列表显示项
     list_display = ('username', 'nickname', 'create_time', 'email')
     # 过滤器
-    list_filter = ('create_time',)
+    list_filter = ('create_time', )
     #
     list_per_page = 20
 
@@ -26,5 +26,3 @@ class UserAdmin(VersionAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(author=request.user)
-
-

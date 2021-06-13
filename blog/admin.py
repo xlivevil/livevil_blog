@@ -22,7 +22,7 @@ class PostAdmin(VersionAdmin):
     #
     list_per_page = 20
 
-    fields = ('title', 'body', 'excerpt', 'category', 'tags', 'is_hidden',
+    fields = ('title', 'slug', 'body', 'excerpt', 'category', 'tags', 'is_hidden',
               'is_top')
     # 分类排列
     # fieldsets =

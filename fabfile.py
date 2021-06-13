@@ -48,7 +48,7 @@ def deploy(c):
         c.run(cmd, watchers=responders)
 
     # 进入 static/plugin 目录，拉取前端调用的的插件
-    with c.cd(project_root_path + 'static/plugin/'):
+    with c.cd(project_root_path + 'blog/static/plugin/'):
         cmd = 'git clone https://github.com/pandao/editor.md.git'
         c.run(cmd)
 

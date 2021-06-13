@@ -19,19 +19,22 @@ class VerifyCode(object):
     def gen_code(self):
         code = self._get_vcode()
         self.dj_request.session[self.session_key] = code
-        font_color = ['black', 'darkblue', 'darkred', 'green', 'darkmagenta', 'cyan', 'darkcyan']
-        bg_color = (random.randrange(230, 255), random.randrange(230, 250), random.randrange(230, 250))
+        font_color = [
+            'black', 'darkblue', 'darkred', 'green', 'darkmagenta', 'cyan',
+            'darkcyan'
+        ]
+        bg_color = (random.randrange(230, 255), random.randrange(230, 250),
+                    random.randrange(230, 250))
         font_path = os.path.join(settings.BASE_DIR, 'static', 'timesbi.ttf')
         im = Image.new('RGB', (self.img_width, self.img_height), bg_color)
         draw = ImageDraw.Draw(im)
         for i in range(random.randrange(1, int(self.code_len / 2) + 1)):
             line_color = random.choice(font_color)
-            point = (
-                random.randrange(0, self.img_width * 0.2),
-                random.randrange(0, self.img_height),
-                random.randrange(self.img_width - self.img_width * 0.2, self.img_width),
-                random.randrange(0, self.img_height)
-            )
+            point = (random.randrange(0, self.img_width * 0.2),
+                     random.randrange(0, self.img_height),
+                     random.randrange(self.img_width - self.img_width * 0.2,
+                                      self.img_width),
+                     random.randrange(0, self.img_height))
             width = random.randrange(1, 4)
             draw.line(point, fill=line_color, width=width)
 

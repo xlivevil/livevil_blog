@@ -18,12 +18,12 @@ schema_view = get_schema_view(
         title="测试工程API",
         default_version='v1.0',
         description="测试工程接口文档",
-        terms_of_service="https://www.google.com/policies/terms/",
+        # terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="xlivevil@aliyun.com"),
         license=openapi.License(name="BSD License"),
     ),
     public=False,
-    permission_classes=(permissions.AllowAny, ),
+    permission_classes=(permissions.IsAdminUser, ),
 )
 
 urlpatterns = [

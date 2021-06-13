@@ -9,7 +9,6 @@ def generate_rich_content(value):
     md = markdown.Markdown(extensions=[
         'markdown.extensions.extra',
         'markdown.extensions.admonition',
-        
         TocExtension(slugify=slugify),
     ])
     content = md.convert(value)
