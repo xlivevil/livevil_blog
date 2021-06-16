@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
+from django.urls.conf import re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import routers, permissions
@@ -30,9 +31,9 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 
-
 urlpatterns += i18n_patterns(
     path('grappelli/', include('grappelli.urls')),  # grappelli URLS
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('users/', include('django.contrib.auth.urls')),
@@ -44,7 +45,9 @@ urlpatterns += i18n_patterns(
     path("api/auth/", include("rest_framework.urls",
                               namespace="rest_framework")),
     path('comments/', include('django_comments.urls')),
-    # path('swagger(?P<format>/.json|/.yaml)', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    re_path('swagger(?P<format>\.json|\.yaml)',
+            schema_view.without_ui(cache_timeout=0),
+            name='schema-json'),
     path('swagger',
          schema_view.with_ui('swagger', cache_timeout=0),
          name='schema-swagger-ui'),

@@ -1,6 +1,7 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class BlogConfig(AppConfig):
     name = 'blog'
-    verbose_name = "博客"
+    verbose_name = _("博客")

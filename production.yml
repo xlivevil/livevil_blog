@@ -48,6 +48,7 @@ services:
     working_dir: /apps
     volumes:
       - static:/apps/static
+      - media:/apps/media
     env_file:
       - .envs/.production
     ports:
@@ -67,6 +68,7 @@ services:
     container_name: livevil_blog_nginx
     volumes:
       - static:/apps/static
+      - media:/apps/media
     ports:
       - "80:80"
       - "443:443"

@@ -5,6 +5,10 @@ from reversion.admin import VersionAdmin
 
 from blog.models import Post, Category, Tag, PostViewInfo, PostBody
 
+# admin.site.site_title = xlivevil后台系统
+# admin.site.site_header = xlivevil后台系统
+# admin.site.index_title = xlivevil后台系统
+
 
 @admin.register(Post)
 class PostAdmin(VersionAdmin):
@@ -19,11 +23,11 @@ class PostAdmin(VersionAdmin):
         'category',
         'tags',
     )
-    #
+    # 每页显示
     list_per_page = 20
 
-    fields = ('title', 'slug', 'body', 'excerpt', 'category', 'tags', 'is_hidden',
-              'is_top')
+    fields = ('title', 'slug', 'body', 'excerpt', 'category', 'tags',
+              'is_hidden', 'is_top')
     # 分类排列
     # fieldsets =
     filter_horizontal = ('tags', )

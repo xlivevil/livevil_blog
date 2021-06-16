@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 from djongo import models as mongomodels
 from users.models import User
@@ -133,18 +134,17 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={'pk': self.pk})
 
-    @property
+    # @property
     def get_view_num(self):
         # '浏览量'
         num = self.postviewinfo_set.count()
         return num
+    get_view_num.short_description = _('浏览量')
 
 
 class PostViewInfo(models.Model):
-    # TODO: 加入记录间隔
-    post = models.ForeignKey(Post,
-                                verbose_name='文章',
-                                on_delete=models.CASCADE)
+
+    post = models.ForeignKey(Post, verbose_name='文章', on_delete=models.CASCADE)
 
     view_time = models.DateTimeField('浏览时间', default=timezone.now)
 
