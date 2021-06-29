@@ -20,7 +20,7 @@ class AllPostsRssFeed(Feed):
 
     # 内容条目的标题
     def item_title(self, item):
-        return "[%s]%s" % (item.category, item.title)
+        return "[%s] %s" % (item.category, item.title)
 
     # 描述
     def item_description(self, item):

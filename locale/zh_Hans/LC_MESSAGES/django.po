@@ -39,15 +39,15 @@ msgstr ""
 
 #: .\blog\templates\about.html:32
 msgid "Social"
-msgstr ""
+msgstr "社交帐号"
 
 #: .\blog\templates\contact_form\contact_form.html:14
 msgid "Contact"
-msgstr ""
+msgstr "联系我"
 
 #: .\blog\templates\footer.html:10
 msgid "default avatar icon made by "
-msgstr ""
+msgstr "默认头像图标来自"
 
 #: .\blog\templates\footer.html:12
 msgid "from"
@@ -100,7 +100,7 @@ msgstr "评论"
 
 #: .\comments\templates\comments\approve.html:4
 msgid "Approve a comment"
-msgstr ""
+msgstr "核准评论"
 
 #: .\comments\templates\comments\approve.html:7
 msgid "Really make this comment public?"
@@ -108,11 +108,11 @@ msgstr "确定公开此评论?"
 
 #: .\comments\templates\comments\approve.html:13
 msgid "Approve"
-msgstr ""
+msgstr "核准"
 
 #: .\comments\templates\comments\approved.html:4
 msgid "Thanks for approving"
-msgstr ""
+msgstr "感谢审核"
 
 #: .\comments\templates\comments\approved.html:7
 #: .\comments\templates\comments\deleted.html:7
@@ -120,6 +120,7 @@ msgstr ""
 msgid ""
 "Thanks for taking the time to improve the quality of discussion on our site"
 msgstr ""
+"感谢您为提升我们网站的质量花费宝贵的时间"
 
 #: .\comments\templates\comments\delete.html:4
 msgid "Remove a comment"
@@ -137,7 +138,7 @@ msgstr "删除"
 
 #: .\comments\templates\comments\deleted.html:4
 msgid "Thanks for removing"
-msgstr ""
+msgstr "感谢删除"
 
 #: .\comments\templates\comments\flag.html:4
 msgid "Flag this comment"
@@ -153,7 +154,7 @@ msgstr "标记"
 
 #: .\comments\templates\comments\flagged.html:4
 msgid "Thanks for flagging"
-msgstr ""
+msgstr "感谢标记"
 
 #: .\comments\templates\comments\form.html:42
 #: .\comments\templates\comments\preview.html:37
@@ -167,37 +168,37 @@ msgstr "回复"
 
 #: .\comments\templates\comments\posted.html:4
 msgid "Thanks for commenting"
-msgstr ""
+msgstr "感谢评论"
 
 #: .\comments\templates\comments\posted.html:7
 msgid "Thank you for your comment"
-msgstr ""
+msgstr "谢谢您的评论"
 
 #: .\comments\templates\comments\preview.html:4
 #: .\comments\templates\comments\preview.html:15
 msgid "Preview your comment"
-msgstr ""
+msgstr "预览你的评论"
 
 #: .\comments\templates\comments\preview.html:12
 msgid "Please correct the error below"
 msgid_plural ""
 "Please\n"
 "                correct the errors below"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "请更正下面的错误"
+msgstr[1] "请更正下面的错误"
 
 #: .\comments\templates\comments\preview.html:18
 msgid "and"
-msgstr ""
+msgstr "和"
 
 #: .\comments\templates\comments\preview.html:19
 msgid "Post your comment"
-msgstr ""
+msgstr "发表你的评论"
 
 #. Translators: This string follows the 'Post your comment' submit button.
 #: .\comments\templates\comments\preview.html:21
 msgid "or make changes"
-msgstr ""
+msgstr "或者修改"
 
 #: .\comments\templates\comments\preview.html:38
 msgid "Preview"
@@ -218,15 +219,15 @@ msgstr ""
 #: .\users\templates\account\account_inactive.html:5
 #: .\users\templates\account\account_inactive.html:9
 msgid "Account Inactive"
-msgstr ""
+msgstr "账号未激活"
 
 #: .\users\templates\account\account_inactive.html:11
 msgid "This account is inactive."
-msgstr ""
+msgstr "此账号未激活"
 
 #: .\users\templates\account\email.html:5
 msgid "Account"
-msgstr ""
+msgstr "账号"
 
 #: .\users\templates\account\email.html:10
 msgid "E-mail Addresses"
@@ -234,15 +235,15 @@ msgstr "电子邮箱地址"
 
 #: .\users\templates\account\email.html:13
 msgid "The following e-mail addresses are associated with your account:"
-msgstr ""
+msgstr "以下电子邮件地址与您的帐户相关联"
 
 #: .\users\templates\account\email.html:30
 msgid "Verified"
-msgstr ""
+msgstr "已验证"
 
 #: .\users\templates\account\email.html:32
 msgid "Unverified"
-msgstr ""
+msgstr "未验证"
 
 #: .\users\templates\account\email.html:35
 msgid "Primary"
@@ -254,7 +255,7 @@ msgstr ""
 
 #: .\users\templates\account\email.html:44
 msgid "Re-send Verification"
-msgstr ""
+msgstr "重新发送验证信息"
 
 #: .\users\templates\account\email.html:54
 msgid "Warning:"
@@ -343,7 +344,7 @@ msgstr ""
 
 #: .\users\templates\account\email_confirm.html:23
 msgid "Confirm"
-msgstr ""
+msgstr "确认"
 
 #: .\users\templates\account\email_confirm.html:30
 #, python-format
@@ -361,7 +362,7 @@ msgstr "登录"
 
 #: .\users\templates\account\login.html:23
 msgid "Forgot Password?"
-msgstr ""
+msgstr "忘记密码?"
 
 #: .\users\templates\account\login.html:30
 #, python-format
@@ -410,19 +411,19 @@ msgstr ""
 #: .\users\templates\account\messages\logged_in.txt:4
 #, python-format
 msgid "Successfully signed in as %(name)s."
-msgstr ""
+msgstr "成功以%(name)s登录"
 
 #: .\users\templates\account\messages\logged_out.txt:2
 msgid "You have signed out."
-msgstr ""
+msgstr "您已经登出"
 
 #: .\users\templates\account\messages\password_changed.txt:2
 msgid "Password successfully changed."
-msgstr ""
+msgstr "密码已修改"
 
 #: .\users\templates\account\messages\password_set.txt:2
 msgid "Password successfully set."
-msgstr ""
+msgstr "密码已设置"
 
 #: .\users\templates\account\messages\primary_email_set.txt:2
 msgid "Primary e-mail address set."
@@ -440,24 +441,26 @@ msgstr ""
 #: .\users\templates\account\password_reset_from_key_done.html:4
 #: .\users\templates\account\password_reset_from_key_done.html:8
 msgid "Change Password"
-msgstr ""
+msgstr "修改密码"
 
 #: .\users\templates\account\password_reset.html:6
 #: .\users\templates\account\password_reset.html:10
 #: .\users\templates\account\password_reset_done.html:6
 #: .\users\templates\account\password_reset_done.html:10
 msgid "Password Reset"
-msgstr ""
+msgstr "密码重置"
 
 #: .\users\templates\account\password_reset.html:15
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll send you "
 "an e-mail allowing you to reset it."
 msgstr ""
+"忘记了密码? 在上方输入您的电子邮箱地址, 我们将向其发送 "
+"重置密码的链接."
 
 #: .\users\templates\account\password_reset.html:20
 msgid "Reset My Password"
-msgstr ""
+msgstr "重置您的密码"
 
 #: .\users\templates\account\password_reset.html:23
 msgid "Please contact us if you have any trouble resetting your password."
@@ -485,12 +488,12 @@ msgstr ""
 
 #: .\users\templates\account\password_reset_from_key.html:19
 msgid "change password"
-msgstr ""
+msgstr "修改密码"
 
 #: .\users\templates\account\password_reset_from_key.html:22
 #: .\users\templates\account\password_reset_from_key_done.html:9
 msgid "Your password is now changed."
-msgstr ""
+msgstr "您的密码已经修改"
 
 #: .\users\templates\account\password_set.html:5
 #: .\users\templates\account\password_set.html:9

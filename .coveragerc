@@ -1,0 +1,13 @@
+[run]
+branch = True
+source = .
+omit =
+   _credentials.py
+   fabfile.py
+   */migrations/*
+
+[report]
+show_missing = True
+
+[html]
+directory = coverage_html_report
