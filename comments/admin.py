@@ -1,25 +1,49 @@
-from django.contrib import admin
-
-# Register your models here.
-from reversion.admin import VersionAdmin
-
 from comments.models import PostComment
+from django.contrib import admin
+from django.utils.translation import gettext_lazy as _, ngettext
+from django.contrib.auth import get_user_model
+from reversion.admin import VersionAdmin
+from django_comments.views.moderation import perform_flag, perform_approve, perform_delete
+
+
+class UsernameSearch:
+    """The User object may not be auth.User, so we need to provide
+    a mechanism for issuing the equivalent of a .filter(user__username=...)
+    search in CommentAdmin.
+    """
+    def __str__(self):
+        return 'user__%s' % get_user_model().USERNAME_FIELD
 
 
 @admin.register(PostComment)
 class CommentAdmin(VersionAdmin):
     # 排序
     date_hierarchy = 'created_time'
-    # 显示列表显示项
-    list_display = ('user', 'created_time', 'submit_date',)
-    # 过滤器
-    list_filter = ('user', 'created_time', 'submit_date', )
-    #
+    # 显示项
+    fieldsets = (
+        (None, {
+            'fields': ('content_type', 'object_pk', 'site', 'parent')
+        }),
+        (_('Content'), {
+            'fields':
+            ('user', 'user_name', 'user_email', 'user_url', 'comment')
+        }),
+        (_('Metadata'), {
+            'fields': ('submit_date', 'ip_address', 'is_public', 'is_removed')
+        }),
+    )
+    list_display = ('name', 'content_type', 'object_pk', 'ip_address',
+                    'submit_date', 'is_public', 'is_removed')
+    list_filter = ('user', 'submit_date', 'site', 'is_public', 'is_removed')
+    date_hierarchy = 'submit_date'
+    ordering = ('-submit_date', )
+    raw_id_fields = ('user', )
+    search_fields = ('comment', UsernameSearch(), 'user_name', 'user_email',
+                     'user_url', 'ip_address')
+    actions = ["flag_comments", "approve_comments", "remove_comments"]
     list_per_page = 20
 
-    fields = ('user', 'created_time', 'submit_date', 'comment', 'parent', 'content_type',)
     # 分类排列
-    # fieldsets =
     # 左右多选框
     # filter_horizontal = ('tags',)
 
@@ -29,3 +53,40 @@ class CommentAdmin(VersionAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(author=request.user)
+
+    def flag_comments(self, request, queryset):
+        self._bulk_flag(request, queryset, perform_flag,
+                        lambda n: ngettext('flagged', 'flagged', n))
+
+    flag_comments.short_description = _("Flag selected comments")
+
+    def approve_comments(self, request, queryset):
+        self._bulk_flag(request, queryset, perform_approve,
+                        lambda n: ngettext('approved', 'approved', n))
+
+    approve_comments.short_description = _("Approve selected comments")
+
+    def remove_comments(self, request, queryset):
+        self._bulk_flag(request, queryset, perform_delete,
+                        lambda n: ngettext('removed', 'removed', n))
+
+    remove_comments.short_description = _("Remove selected comments")
+
+    def _bulk_flag(self, request, queryset, action, done_message):
+        """
+        Flag, approve, or remove some comments from an admin action. Actually
+        calls the `action` argument to perform the heavy lifting.
+        """
+        n_comments = 0
+        for comment in queryset:
+            action(request, comment)
+            n_comments += 1
+
+        msg = ngettext('%(count)s comment was successfully %(action)s.',
+                       '%(count)s comments were successfully %(action)s.',
+                       n_comments)
+        self.message_user(
+            request, msg % {
+                'count': n_comments,
+                'action': done_message(n_comments)
+            })

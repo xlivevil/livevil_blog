@@ -47,9 +47,15 @@
 <script type="text/javascript">
     $(function () {
         let editor = editormd("editor", {
-            // width: "100%",var
             height: 200,
-            // markdown: "xxxx",     // dynamic set Markdown text
+            toolbarIcons:  [
+            "undo", "redo", "|",
+            "bold", "del", "italic", "quote", "|",
+            "list-ul", "list-ol", "hr", "|",
+            "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "html-entities", "|",
+            "goto-line", "watch", "preview", "fullscreen", "clear", "|",
+            "help", "info"
+        ],
             path: "{% static 'plugin/editor.md/lib/' %}"  // Autoload modules mode, codemirror, marked... dependents libs path
         });
     });

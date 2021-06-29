@@ -53,7 +53,33 @@ class PostComment(MPTTModel, CommentAbstractModel):
         order_insertion_by = ["-submit_date", "user_id"]
 
     def __str__(self):
-        return f'{self.user}:{self.comment[:40]}'
+        return f'{self.user}: {self.comment[:40]}'
+
+    def _get_userinfo(self):
+        """
+        Get a dictionary that pulls together information about the poster
+        safely for both authenticated and non-authenticated comments.
+
+        This dict will have ``name``, ``email``, and ``url`` fields.
+        """
+        if not hasattr(self, "_userinfo"):
+            userinfo = {
+                "name": self.user_name,
+                "email": self.user_email,
+                "url": self.user_url
+            }
+            if self.user_id:
+                u = self.user
+                if u.email:
+                    userinfo["email"] = u.email
+                if u.nickname:
+                    userinfo["name"] = self.user.nickname
+                elif not self.user_name:
+                    userinfo["name"] = u.get_username()
+                if u.url:
+                    userinfo["url"] = u.url
+            self._userinfo = userinfo
+        return self._userinfo
 
     @property
     def comment_html(self):
