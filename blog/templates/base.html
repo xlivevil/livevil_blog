@@ -179,9 +179,9 @@
                     </div>
                 </main>
             {% endblock %}
-
+            {% block aside %}
             <aside class="col-md-3">
-                {% block aside %}
+
                     {% cache 500 'cache_aside' %}
                         {% show_recent_posts %}
                         {% show_archives %}
@@ -191,9 +191,9 @@
                     <div class="rss">
                         <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                     </div>
-                {% endblock %}
-            </aside>
 
+            </aside>
+            {% endblock %}
         </div>
     </div>
 </div>

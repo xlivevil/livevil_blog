@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load cache %}
+{% load blog_extra %}
 {% load comments_extras i18n %}
 {% load comments i18n %}
 {% load mptt_tags %}
@@ -98,6 +99,7 @@
     </main>
 {% endblock %}
 {% block aside %}
+ <aside class="col-md-3">
     {% if post.toc %}
         <div class="widget widget-content">
             <h3 class="widget-title">{% trans "文章目录" %}</h3>
@@ -107,7 +109,17 @@
 
         </div>
     {% endif %}
-    {{ block.super }}
+                    {% cache 500 'cache_aside' %}
+                        {% show_recent_posts %}
+                        {% show_archives %}
+                        {% show_categories %}
+                        {% show_tags %}
+                    {% endcache %}
+                    <div class="rss">
+                        <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                    </div>
+
+            </aside>
 {% endblock %}
 {% block footer %}
     {% include 'footer.html' %}

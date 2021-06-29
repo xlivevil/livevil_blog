@@ -53,7 +53,7 @@ class Post(models.Model):
     # TODO: 保存同时刷新缓存
     # 标题
     title = models.CharField('标题', max_length=70)
-    slug = models.SlugField('短网址', unique=True)
+    slug = models.SlugField('短网址', unique=True, allow_unicode=True)
 
     # 正文
     body = models.TextField('正文')
@@ -113,11 +113,11 @@ class Post(models.Model):
             self.excerpt = strip_tags(body)[:200]
 
         if self.slug == '':
-            slug = slugify(self.title[:20])
+            slug = slugify(self.title, allow_unicode=True)[:20]
             if Post.objects.filter(slug=slug).exists():
                 self.slug = "{}-{}".format(
                     slug,
-                    Post.objects.filter(slug__startswith=slug).count + 1)
+                    Post.objects.filter(slug__startswith=slug).count() + 1)
             else:
                 self.slug = slug
 
