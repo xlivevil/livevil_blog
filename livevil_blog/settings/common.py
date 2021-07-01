@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'comments.apps.BlogCommentsConfig',
+    'api',
     # External apps
     'django_comments',
     'crispy_forms',
@@ -74,7 +77,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'reversion.middleware.RevisionMiddleware',
     'django.contrib.admindocs.middleware.XViewMiddleware',
-
 ]
 
 ROOT_URLCONF = 'livevil_blog.urls'
@@ -89,9 +91,7 @@ SUBDOMAIN_URLCONFS = {
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': (
-            os.path.join(BASE_DIR, 'templates'),
-        ),
+        'DIRS': (os.path.join(BASE_DIR, 'templates'), ),
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -110,16 +110,20 @@ ASGI_APPLICATION = 'livevil_blog.asgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -136,15 +140,9 @@ USE_L10N = True
 # TODO: 解决本地数据库timezone问题
 USE_TZ = False
 
-LANGUAGES = (
-    ('zh-hans', _('中文简体')),
-    ('en', _('English')),
-    ('ja', _('日本語'))
-)
+LANGUAGES = (('zh-hans', _('中文简体')), ('en', _('English')), ('ja', _('日本語')))
 
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
-)
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'), )
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -153,11 +151,12 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # 多数据库联用
-DATABASE_ROUTERS = ['livevil_blog.database_router.MongoDBRouter', ]
+DATABASE_ROUTERS = [
+    'livevil_blog.database_router.MongoDBRouter',
+]
 
 # 增加第三方登录支持
 AUTHENTICATION_BACKENDS = [
@@ -211,7 +210,9 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False  # 用户注册时是否需要输入邮
 
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True  # 用户注册时是否需要用户输入两遍密码
 
-ACCOUNT_USERNAME_BLACKLIST = ['admin', ]  # 用户不能使用的用户名列表
+ACCOUNT_USERNAME_BLACKLIST = [
+    'admin',
+]  # 用户不能使用的用户名列表
 
 ACCOUNT_UNIQUE_EMAIL = True  # 加强电子邮件地址的唯一性
 
@@ -231,13 +232,14 @@ HAYSTACK_CUSTOM_HIGHLIGHTER = 'blog.highlighter.Highlighter'
 
 SECURE_BROWSER_XSS_FILTER = True
 
-
 COMMENTS_APP = 'comments'
 
 # rest_framework
 REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 10,
+    'DEFAULT_PAGINATION_CLASS':
+    'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE':
+    10,
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
@@ -247,9 +249,18 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ],
-    'EXCEPTION_HANDLER': [
-        'rest_framework.views.exception_handler'
-    ]
+    'EXCEPTION_HANDLER': ['rest_framework.views.exception_handler'],
+    'DEFAULT_VERSIONING_CLASS':
+    'rest_framework.versioning.NamespaceVersioning',
+    'DEFAULT_VERSION':
+    'v1',
+    # 限流
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "10/min"
+    },
 }
 
 STATICFILES_FINDERS = (
@@ -268,9 +279,7 @@ COMPRESS_CSS_FILTERS = [
     # css minimizer
     'compressor.filters.cssmin.CSSMinFilter'
 ]
-COMPRESS_JS_FILTERS = [
-    'compressor.filters.jsmin.JSMinFilter'
-]
+COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.JSMinFilter']
 
 # grappli
 ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
@@ -282,4 +291,4 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'
 
 # 设置session失效时间,单位为秒
-SESSION_COOKIE_AGE = 60*30
+SESSION_COOKIE_AGE = 60 * 30

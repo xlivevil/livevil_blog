@@ -1,28 +1,36 @@
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render
-
-# Create your views here.
+from django.utils.decorators import method_decorator
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import response, status
 from rest_framework.decorators import action
 from rest_framework.fields import DateField
 from rest_framework.generics import ListAPIView
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin
-from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
+from rest_framework.mixins import (ListModelMixin, RetrieveModelMixin,
+                                   CreateModelMixin)
+from rest_framework.pagination import (PageNumberPagination,
+                                       LimitOffsetPagination)
 from rest_framework.permissions import AllowAny
 from rest_framework.settings import api_settings
 from rest_framework.views import APIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-
+from rest_framework.throttling import AnonRateThrottle
+from drf_haystack.viewsets import HaystackViewSet
+from drf_haystack.filters import HaystackAutocompleteFilter
+from drf_yasg import openapi
+from drf_yasg.inspectors import FilterInspector
+from drf_yasg.utils import swagger_auto_schema
 from api.filter import PostFilter
-from api.serializers import PostSerializer, CommentSerializer
-from blog.models import Post
+from api.serializers import (CategorySerializer, PostHaystackSerializer,
+                             PostListSerializer, PostSerializer,
+                             CommentSerializer, TagSerializer)
+from blog.models import Category, Post, Tag
 from comments.models import PostComment
 
 
-class View(APIView):
+class View(APIView):  # pragma: no cover
 
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
     parser_classes = api_settings.DEFAULT_PARSER_CLASSES
@@ -66,8 +74,8 @@ class View(APIView):
         pass
 
 
-class IndexAPIView(ListModelMixin, GenericViewSet):
-    # TODO: CURD全完成,认证模块完成
+class IndexAPIView(ListModelMixin, GenericViewSet):  # pragma: no cover
+    # 没有使用, 功能已整合进PostViewSet
     serializer_class = PostSerializer
     queryset = Post.objects.all()
     pagination_class = PageNumberPagination
@@ -75,27 +83,58 @@ class IndexAPIView(ListModelMixin, GenericViewSet):
 
 
 class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
+    """
+    PostViewSet
+
+    list:
+    list posts
+
+    retrieve:
+    get a post by id
+
+    list_comments:
+    get a post's comments
+
+    list_archive_dates:
+    list posts's archive dates
+    """
     serializer_class = PostSerializer
+    serializer_class_table = {
+        "list": PostListSerializer,
+        "retrieve": PostSerializer,
+    }
     queryset = Post.objects.all()
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
     filterset_class = PostFilter
 
-    @action(methods=["GET"],
-            detail=False,
-            url_path="archive/dates",
-            url_name="archive-date")
+    def get_serializer_class(self):
+        return self.serializer_class_table.get(self.action,
+                                               super().get_serializer_class())
+
+    @swagger_auto_schema(
+        responses={200: "归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。"})
+    @action(
+        methods=['GET'],
+        detail=False,
+        url_path='archive/dates',
+        url_name='archive-date',
+        filter_backends=[],
+        pagination_class=None,
+    )
     def list_archive_dates(self, request, *args, **kwargs):
-        dates = Post.objects.dates("create_time", "month", order="DESC")
-        date_field = DateField()
+        dates = Post.objects.dates('create_time', 'month', order='DESC')
+        date_field = DateField(format='%Y-%m')
         data = [date_field.to_representation(date) for date in dates]
         return Response(data=data, status=status.HTTP_200_OK)
 
     @action(
-        methods=["GET"],
+        methods=['GET'],
         detail=True,
-        url_path="comments",
-        url_name="comment",
+        url_path='comments',
+        url_name='comment',
+        filter_backends=[],
+        suffix="List",
         pagination_class=LimitOffsetPagination,
         serializer_class=CommentSerializer,
     )
@@ -107,7 +146,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
                                                model=post._meta.model_name)
         queryset = PostComment.objects.filter(
             content_type=content_type,
-            object_pk=post.pk).order_by("-created_time")
+            object_pk=post.pk).order_by('-created_time')
         # 对评论列表进行分页，根据 URL 传入的参数获取指定页的评论
         page = self.paginate_queryset(queryset)
         # 序列化评论
@@ -116,8 +155,63 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         return self.get_paginated_response(serializer.data)
 
 
-class CommentViewSet(CreateModelMixin, GenericViewSet):
+index = PostViewSet.as_view({'get': 'list'})
+
+
+class CommentViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     serializer_class = CommentSerializer
 
     def get_queryset(self):
         return PostComment.objects.all()
+
+
+class PostSearchAnonRateThrottle(AnonRateThrottle):
+    THROTTLE_RATES = {'anon': '5/min'}
+
+
+class PostSearchFilterInspector(FilterInspector):
+    def get_filter_parameters(self, filter_backend):
+        return [
+            openapi.Parameter(
+                name='text',
+                in_=openapi.IN_QUERY,
+                required=True,
+                description='搜索关键词',
+                type=openapi.TYPE_STRING,
+            )
+        ]
+
+
+@method_decorator(name='retrieve',
+                  decorator=swagger_auto_schema(auto_schema=None, ))
+@method_decorator(name='list',
+                  decorator=swagger_auto_schema(
+                      filter_inspectors=[PostSearchFilterInspector]))
+class PostSearchView(HaystackViewSet):
+    """
+    搜索视图集
+
+    list:
+    返回搜索结果列表
+    """
+
+    index_models = [Post]
+    serializer_class = PostHaystackSerializer
+    throttle_classes = [PostSearchAnonRateThrottle]
+    filter_backends = [HaystackAutocompleteFilter]
+
+
+class TagViewSet(ListModelMixin, GenericViewSet):
+    serializer_class = TagSerializer
+    pagination_class = None
+
+    def get_queryset(self):
+        return Tag.objects.all().order_by('name')
+
+
+class CategoryViewSet(ListModelMixin, GenericViewSet):
+    serializer_class = CategorySerializer
+    pagination_class = None
+
+    def get_queryset(self):
+        return Category.objects.all().order_by('name')
