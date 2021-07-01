@@ -19,8 +19,8 @@ class Category(models.Model):
     name = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = '分类'
-        verbose_name_plural = verbose_name
+        verbose_name = _('分类')
+        verbose_name_plural = _('分类')
 
     def __str__(self):
         return self.name
@@ -33,8 +33,8 @@ class Tag(models.Model):
     name = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = '标签'
-        verbose_name_plural = verbose_name
+        verbose_name = _('标签')
+        verbose_name_plural = _('标签')
 
     def __str__(self):
         return self.name
@@ -43,7 +43,7 @@ class Tag(models.Model):
 class PostBody(mongomodels.Model):
     db_connection = 'mongodb'
 
-    main = models.TextField('正文')
+    main = models.TextField(_('正文'))
 
 
 class Post(models.Model):
@@ -52,34 +52,34 @@ class Post(models.Model):
     """
     # TODO: 保存同时刷新缓存
     # 标题
-    title = models.CharField('标题', max_length=70)
-    slug = models.SlugField('短网址', unique=True, allow_unicode=True)
+    title = models.CharField(_('标题'), max_length=70)
+    slug = models.SlugField(_('短网址'), unique=True, allow_unicode=True)
 
     # 正文
-    body = models.TextField('正文')
+    body = models.TextField(_('正文'))
     # body_link = models.OneToOneField(PostBody,verbose_name='正文链接')
 
     # 时间信息 可以使用auto_now_add=True
-    create_time = models.DateTimeField('创建时间', default=timezone.now)
-    modified_time = models.DateTimeField('修改时间')
+    create_time = models.DateTimeField(_('创建时间'), default=timezone.now)
+    modified_time = models.DateTimeField(_('修改时间'))
 
     # 摘要
-    excerpt = models.CharField('摘要', max_length=200, blank=True)
+    excerpt = models.CharField(_('摘要'), max_length=200, blank=True)
 
     # 分类关系和标签关系
     category = models.ForeignKey(Category,
-                                 verbose_name='分类',
+                                 verbose_name=_('分类'),
                                  on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag, verbose_name='标签', blank=True)
+    tags = models.ManyToManyField(Tag, verbose_name=_('标签'), blank=True)
 
     # 作者关系
     author = models.ForeignKey(User,
-                               verbose_name='作者',
+                               verbose_name=_('作者'),
                                on_delete=models.CASCADE)
 
-    is_hidden = models.BooleanField(verbose_name='隐藏', default=False)
+    is_hidden = models.BooleanField(verbose_name=_('隐藏'), default=False)
 
-    is_top = models.BooleanField(verbose_name='置顶', default=False)
+    is_top = models.BooleanField(verbose_name=_('置顶'), default=False)
 
     @property
     def toc(self):
@@ -124,8 +124,8 @@ class Post(models.Model):
         super().save()
 
     class Meta:
-        verbose_name = '文章'
-        verbose_name_plural = verbose_name
+        verbose_name = _('文章')
+        verbose_name_plural = _('文章')
         ordering = ['-create_time']
 
     def __str__(self):
@@ -144,18 +144,18 @@ class Post(models.Model):
 
 class PostViewInfo(models.Model):
 
-    post = models.ForeignKey(Post, verbose_name='文章', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, verbose_name=_('文章'), on_delete=models.CASCADE)
 
-    view_time = models.DateTimeField('浏览时间', default=timezone.now)
+    view_time = models.DateTimeField(_('浏览时间'), default=timezone.now)
 
     header = models.CharField(
-        '请求头',
+        _('请求头'),
         max_length=200,
     )
 
     ip = models.GenericIPAddressField('IP', )
 
     class Meta:
-        verbose_name = '浏览记录'
-        verbose_name_plural = verbose_name
+        verbose_name = _('浏览记录')
+        verbose_name_plural = _('浏览记录')
         ordering = ['-view_time']

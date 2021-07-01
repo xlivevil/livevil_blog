@@ -444,6 +444,21 @@ python-versions = ">=3.5"
 django = ">=2.2"
 
 [[package]]
+name = "djangorestframework-stubs"
+version = "1.4.0"
+description = "PEP-484 stubs for django-rest-framework"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+coreapi = ">=2.0.0"
+django-stubs = ">=1.7.0"
+mypy = ">=0.790"
+requests = ">=2.0.0"
+typing-extensions = ">=3.7.2"
+
+[[package]]
 name = "djongo"
 version = "1.3.6"
 description = "Driver for allowing Django to use MongoDB as the database backend."
@@ -1313,7 +1328,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5f4dfee65b93609f36c536383b84a99eeb9c83a4b48cc7ce015c490f4b243f75"
+content-hash = "5836212d0894eeed5f235ea4d8581753dd286c057b84d949286e71706a4fdb28"
 
 [metadata.files]
 akismet = [
@@ -1560,6 +1575,10 @@ django-stubs-ext = [
 djangorestframework = [
     {file = "djangorestframework-3.12.4-py3-none-any.whl", hash = "sha256:6d1d59f623a5ad0509fe0d6bfe93cbdfe17b8116ebc8eda86d45f6e16e819aaf"},
     {file = "djangorestframework-3.12.4.tar.gz", hash = "sha256:f747949a8ddac876e879190df194b925c177cdeb725a099db1460872f7c0a7f2"},
+]
+djangorestframework-stubs = [
+    {file = "djangorestframework-stubs-1.4.0.tar.gz", hash = "sha256:037f0582b1e6c79366b6a839da861474d59210c4bfa1d36291545cb6ede6a0da"},
+    {file = "djangorestframework_stubs-1.4.0-py3-none-any.whl", hash = "sha256:f6ed5fb19c12aa752288ddc6ad28d4ca7c81681ca7f28a19aba9064b2a69489c"},
 ]
 djongo = [
     {file = "djongo-1.3.6.tar.gz", hash = "sha256:2250d484d4b4025661c139162bafd359eabaffd0deeba18debc59df78a325dc7"},

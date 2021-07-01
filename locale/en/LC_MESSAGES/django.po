@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-09 12:48+0800\n"
+"POT-Creation-Date: 2021-06-29 16:03+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\blog\apps.py:7
+msgid "博客"
+msgstr ""
+
+#: .\blog\models.py:142
+msgid "浏览量"
+msgstr ""
 
 #: .\blog\templates\about.html:17
 msgid "About Me"
@@ -41,8 +49,16 @@ msgstr ""
 msgid "Social"
 msgstr ""
 
-#: .\blog\templates\contact_form\contact_form.html:14
+#: .\blog\templates\base.html:203
+msgid "Languages"
+msgstr ""
+
+#: .\blog\templates\contact_form\contact_form.html:16
 msgid "Contact"
+msgstr ""
+
+#: .\blog\templates\contact_form\contact_form.html:29
+msgid "Drop Me a Line"
 msgstr ""
 
 #: .\blog\templates\footer.html:10
@@ -53,15 +69,15 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: .\blog\templates\single.html:68
+#: .\blog\templates\single.html:69
 msgid "发表评论"
 msgstr ""
 
-#: .\blog\templates\single.html:74
+#: .\blog\templates\single.html:75
 msgid "请登录"
 msgstr ""
 
-#: .\blog\templates\single.html:83
+#: .\blog\templates\single.html:84
 #, python-format
 msgid ""
 "\n"
@@ -70,13 +86,62 @@ msgid ""
 "                    "
 msgstr ""
 
-#: .\blog\templates\single.html:90
+#: .\blog\templates\single.html:91
 msgid "暂无评论"
 msgstr ""
 
-#: .\blog\templates\single.html:103
+#: .\blog\templates\single.html:105
 msgid "文章目录"
 msgstr ""
+
+#: .\blog\views.py:88
+msgid "请输入搜索关键字"
+msgstr ""
+
+#: .\comments\admin.py:27
+msgid "Content"
+msgstr ""
+
+#: .\comments\admin.py:31
+msgid "Metadata"
+msgstr ""
+
+#: .\comments\admin.py:59
+msgid "flagged"
+msgid_plural "flagged"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\comments\admin.py:61
+msgid "Flag selected comments"
+msgstr ""
+
+#: .\comments\admin.py:65
+msgid "approved"
+msgid_plural "approved"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\comments\admin.py:67
+msgid "Approve selected comments"
+msgstr ""
+
+#: .\comments\admin.py:71
+msgid "removed"
+msgid_plural "removed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\comments\admin.py:73
+msgid "Remove selected comments"
+msgstr ""
+
+#: .\comments\admin.py:85
+#, python-format
+msgid "%(count)s comment was successfully %(action)s."
+msgid_plural "%(count)s comments were successfully %(action)s."
+msgstr[0] ""
+msgstr[1] ""
 
 #: .\comments\apps.py:7
 msgid "评论"
@@ -203,15 +268,15 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:138
+#: .\livevil_blog\settings\common.py:140
 msgid "中文简体"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:139
+#: .\livevil_blog\settings\common.py:141
 msgid "English"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:140
+#: .\livevil_blog\settings\common.py:142
 msgid "日本語"
 msgstr ""
 

@@ -42,7 +42,7 @@ DATABASES = {
                     'propogate': False,
                 }
             },
-         },
+        },
         'NAME': 'djongo',
         'CLIENT': {
             'host': '172.17.0.1',
@@ -54,7 +54,8 @@ DATABASES = {
 # haystack
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'blog.elasticsearch5_ik_backend.Elasticsearch5IkSearchEngine',
+        'ENGINE':
+        'blog.elasticsearch5_ik_backend.Elasticsearch5IkSearchEngine',
         'URL': 'http://livevil_blog_elasticsearch:9200/',
         'INDEX_NAME': 'xlivevil'
     },
@@ -113,3 +114,6 @@ LOGGING = {
 }
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

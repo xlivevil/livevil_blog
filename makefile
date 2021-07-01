@@ -11,6 +11,7 @@ all:
 		make lint : runs linters on all project files and shows the changes \n\
 		make test : run the test suite  \n\
 		make coverage : runs tests and creates a report of the coverage \n\
+		make production : run the the django application by docker-compose \n\
 	"
 
 installdeps:
@@ -41,9 +42,9 @@ shell:
 lint:
 	# starts a poetry shell, shows autopep8 diff and then fixes the files
 	# does the same for isort
-	@echo '---Running autopep8---'
-	poetry run autopep8 livevil_blog -r -d
-	poetry run autopep8 livevil_blog -r -i
+	@echo '---Running yapf---'
+	poetry run yapf livevil_blog -r -d
+	poetry run yapf livevil_blog -r -i
 	@echo '---Running isort---'
 	poetry run isort livevil_blog --diff
 	poetry run isort livevil_blog --atomic
@@ -66,3 +67,7 @@ adminuser:
 test:
 	@echo 'Running tests'
 	poetry run python manage.py test
+
+production:
+	docker-compose -f production.yml build
+	docker-compose -f production.yml up

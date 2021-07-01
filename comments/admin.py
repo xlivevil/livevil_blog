@@ -3,11 +3,13 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _, ngettext
 from django.contrib.auth import get_user_model
 from reversion.admin import VersionAdmin
-from django_comments.views.moderation import perform_flag, perform_approve, perform_delete
+from django_comments.views.moderation import (perform_flag, perform_approve,
+                                              perform_delete)
 
 
 class UsernameSearch:
-    """The User object may not be auth.User, so we need to provide
+    """
+    The User object may not be auth.User, so we need to provide
     a mechanism for issuing the equivalent of a .filter(user__username=...)
     search in CommentAdmin.
     """
@@ -32,8 +34,16 @@ class CommentAdmin(VersionAdmin):
             'fields': ('submit_date', 'ip_address', 'is_public', 'is_removed')
         }),
     )
-    list_display = ('name', 'content_type', 'object_pk', 'ip_address',
-                    'submit_date', 'is_public', 'is_removed')
+    list_display = (
+        'user_name',
+        'parent',
+        'content_type',
+        'object_pk',
+        'ip_address',
+        'submit_date',
+        'is_public',
+        'is_removed',
+    )
     list_filter = ('user', 'submit_date', 'site', 'is_public', 'is_removed')
     date_hierarchy = 'submit_date'
     ordering = ('-submit_date', )
@@ -43,7 +53,6 @@ class CommentAdmin(VersionAdmin):
     actions = ["flag_comments", "approve_comments", "remove_comments"]
     list_per_page = 20
 
-    # 分类排列
     # 左右多选框
     # filter_horizontal = ('tags',)
 

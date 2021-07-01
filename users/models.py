@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
 
@@ -8,21 +8,21 @@ class User(AbstractUser):
     # TODO: 加入头像、默认头像
     # ImageField
     nickname = models.CharField(
-        '昵称',
+        _('昵称'),
         max_length=20,
         blank=True,
     )
-    create_time = models.DateTimeField('创建时间', default=timezone.now)
-    link = models.URLField('个人网址',
+    create_time = models.DateTimeField(_('创建时间'), default=timezone.now)
+    link = models.URLField(_('个人网址'),
                            max_length=30,
                            blank=True,
                            default=None,
                            null=True)
     email = models.EmailField(
-        '电子邮箱',
+        _('电子邮箱'),
         unique=True,
         error_messages={
-            'unique': "电子邮箱已存在",
+            'unique': _("电子邮箱已存在"),
         },
     )
 
