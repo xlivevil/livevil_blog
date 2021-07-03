@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.core.cache import cache
 from django.db import models
 from django.urls import reverse
@@ -6,7 +7,7 @@ from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-
+from django.db.models.signals import post_delete, post_save
 from djongo import models as mongomodels
 from users.models import User
 from utils.rich_content import generate_rich_content
@@ -26,6 +27,13 @@ class Category(models.Model):
         return self.name
 
 
+def change_category_updated_at(sender=None, instance=None, *args, **kwargs):
+    cache.set("category_updated_at", datetime.utcnow())
+
+post_save.connect(receiver=change_category_updated_at, sender=Category)
+post_delete.connect(receiver=change_category_updated_at, sender=Category)
+
+
 class Tag(models.Model):
     """
 
@@ -38,6 +46,13 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def change_tag_updated_at(sender=None, instance=None, *args, **kwargs):
+    cache.set("tag_updated_at", datetime.utcnow())
+
+post_save.connect(receiver=change_tag_updated_at, sender=Category)
+post_delete.connect(receiver=change_tag_updated_at, sender=Category)
 
 
 class PostBody(mongomodels.Model):
@@ -159,3 +174,11 @@ class PostViewInfo(models.Model):
         verbose_name = _('浏览记录')
         verbose_name_plural = _('浏览记录')
         ordering = ['-view_time']
+
+
+def change_post_updated_at(sender=None, instance=None, *args, **kwargs):
+    cache.set("post_updated_at", datetime.utcnow())
+
+
+post_save.connect(receiver=change_post_updated_at, sender=Post)
+post_delete.connect(receiver=change_post_updated_at, sender=Post)

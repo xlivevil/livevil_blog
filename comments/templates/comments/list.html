@@ -6,41 +6,46 @@
 {% get_comment_list for post as comment_list %}
 <dl class="comment-list list-unstyled" id="comments">
     {% recursetree comment_list %}
-        <dt class="comment-item" id="c{{ node.id }}">
-            {% if user.socialaccount %}
-                <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}"/>
-            {% endif %}
-            <span class="nickname">{{ node.user.username }}</span>
-            <time class="create_time" datetime="{{ node.create_time }}">{{ node.create_time }}</time>
-
-            {% if node.parent %}<span>{% trans "reply" %}{{ node.parent }}</span>{% endif %}
-            <div class="text">
-                <div class="reply">
-                    <button id="reply-btn{{ node.pk }}"
-                            onclick="show_reply({{ node.pk }});">
-                        {% trans "reply" %}</button>
-                </div>
-                {{ node.comment_html|safe }}
-            </div>
-            {# TODO: 改掉这种回复框显示形式 js获取url并插入元素  #}
-            <iframe src="{% url 'comments:post_comments_reply' node.pk %}"
-                    class="reply-box"
-                    height="300"
-                    width="100%"
-                    frameborder="0"
-                    scrolling="0"
-                    style="display: none"
-                    id="iframe{{ node.pk }}"
-                    name="reply_iframe"
-            ></iframe>
-        </dt>
-
-        {% if not node.is_leaf_node %}
-            <dl class="children" style="margin-left: 40px">
-                {{ children }}
-            </dl>
+    <dt class="comment-item" id="c{{ node.id }}">
+        {% if user.socialaccount %}
+        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
         {% endif %}
+        <span class="nickname">{{ node.user.username }}</span>
+        <time class="create_time" datetime="{{ node.create_time }}">{{ node.create_time }}</time>
+
+        {% if node.parent %}<span>{% trans "reply" %}{{ node.parent }}</span>{% endif %}
+        <div class="text">
+            <div class="reply">
+                <button id="reply-btn{{ node.pk }}" onclick="showReply({{ node.pk }});">
+                    {% trans "reply" %}</button>
+            </div>
+            {{ node.comment_html|safe }}
+        </div>
+        {# reply form #}
+        <!--{% url 'comments:post_comments_reply' node.pk %}-->
+    </dt>
+
+    {% if not node.is_leaf_node %}
+    <dl class="children" style="margin-left: 40px">
+        {{ children }}
+    </dl>
+    {% endif %}
 
     {% endrecursetree %}
 </dl>
+
+<script type="text/javascript">
+    function showReply(x) {
+        const box = document.getElementById("c" + x);
+        if (document.getElementById("iframe"+x)){
+            return
+        };
+        const newiframe = document.createElement('iframe');
+        newiframe.style.cssText = "class:reply-box;height:500;width:100%;frameborder:0;scrolling:0;";
+        newiframe.id = "iframe"+x;
+        newiframe.name = "reply_iframe";
+        newiframe.src = "http://" + document.domain + "/zh-hans/comments/reply/" + x;
+        box.appendChild(newiframe);
+    }
+</script>
 {# FIXME: 点回复弹出md回复框 回复键位置调整 回复跳转为本页刷新并msg  #}

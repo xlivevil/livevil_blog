@@ -1,5 +1,7 @@
+from datetime import datetime
 from django.core.cache import cache
 from django.db import models
+from django.db.models.signals import post_delete, post_save
 from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
@@ -96,3 +98,10 @@ class PostComment(MPTTModel, CommentAbstractModel):
             rich_content = generate_rich_content(self.comment)
             cache.set(md_key, rich_content, 60 * 60 * 12)
         return rich_content
+
+
+def change_comment_updated_at(sender=None, instance=None, *args, **kwargs):
+    cache.set("tag_updated_at", datetime.utcnow())
+
+post_save.connect(receiver=change_comment_updated_at, sender=PostComment)
+post_delete.connect(receiver=change_comment_updated_at, sender=PostComment)

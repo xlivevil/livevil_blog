@@ -1,32 +1,28 @@
 var searchvisible = 0;
 
-$("#search-menu").click(function(e){
-    //This stops the page scrolling to the top on a # link.
-    e.preventDefault();
+$('#search-menu').click(function (e) {
+	//This stops the page scrolling to the top on a # link.
+	e.preventDefault();
 
-    var val = $('#search-menu');
-    if(val.hasClass('ion-ios-search-strong')){
-        val.addClass('ion-ios-close-empty');
-        val.removeClass('ion-ios-search-strong');
-    }
-    else{
-         val.removeClass('ion-ios-close-empty');
-        val.addClass('ion-ios-search-strong');
-    }
+	var val = $('#search-menu');
+	if (val.hasClass('ion-ios-search-strong')) {
+		val.addClass('ion-ios-close-empty');
+		val.removeClass('ion-ios-search-strong');
+	} else {
+		val.removeClass('ion-ios-close-empty');
+		val.addClass('ion-ios-search-strong');
+	}
 
-
-    if (searchvisible ===0) {
-        //Search is currently hidden. Slide down and show it.
-        $("#search-form").slideDown(200);
-        $("#s").focus(); //Set focus on the search input field.
-        searchvisible = 1; //Set search visible flag to visible.
-    }
-
-    else {
-        //Search is currently showing. Slide it back up and hide it.
-        $("#search-form").slideUp(200);
-        searchvisible = 0;
-    }
+	if (searchvisible === 0) {
+		//Search is currently hidden. Slide down and show it.
+		$('#search-form').slideDown(200);
+		$('#s').focus(); //Set focus on the search input field.
+		searchvisible = 1; //Set search visible flag to visible.
+	} else {
+		//Search is currently showing. Slide it back up and hide it.
+		$('#search-form').slideUp(200);
+		searchvisible = 0;
+	}
 });
 
 /*!
@@ -42,154 +38,130 @@ $("#search-menu").click(function(e){
 /*jshint browser: true, strict: true, undef: true */
 /*global define: false */
 
-( function( window ) {
+(function (window) {
+	'use strict';
 
-'use strict';
+	// class helper functions from bonzo https://github.com/ded/bonzo
 
-// class helper functions from bonzo https://github.com/ded/bonzo
+	function classReg(className) {
+		return new RegExp('(^|\\s+)' + className + '(\\s+|$)');
+	}
 
-function classReg( className ) {
-  return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
-}
+	// classList support for class management
+	// altho to be fair, the api sucks because it won't accept multiple classes at once
+	var hasClass, addClass, removeClass;
 
-// classList support for class management
-// altho to be fair, the api sucks because it won't accept multiple classes at once
-var hasClass, addClass, removeClass;
+	if ('classList' in document.documentElement) {
+		hasClass = function (elem, c) {
+			return elem.classList.contains(c);
+		};
+		addClass = function (elem, c) {
+			elem.classList.add(c);
+		};
+		removeClass = function (elem, c) {
+			elem.classList.remove(c);
+		};
+	} else {
+		hasClass = function (elem, c) {
+			return classReg(c).test(elem.className);
+		};
+		addClass = function (elem, c) {
+			if (!hasClass(elem, c)) {
+				elem.className = elem.className + ' ' + c;
+			}
+		};
+		removeClass = function (elem, c) {
+			elem.className = elem.className.replace(classReg(c), ' ');
+		};
+	}
 
-if ( 'classList' in document.documentElement ) {
-  hasClass = function( elem, c ) {
-    return elem.classList.contains( c );
-  };
-  addClass = function( elem, c ) {
-    elem.classList.add( c );
-  };
-  removeClass = function( elem, c ) {
-    elem.classList.remove( c );
-  };
-}
-else {
-  hasClass = function( elem, c ) {
-    return classReg( c ).test( elem.className );
-  };
-  addClass = function( elem, c ) {
-    if ( !hasClass( elem, c ) ) {
-      elem.className = elem.className + ' ' + c;
-    }
-  };
-  removeClass = function( elem, c ) {
-    elem.className = elem.className.replace( classReg( c ), ' ' );
-  };
-}
+	function toggleClass(elem, c) {
+		var fn = hasClass(elem, c) ? removeClass : addClass;
+		fn(elem, c);
+	}
 
-function toggleClass( elem, c ) {
-  var fn = hasClass( elem, c ) ? removeClass : addClass;
-  fn( elem, c );
-}
+	var classie = {
+		// full names
+		hasClass: hasClass,
+		addClass: addClass,
+		removeClass: removeClass,
+		toggleClass: toggleClass,
+		// short names
+		has: hasClass,
+		add: addClass,
+		remove: removeClass,
+		toggle: toggleClass,
+	};
 
-var classie = {
-  // full names
-  hasClass: hasClass,
-  addClass: addClass,
-  removeClass: removeClass,
-  toggleClass: toggleClass,
-  // short names
-  has: hasClass,
-  add: addClass,
-  remove: removeClass,
-  toggle: toggleClass
-};
+	// transport
+	if (typeof define === 'function' && define.amd) {
+		// AMD
+		define(classie);
+	} else {
+		// browser global
+		window.classie = classie;
+	}
+})(window);
 
-// transport
-if ( typeof define === 'function' && define.amd ) {
-  // AMD
-  define( classie );
-} else {
-  // browser global
-  window.classie = classie;
-}
+(function () {
+	var triggerBttn = document.getElementById('trigger-overlay'),
+		overlay = document.querySelector('div.overlay'),
+		closeBttn = overlay.querySelector('button.overlay-close');
+	(transEndEventNames = {
+		WebkitTransition: 'webkitTransitionEnd',
+		MozTransition: 'transitionend',
+		OTransition: 'oTransitionEnd',
+		msTransition: 'MSTransitionEnd',
+		transition: 'transitionend',
+	}),
+		(transEndEventName = transEndEventNames[Modernizr.prefixed('transition')]),
+		(support = { transitions: Modernizr.csstransitions });
 
-})( window );
+	function toggleOverlay() {
+		if (classie.has(overlay, 'open')) {
+			classie.remove(overlay, 'open');
+			classie.add(overlay, 'close');
+			var onEndTransitionFn = function (ev) {
+				if (support.transitions) {
+					if (ev.propertyName !== 'visibility') return;
+					this.removeEventListener(transEndEventName, onEndTransitionFn);
+				}
+				classie.remove(overlay, 'close');
+			};
+			if (support.transitions) {
+				overlay.addEventListener(transEndEventName, onEndTransitionFn);
+			} else {
+				onEndTransitionFn();
+			}
+		} else if (!classie.has(overlay, 'close')) {
+			classie.add(overlay, 'open');
+		}
+	}
 
-(function() {
-    var triggerBttn = document.getElementById( 'trigger-overlay' ),
-        overlay = document.querySelector( 'div.overlay' ),
-        closeBttn = overlay.querySelector( 'button.overlay-close' );
-        transEndEventNames = {
-            'WebkitTransition': 'webkitTransitionEnd',
-            'MozTransition': 'transitionend',
-            'OTransition': 'oTransitionEnd',
-            'msTransition': 'MSTransitionEnd',
-            'transition': 'transitionend'
-        },
-        transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ],
-        support = { transitions : Modernizr.csstransitions };
-
-    function toggleOverlay() {
-        if( classie.has( overlay, 'open' ) ) {
-            classie.remove( overlay, 'open' );
-            classie.add( overlay, 'close' );
-            var onEndTransitionFn = function( ev ) {
-                if( support.transitions ) {
-                    if( ev.propertyName !== 'visibility' ) return;
-                    this.removeEventListener( transEndEventName, onEndTransitionFn );
-                }
-                classie.remove( overlay, 'close' );
-            };
-            if( support.transitions ) {
-                overlay.addEventListener( transEndEventName, onEndTransitionFn );
-            }
-            else {
-                onEndTransitionFn();
-            }
-        }
-        else if( !classie.has( overlay, 'close' ) ) {
-            classie.add( overlay, 'open' );
-        }
-    }
-
-    triggerBttn.addEventListener( 'click', toggleOverlay );
-    closeBttn.addEventListener( 'click', toggleOverlay );
+	triggerBttn.addEventListener('click', toggleOverlay);
+	closeBttn.addEventListener('click', toggleOverlay);
 })();
 
-var login_menu_flag=true;
+var login_menu_flag = true;
 function show_menu() {
-    var menu=document.getElementById("user-login-menu");
-    if(login_menu_flag){
-        menu.style.display="block";
-        login_menu_flag=false;
-    }else{
-        menu.style.display="none";
-        login_menu_flag=true;
-    }
-
+	var menu = document.getElementById('user-login-menu');
+	if (login_menu_flag) {
+		menu.style.display = 'block';
+		login_menu_flag = false;
+	} else {
+		menu.style.display = 'none';
+		login_menu_flag = true;
+	}
 }
 
 function show_menu1() {
-    var menu=document.getElementById("user-login-menu");
-        menu.style.display="none";
-        login_menu_flag=true;
-}
-
-// TODO：回复功能改为获取"comment-item" "node.id" 在dt中插入回复页面
-
-// let newIfram = document.creatElement('ifram');
-// let parentNode = document.getElementsById("c{{ node.id }}");
-// parentNode.appendChild(newIfram);
-const iframe_list=document.getElementsByName("reply_iframe");
-
-const hide = (el) => Array.from(el).forEach(e => (e.style.display = 'none'));
-function show_reply(x) {
-    let box=document.getElementById("iframe"+x);
-        if (box.style.display==="block"){
-            hide(iframe_list);
-        }else{
-            hide(iframe_list);
-            box.style.display="block"
-        }
+	var menu = document.getElementById('user-login-menu');
+	menu.style.display = 'none';
+	login_menu_flag = true;
 }
 
 function addFormClass() {
-    $('.account form p input[type!=checkbox]').addClass('form-control');
-    $('.account form p').addClass('form-group');
-    $('button').addClass('btn btn-primary');
+	$('.account form p input[type!=checkbox]').addClass('form-control');
+	$('.account form p').addClass('form-group');
+	$('button').addClass('btn btn-primary');
 }

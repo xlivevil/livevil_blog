@@ -16,7 +16,8 @@ from rest_framework.views import APIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.throttling import AnonRateThrottle
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+from rest_framework_extensions.cache.decorators import cache_response
 from drf_haystack.viewsets import HaystackViewSet
 from drf_haystack.filters import HaystackAutocompleteFilter
 from drf_yasg import openapi
@@ -28,6 +29,9 @@ from api.serializers import (CategorySerializer, PostHaystackSerializer,
                              CommentSerializer, TagSerializer)
 from blog.models import Category, Post, Tag
 from comments.models import PostComment
+from .cache import (CategoryKeyConstructor, CommentListKeyConstructor,
+                    PostListKeyConstructor, PostObjectKeyConstructor,
+                    TagKeyConstructor)
 
 
 class View(APIView):  # pragma: no cover
@@ -112,6 +116,14 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         return self.serializer_class_table.get(self.action,
                                                super().get_serializer_class())
 
+    @cache_response(timeout=5 * 60, key_func=PostListKeyConstructor())
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @cache_response(timeout=5 * 60, key_func=PostObjectKeyConstructor())
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
     @swagger_auto_schema(
         responses={200: "归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。"})
     @action(
@@ -164,9 +176,17 @@ class CommentViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     def get_queryset(self):
         return PostComment.objects.all()
 
+    @cache_response(timeout=5 * 60, key_func=CommentListKeyConstructor())
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 class PostSearchAnonRateThrottle(AnonRateThrottle):
     THROTTLE_RATES = {'anon': '5/min'}
+
+
+class PostSearchUserRateThrottle(UserRateThrottle):
+    THROTTLE_RATES = {'user': '10/min'}
 
 
 class PostSearchFilterInspector(FilterInspector):
@@ -197,7 +217,7 @@ class PostSearchView(HaystackViewSet):
 
     index_models = [Post]
     serializer_class = PostHaystackSerializer
-    throttle_classes = [PostSearchAnonRateThrottle]
+    throttle_classes = [PostSearchAnonRateThrottle, PostSearchUserRateThrottle]
     filter_backends = [HaystackAutocompleteFilter]
 
 
@@ -208,6 +228,10 @@ class TagViewSet(ListModelMixin, GenericViewSet):
     def get_queryset(self):
         return Tag.objects.all().order_by('name')
 
+    @cache_response(timeout=5 * 60, key_func=TagKeyConstructor())
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 class CategoryViewSet(ListModelMixin, GenericViewSet):
     serializer_class = CategorySerializer
@@ -215,3 +239,7 @@ class CategoryViewSet(ListModelMixin, GenericViewSet):
 
     def get_queryset(self):
         return Category.objects.all().order_by('name')
+
+    @cache_response(timeout=5 * 60, key_func=CategoryKeyConstructor())
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)

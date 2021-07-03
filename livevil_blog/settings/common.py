@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'mptt',
     'drf_yasg',
     'django_filters',
-    "compressor",
+    'compressor',
     'subdomains',
     'djongo',
     'contact_form',
@@ -153,6 +153,8 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
+X_FRAME_OPTIONS = 'sameorigin'
+
 # 多数据库联用
 DATABASE_ROUTERS = [
     'livevil_blog.database_router.MongoDBRouter',
@@ -220,7 +222,7 @@ ACCOUNT_USERNAME_MIN_LENGTH = 2  # 用户名允许的最小长度的整数
 
 SOCIALACCOUNT_AUTO_SIGNUP = True  # 使用从社会帐户提供者检索的字段(如用户名、邮件)来绕过注册表单
 
-ACCOUNT_LOGOUT_REDIRECT_URL = "/"  # 设置退出登录后跳转链接
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # 设置退出登录后跳转链接
 
 # APPEND_SLASH=False
 
@@ -255,11 +257,13 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSION':
     'v1',
     # 限流
-    "DEFAULT_THROTTLE_CLASSES": [
-        "rest_framework.throttling.AnonRateThrottle",
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
     ],
-    "DEFAULT_THROTTLE_RATES": {
-        "anon": "10/min"
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '10/min',
+        'user': '20/min'
     },
 }
 
@@ -281,10 +285,10 @@ COMPRESS_CSS_FILTERS = [
 ]
 COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.JSMinFilter']
 
-# grappli
-ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
+# grappelli
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'grappelli/'
 # 把admin的静态文件,由原来的admin目录,改为映射到static目录下的
-GRAPPELLI_ADMIN_TITLE = '后台管理系统'  # 更改grappellie的登入title
+GRAPPELLI_ADMIN_TITLE = '后台管理系统'  # 更改grappelli的登入title
 
 # session的存储配置
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'

@@ -484,6 +484,17 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "drf-extensions"
+version = "0.7.0"
+description = "Extensions for Django REST Framework"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+djangorestframework = ">=3.9.3"
+
+[[package]]
 name = "drf-haystack"
 version = "1.8.10"
 description = "Makes Haystack play nice with Django REST Framework"
@@ -1328,7 +1339,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5836212d0894eeed5f235ea4d8581753dd286c057b84d949286e71706a4fdb28"
+content-hash = "31d4563ac7cb24c7ae6f341b787883fd443a4cbaf7f172828b369acfc87b7a6a"
 
 [metadata.files]
 akismet = [
@@ -1586,6 +1597,10 @@ djongo = [
 docutils = [
     {file = "docutils-0.17.1-py2.py3-none-any.whl", hash = "sha256:cf316c8370a737a022b72b56874f6602acf974a37a9fba42ec2876387549fc61"},
     {file = "docutils-0.17.1.tar.gz", hash = "sha256:686577d2e4c32380bb50cbb22f575ed742d58168cee37e99117a854bcd88f125"},
+]
+drf-extensions = [
+    {file = "drf-extensions-0.7.0.tar.gz", hash = "sha256:0957ec025c39ccb1d56f1f3966c99f0cefd913f89d0184ecb7714681760246f8"},
+    {file = "drf_extensions-0.7.0-py2.py3-none-any.whl", hash = "sha256:6bec775ebefca78e739939f8d9b2a282083de1c19798fce4bba54aa38cfc7677"},
 ]
 drf-haystack = [
     {file = "drf-haystack-1.8.10.tar.gz", hash = "sha256:e091e4c13110117916cdd247d30b6314451be9e2f1183db60a61ab1031b13b55"},

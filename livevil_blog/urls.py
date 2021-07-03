@@ -15,6 +15,7 @@ urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('comments/', include('comments.urls')),
+    path('comments/', include('django_comments.urls')),
     path('accounts/', include('allauth.urls')),
     path('all/rss', AllPostsRssFeed(), name="rss"),
     path("api/", include("api.urls")),

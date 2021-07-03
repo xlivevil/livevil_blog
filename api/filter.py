@@ -4,6 +4,7 @@ from blog.models import Post
 
 
 class PostFilter(drf_filters.FilterSet):
+    # TODO: 修改完善
     created_year = drf_filters.NumberFilter(field_name='create_time',
                                             lookup_expr='year',
                                             help_text='年份')
@@ -15,5 +16,6 @@ class PostFilter(drf_filters.FilterSet):
     class Meta:
         model = Post
         fields = [
-            'category', 'tags', 'create_daterange', 'create', 'created_year', 'created_month'
+            'category', 'tags', 'create_daterange', 'create', 'created_year',
+            'created_month'
         ]
