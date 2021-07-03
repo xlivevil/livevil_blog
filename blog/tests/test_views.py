@@ -123,8 +123,8 @@ class AdminTestCase(BlogDataTestCase):
     def setUp(self):
         super().setUp()
         self.test_user = User.objects.create_superuser(username='test',
-                                                  email='test@test.com',
-                                                  password='test')
+                                                       email='test@test.com',
+                                                       password='test')
         self.url = reverse('admin:blog_post_add')
 
     def test_set_author_after_publishing_the_post(self):
@@ -152,6 +152,7 @@ class AdminTestCase(BlogDataTestCase):
         }
         self.client.login(username=self.user.username, password='admin')
         response = self.client.post(self.url, data=data)
+        self.assertEqual(response.status_code, 302)
         data = {
             'title': '普通权限测试标题',
             'body': '普通同权限测试内容',
@@ -159,12 +160,15 @@ class AdminTestCase(BlogDataTestCase):
             'slug': '权限测试'
         }
         self.client.login(username=self.test_user.username, password='admin')
-        response = self.client.post(self.url, data=data)
+        test_response = self.client.post(self.url, data=data)
+        self.assertEqual(test_response.status_code, 200)
+
         post = Post.objects.all()
 
         self.assertEqual(post.author, self.user)
         self.assertEqual(post.title, data.get('title'))
         self.assertEqual(post.category, self.cate1)
+
 
 class RSSTestCase(BlogDataTestCase):
     def setUp(self):

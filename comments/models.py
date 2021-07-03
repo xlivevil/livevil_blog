@@ -103,5 +103,6 @@ class PostComment(MPTTModel, CommentAbstractModel):
 def change_comment_updated_at(sender=None, instance=None, *args, **kwargs):
     cache.set("tag_updated_at", datetime.utcnow())
 
+
 post_save.connect(receiver=change_comment_updated_at, sender=PostComment)
 post_delete.connect(receiver=change_comment_updated_at, sender=PostComment)

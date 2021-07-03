@@ -60,7 +60,10 @@ class PostDetailView(DetailView):
             post_slug = kwargs['slug']
             post_id = Post.objects.filter(slug=post_slug).first().pk
         header = request.META.get('HTTP_USER_AGENT')
-        ip = request.META.get('REMOTE_ADDR')
+        if request.META.get('X-Real-IP'):
+            ip = request.META.get('X-Real-IP')
+        else:
+            ip = request.META.get('REMOTE_ADDR')
 
         post_view = PostViewInfo(post_id=post_id, header=header, ip=ip)
         post_view.save()
