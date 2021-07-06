@@ -191,6 +191,10 @@ img {
     font-size: 22px;
 }
 
+#navbarDropdown::after {
+    margin-left: 0.5em;
+}
+
 /**
  * 3.2.1 - Main Nav CSS 3 Hover Effect
  */

@@ -81,13 +81,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'livevil_blog.urls'
 
-# A dictionary of urlconf module paths, keyed by their subdomain.
-SUBDOMAIN_URLCONFS = {
-    None: 'livevil_blog.urls',  # no subdomain, e.g. ``example.com``
-    'www': 'livevil_blog.urls',
-    'api': 'livevil_blog.urls.api',
-}
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -169,6 +162,15 @@ AUTHENTICATION_BACKENDS = [
 
 # 扩展默认User功能
 AUTH_USER_MODEL = 'users.User'
+
+# A dictionary of urlconf module paths, keyed by their subdomain.
+SUBDOMAIN_URLCONFS = {
+    None: 'livevil_blog.urls',  # no subdomain, e.g. ``example.com``
+    'www': 'livevil_blog.urls',
+    'api': 'api.urls',
+}
+
+FORCE_VARY_ON_HOST = True
 
 # crispy-forms的模式
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -60,8 +60,8 @@ class PostDetailView(DetailView):
             post_slug = kwargs['slug']
             post_id = Post.objects.filter(slug=post_slug).first().pk
         header = request.META.get('HTTP_USER_AGENT')
-        if request.META.get('X-Real-IP'):
-            ip = request.META.get('X-Real-IP')
+        if request.META.get('HTTP_X_FORWARDED_FOR'):
+            ip = request.META.get('HTTP_X_FORWARDED_FOR')
         else:
             ip = request.META.get('REMOTE_ADDR')
 
