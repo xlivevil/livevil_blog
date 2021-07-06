@@ -229,13 +229,11 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # 设置退出登录后跳转链接
 # APPEND_SLASH=False
 
 # haystack
-
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_CUSTOM_HIGHLIGHTER = 'blog.highlighter.Highlighter'
 
-SECURE_BROWSER_XSS_FILTER = True
-
+# django_comments
 COMMENTS_APP = 'comments'
 
 # rest_framework

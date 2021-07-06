@@ -1,4 +1,6 @@
 from .common import *
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
@@ -50,6 +52,18 @@ DATABASES = {
         }
     }
 }
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+
+SECURE_HSTS_SECONDS = 60 * 60 * 24 * 7 * 52  # one year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_SSL_REDIRECT = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+SESSION_COOKIE_SECURE = True
 
 # haystack
 HAYSTACK_CONNECTIONS = {
@@ -117,3 +131,18 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
+sentry_sdk.init(
+    dsn=os.environ['SENTRY_DSN'],
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)

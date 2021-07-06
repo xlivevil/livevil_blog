@@ -36,6 +36,7 @@ django-pure-pagination = "^0.3.0"
 Markdown = "^3.3.4"
 docutils = "^0.17.1"
 drf-extensions = "^0.7.0"
+sentry-sdk = "^1.1.0"
 
 [tool.poetry.dev-dependencies]
 Faker = "^8.1.4"
