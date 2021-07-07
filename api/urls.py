@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.urls import include, path
 from django.urls.conf import re_path
 from django.utils.translation import gettext_lazy as _
@@ -24,7 +25,7 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="xlivevil@aliyun.com"),
         license=openapi.License(name="BSD License"),
     ),
-    public=False,
+    public=True,
     permission_classes=(permissions.IsAdminUser, ),
 )
 
@@ -42,3 +43,8 @@ urlpatterns = [
          schema_view.with_ui('redoc', cache_timeout=0),
          name='schema-redoc'),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [path('__debug__/', include(debug_toolbar.urls))
+                   ] + urlpatterns

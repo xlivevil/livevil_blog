@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED 1
 
 COPY ./pyproject.toml ./
 RUN pip3 install poetry
-RUN  ~/.poetry/bin/poetry export -f requirements.txt --output requirements.txt --without-hashes
+RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 RUN pip wheel --no-cache-dir --wheel-dir /usr/src/app/wheels -r requirements.txt
 
@@ -23,8 +23,6 @@ COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --no-cache --no-deps /wheels/*
 
 COPY . $APP_HOME
-
-RUN chown -R app:app $APP_HOME
 
 COPY ./compose/production/django/start.sh /start.sh
 RUN sed -i 's/\r//' /start.sh

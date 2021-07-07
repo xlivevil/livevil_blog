@@ -116,11 +116,11 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         return self.serializer_class_table.get(self.action,
                                                super().get_serializer_class())
 
-    @cache_response(timeout=5 * 60, key_func=PostListKeyConstructor())
+    # @cache_response(timeout=5 * 60, key_func=PostListKeyConstructor())
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-    @cache_response(timeout=5 * 60, key_func=PostObjectKeyConstructor())
+    # @cache_response(timeout=5 * 60, key_func=PostObjectKeyConstructor())
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
@@ -176,7 +176,7 @@ class CommentViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     def get_queryset(self):
         return PostComment.objects.all()
 
-    @cache_response(timeout=5 * 60, key_func=CommentListKeyConstructor())
+    # @cache_response(timeout=5 * 60, key_func=CommentListKeyConstructor())
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
@@ -228,7 +228,7 @@ class TagViewSet(ListModelMixin, GenericViewSet):
     def get_queryset(self):
         return Tag.objects.all().order_by('name')
 
-    @cache_response(timeout=5 * 60, key_func=TagKeyConstructor())
+    # @cache_response(timeout=5 * 60, key_func=TagKeyConstructor())
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
@@ -240,6 +240,6 @@ class CategoryViewSet(ListModelMixin, GenericViewSet):
     def get_queryset(self):
         return Category.objects.all().order_by('name')
 
-    @cache_response(timeout=5 * 60, key_func=CategoryKeyConstructor())
+    # @cache_response(timeout=5 * 60, key_func=CategoryKeyConstructor())
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)

@@ -5,6 +5,7 @@ all:
 		make install : to install poetry, other dependent packages, and create migrations \n\
 		make migrate : creates tables in database \n\
 		make adminuser : creates a superuser to access the django admin \n\
+		make collectstatic : collectstatic and compress \n\
 		make dev : runs django development server \n\
 		make run : run the django application \n\
 		make shell : start a poetry shell with all required packages available in the environment \n\
@@ -26,6 +27,10 @@ install: installdeps createmigrations
 migrate:
 	poetry run python manage.py migrate --database default
 	poetry run python manage.py migrate --database mongodb
+
+collectstatic:
+	poetry run python manage.py collectstatic
+	poetry run python manage.py compress
 
 dev:
 	poetry run python manage.py runserver
