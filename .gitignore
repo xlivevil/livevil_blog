@@ -281,4 +281,10 @@ push.bat
 
 editor.md
 
+elasticsearch-analysis-ik-5.6.16
+
+# nginx
+
 nginx/ssl
+
+nginx/logs

@@ -1,6 +1,7 @@
 from .common import *
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.redis import RedisIntegration
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
@@ -135,7 +136,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 sentry_sdk.init(
     dsn=os.environ['SENTRY_DSN'],
-    integrations=[DjangoIntegration()],
+    integrations=[DjangoIntegration(), RedisIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.

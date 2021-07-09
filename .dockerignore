@@ -4,5 +4,4 @@ fabfile.py
 static/
 push.py
 coverage_html_report
-compose/
 production.yml
