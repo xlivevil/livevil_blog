@@ -1,0 +1,5 @@
+
+User-agent: *                              允许所有搜索引擎访问抓取
+Disallow: /accounts/
+Allow: /zh-hans/posts/
+Sitemap: https://xlivevil.com/sitemap.xml

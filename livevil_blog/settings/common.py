@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.admindocs',
+    'django.contrib.sitemaps',
     # Local apps
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
@@ -51,8 +52,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.weibo',
     'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.windowslive',
-    'allauth.socialaccount.providers.baidu',
+    # 'allauth.socialaccount.providers.windowslive',
+    # 'allauth.socialaccount.providers.baidu',
     'haystack',
     'rest_framework',
     'mptt',

@@ -1,12 +1,26 @@
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
+from django.contrib.sitemaps import GenericSitemap
 from django.urls import include, path
-
+from django.contrib.sitemaps.views import sitemap
 from blog.feed import AllPostsRssFeed
+from blog.models import Post
+
+info_dict = {
+    'queryset': Post.objects.all(),
+    'date_field': 'create_time',
+}
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
+    path('accounts/', include('allauth.urls')),
+    path('sitemap.xml',
+         sitemap,
+         {'sitemaps': {
+             'blog': GenericSitemap(info_dict, priority=0.6)
+         }},
+         name='django.contrib.sitemaps.views.sitemap')
 ]
 
 urlpatterns += i18n_patterns(
@@ -16,7 +30,6 @@ urlpatterns += i18n_patterns(
     path('users/', include('users.urls')),
     path('comments/', include('comments.urls')),
     path('comments/', include('django_comments.urls')),
-    path('accounts/', include('allauth.urls')),
     path('all/rss', AllPostsRssFeed(), name="rss"),
     path("api/", include("api.urls")),
     path('todo/', include('todo.urls')),
