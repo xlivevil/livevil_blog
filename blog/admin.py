@@ -57,7 +57,7 @@ class ViewInfoAdmin(VersionAdmin):
 admin.site.register(PostBody)
 admin.site.register(Category)
 admin.site.register(Tag)
-admin.site.site_header = '网站管理'
-admin.site.site_title = '后台管理'
-admin.site.index_title = '文章管理'
+admin.site.site_header = 'Xlivevil后台'
+admin.site.site_title = 'Xlivevil后台管理'
+admin.site.index_title = '网站管理'
 # TODO: 修改后台admin视图、模板、方法、

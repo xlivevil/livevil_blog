@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'comments.apps.BlogCommentsConfig',
+    'netdisk.apps.NetdiskConfig',
     'api',
     # External apps
     'django_comments',
