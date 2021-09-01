@@ -19,6 +19,9 @@ urlpatterns = [
     path('posts/categories/<str:name>',
          views.CategoryView.as_view(),
          name='category'),
+    path('increase-likes/<int:id>',
+         views.IncreaseLikeView.as_view(),
+         name='increase_likes'),
     path('search/', include('haystack.urls')),
 ]
 

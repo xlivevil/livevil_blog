@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.db.models import Q
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
@@ -70,13 +70,12 @@ class PostDetailView(DetailView):
         return response
 
 
-# class SearchView(IndexView):
-#     def get_queryset(self):
-#         search = self.kwargs.get('q')
-#
-#         if not search:
-#             error_msg = "请的输入搜索关键词"
-#             messages.add_message(request,)
+class IncreaseLikesView(View):
+    def post(self, request, *args, **kwargs):
+        post = Post.objects.get(id=kwargs.get('id'))
+        post.likes += 1
+        post.save()
+        return HttpResponse('success')
 
 
 def search(request):
