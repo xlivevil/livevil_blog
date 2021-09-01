@@ -32,6 +32,7 @@ from comments.models import PostComment
 from .cache import (CategoryKeyConstructor, CommentListKeyConstructor,
                     PostListKeyConstructor, PostObjectKeyConstructor,
                     TagKeyConstructor)
+from django.utils.translation import gettext_lazy as _
 
 
 class View(APIView):  # pragma: no cover
@@ -86,6 +87,7 @@ class IndexAPIView(ListModelMixin, GenericViewSet):  # pragma: no cover
     permission_classes = [AllowAny]
 
 
+# TODO: post category tags 都是传id 改为传字段
 class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     """
     PostViewSet
@@ -125,7 +127,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         return super().retrieve(request, *args, **kwargs)
 
     @swagger_auto_schema(
-        responses={200: "归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。"})
+        responses={200: _("归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。")})
     @action(
         methods=['GET'],
         detail=False,
@@ -182,28 +184,37 @@ class CommentViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
 
 
 class PostSearchAnonRateThrottle(AnonRateThrottle):
+    """
+    游客搜索频率限制
+    """
     THROTTLE_RATES = {'anon': '5/min'}
 
 
 class PostSearchUserRateThrottle(UserRateThrottle):
+    """
+    用户搜索频率限制
+    """
     THROTTLE_RATES = {'user': '10/min'}
 
 
 class PostSearchFilterInspector(FilterInspector):
+    """
+    swagger text 字段提示
+    """
     def get_filter_parameters(self, filter_backend):
         return [
             openapi.Parameter(
                 name='text',
                 in_=openapi.IN_QUERY,
                 required=True,
-                description='搜索关键词',
+                description=_('搜索关键词'),
                 type=openapi.TYPE_STRING,
             )
         ]
 
 
-@method_decorator(name='retrieve',
-                  decorator=swagger_auto_schema(auto_schema=None, ))
+# @method_decorator(name='retrieve',
+#                   decorator=swagger_auto_schema(auto_schema=None, ))
 @method_decorator(name='list',
                   decorator=swagger_auto_schema(
                       filter_inspectors=[PostSearchFilterInspector]))
@@ -211,7 +222,12 @@ class PostSearchView(HaystackViewSet):
     """
     搜索视图集
 
+    retrieve:
+    search/42/?model=myapp.person
+    返回
+
     list:
+    search/?text=key
     返回搜索结果列表
     """
 

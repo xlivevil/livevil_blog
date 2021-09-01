@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+from datetime import timedelta
 
 from django.utils.translation import gettext_lazy as _
 
@@ -50,7 +51,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.weibo',
+    # 'allauth.socialaccount.providers.weibo',
     'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.windowslive',
     # 'allauth.socialaccount.providers.baidu',
@@ -63,10 +64,12 @@ INSTALLED_APPS = [
     'subdomains',
     'djongo',
     'contact_form',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -266,6 +269,9 @@ REST_FRAMEWORK = {
         'anon': '10/min',
         'user': '20/min'
     },
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 STATICFILES_FINDERS = (
@@ -297,3 +303,9 @@ SESSION_CACHE_ALIAS = 'default'
 
 # 设置session失效时间,单位为秒
 SESSION_COOKIE_AGE = 60 * 30
+
+# SIMPLE_JWT
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+}

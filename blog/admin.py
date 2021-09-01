@@ -1,13 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
 from reversion.admin import VersionAdmin
 
 from blog.models import Post, Category, Tag, PostViewInfo, PostBody
-
-# admin.site.site_title = xlivevil后台系统
-# admin.site.site_header = xlivevil后台系统
-# admin.site.index_title = xlivevil后台系统
 
 
 @admin.register(Post)
@@ -16,7 +11,7 @@ class PostAdmin(VersionAdmin):
     date_hierarchy = 'create_time'
     # 显示列表显示项
     list_display = ('title', 'create_time', 'modified_time', 'category',
-                    'author', 'get_view_num')
+                    'author', 'view_num')
     # 过滤器
     list_filter = (
         'create_time',
@@ -64,4 +59,5 @@ admin.site.register(Category)
 admin.site.register(Tag)
 admin.site.site_header = '网站管理'
 admin.site.site_title = '后台管理'
+admin.site.index_title = '文章管理'
 # TODO: 修改后台admin视图、模板、方法、

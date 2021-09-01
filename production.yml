@@ -70,7 +70,7 @@ services:
     volumes:
       - static:/apps/static
       - media:/apps/media
-      - .compose/production/nginx/logs:/etc/nginx/logs
+      - ./compose/production/nginx/logs:/etc/nginx/logs
     ports:
       - "80:80"
       - "443:443"

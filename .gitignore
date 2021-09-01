@@ -273,6 +273,8 @@ compse
 
 /static/*
 
+/media/*
+
 .history
 
 push.bat

@@ -31,6 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class PostListSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
+    tags = TagSerializer(many=True)
     author = UserSerializer()
 
     class Meta:
@@ -42,8 +43,9 @@ class PostListSerializer(serializers.ModelSerializer):
             'create_time',
             'excerpt',
             'category',
+            'tags',
             'author',
-            'get_view_num',
+            'view_num',
         ]
 
 
@@ -69,7 +71,7 @@ class PostSerializer(serializers.ModelSerializer):
             'tags',
             'toc',
             'body_html',
-            'get_view_num',
+            'view_num',
         ]
 
         read_only_fields = [
@@ -89,17 +91,31 @@ class PostSerializer(serializers.ModelSerializer):
             },
         }
 
-    # def create(self, validated_data):
-    #     user = User(
-    #         email=validated_data['email'],
-    #         username=validated_data['username']
-    #     )
-    #     user.set_password(validated_data['password'])
-    #     user.save()
-    #     return user
 
-    # def update(self, instance, validated_data):
-    #     return instance
+class UserRegisterSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='user-detail', lookup_field='username')
+
+    class Meta:
+        model = User
+        fields = [
+            'url',
+            'id',
+            'username',
+            'password'
+        ]
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
+    def update(self, instance, validated_data):
+        if 'password' in validated_data:
+            password = validated_data.pop('password')
+            instance.set_password(password)
+        return super().update(instance, validated_data)
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -137,5 +153,5 @@ class PostHaystackSerializer(HaystackSerializerMixin, PostListSerializer):
         search_fields = ['text']
         fields = [
             'id', 'title', 'create_time', 'excerpt', 'category', 'author',
-            'get_view_num', 'summary'
+            'view_num', 'summary'
         ]

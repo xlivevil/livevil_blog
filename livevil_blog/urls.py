@@ -43,3 +43,4 @@ if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [path('__debug__/', include(debug_toolbar.urls))
                    ] + urlpatterns
+# TODO: error handler 模板和api两个版本 返回网页或JSON
