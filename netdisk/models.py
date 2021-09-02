@@ -8,7 +8,7 @@ class Files(models.Model):
     '''
 
     '''
-    file = models.FileField(verbose_name=_('文件'), upload_to='file/%Y%m%d/')
+    file = models.FileField(verbose_name=_('文件'), upload_to='media/file/%Y%m%d/')
     created = models.DateTimeField(verbose_name=_('创建时间'),
                                    default=timezone.now)
     uploader = models.ForeignKey(settings.AUTH_USER_MODEL,
