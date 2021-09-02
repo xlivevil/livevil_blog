@@ -1,11 +1,13 @@
+import json
 from django.contrib import messages
 from django.db.models import Q
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.base import View
 from pure_pagination import PaginationMixin
 
 from blog.models import Post, Category, Tag, PostViewInfo
@@ -70,13 +72,13 @@ class PostDetailView(DetailView):
         return response
 
 
-# class SearchView(IndexView):
-#     def get_queryset(self):
-#         search = self.kwargs.get('q')
-#
-#         if not search:
-#             error_msg = "请的输入搜索关键词"
-#             messages.add_message(request,)
+class IncreaseLikesView(View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        post = Post.objects.get(id=data.get('id'))
+        post.likes += 1
+        post.save()
+        return HttpResponse('success')
 
 
 def search(request):

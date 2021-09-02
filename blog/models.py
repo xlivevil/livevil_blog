@@ -93,6 +93,8 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                verbose_name=_('作者'),
                                on_delete=models.CASCADE)
+    # 点赞数
+    likes = models.PositiveIntegerField(_('获赞数'), default=0)
 
     is_hidden = models.BooleanField(verbose_name=_('隐藏'), default=False)
 
