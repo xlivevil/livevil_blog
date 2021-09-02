@@ -64,6 +64,29 @@
 
             </div>
         </article>
+        {# 点赞 #}
+        {% csrf_token %}
+        <script>
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        </script>
+        <script src="{% static 'js/likes.js' %}"></script>
+        <div style="text-align:center;" class="mt-4">
+        <button class="btn btn-outline-danger" type="button" onclick="validate_is_like(
+                     '{% url 'blog:increase_likes' %}',
+                     {{ post.id }},
+                     {{ post.likes }}
+                     )">
+            <span>点赞</span>
+            <span>
+                <i class="fas fa-heart"></i>
+            </span>
+            <span id="likes_number">
+                {{ post.likes }}
+            </span>
+        </button>
+        </div>
+
+        {# 评论 #}
         <section class="comment-area" id="comment-area ">
             <hr>
             <h3>{% trans "发表评论" %}</h3>
@@ -72,6 +95,7 @@
                 {% render_post_comment_form for post %}
 
             {% else %}
+            {# TODO: 登陆后回到之前页面 #}
                 <div><a href="{% url 'account_login' %}"> <span>{% trans "请登录" %}</span></a></div>
             {% endif %}
 
