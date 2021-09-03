@@ -68,14 +68,14 @@ class PostComment(MPTTModel, CommentAbstractModel):
             userinfo = {
                 "name": self.user_name,
                 "email": self.user_email,
-                "url": self.user_url
+                "url": self.user_url,
             }
             if self.user_id:
                 u = self.user
                 if u.email:
                     userinfo["email"] = u.email
                 if u.nickname:
-                    userinfo["name"] = self.user.nickname
+                    userinfo["name"] = u.nickname
                 elif not self.user_name:
                     userinfo["name"] = u.get_username()
                 if u.url:
