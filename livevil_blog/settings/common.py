@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # External apps
     'django_comments',
     'crispy_forms',
+    "crispy_bootstrap5",
     'reversion',
     'debug_toolbar',
     'pure_pagination',
@@ -179,7 +180,9 @@ SUBDOMAIN_URLCONFS = {
 FORCE_VARY_ON_HOST = True
 
 # crispy-forms的模式
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # django-pure-pagination设置
 PAGINATION_SETTINGS = {

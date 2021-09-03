@@ -27,8 +27,8 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- css -->
-    <link crossorigin="anonymous" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          href="https://lib.baomitu.com/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="https://lib.baomitu.com/ionicons/2.0.1/css/ionicons.min.css">
     {% compress css %}
         <link rel="stylesheet" href="{% static 'css/pace.css' %}">
@@ -221,8 +221,8 @@ function selectlang(obj) {
 {% block footer %}
     {% include 'footer.html' %}
 {% endblock %}
-<script crossorigin="anonymous" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-        src="https://lib.baomitu.com/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 {% compress js %}
     <script src="{% static 'js/script.js' %}"></script>
 {% endcompress %}
