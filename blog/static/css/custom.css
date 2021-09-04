@@ -50,6 +50,7 @@ b {
 
 a {
     color: #333;
+    text-decoration: none;
 }
 
 a:hover,
@@ -188,11 +189,23 @@ img {
     color: #000;
 }
 .navbar-nav .nav-link {
-    font-size: 22px;
+    font-size: 1.8rem;
 }
 
 #navbarDropdown::after {
-    margin-left: 0.5em;
+    margin-left: 0.4rem;
+}
+
+.navbar-collapse {
+    flex-direction: column;
+}
+
+.navbar-nav {
+    align-self: flex-end;
+}
+
+.language-img {
+    height: 1.6rem;
 }
 
 /**

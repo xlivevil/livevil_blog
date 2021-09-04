@@ -67,10 +67,6 @@
         </article>
         {# 点赞 #}
         {% csrf_token %}
-        <script>
-            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        </script>
-        <script src="{% static 'js/likes.js' %}"></script>
         <div style="text-align:center;" class="mt-4">
         <button class="btn btn-outline-danger" type="button" onclick="validate_is_like(
                      '{% url 'blog:increase_likes' %}',
@@ -155,4 +151,12 @@
         hljs.initHighlightingOnLoad();
         hljs.initLineNumbersOnLoad();
     </script>
+{% endblock %}
+{% block extra_js %}
+{% compress js %}
+<script>
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+</script>
+<script src="{% static 'js/likes.js' %}"></script>
+{% endcompress %}
 {% endblock %}
