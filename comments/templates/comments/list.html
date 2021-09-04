@@ -18,13 +18,15 @@
         {% if comment.parent %}<span>{% trans "reply" %} {{ comment.parent }}</span>{% endif %}
         <div class="text">
             <div class="reply">
-            {% if user.is_authenticated %}
-                <button id="reply-btn{{ comment.pk }}" onclick="showReply({{ comment.pk }})">
-                    {% trans "reply" %}</button>
-            {% else %}
-                <button id="reply-btn{{ comment.pk }}" href="{% url 'account_login' %}?next={{ request.path }}">
-                    {% trans "reply" %}</button>
-            {% endif %}
+                {% if user.is_authenticated %}
+                <a class="btn btn-light btn-sm text-muted" id="reply-btn{{ comment.pk }}"
+                    onclick="showReply({{ comment.pk }})">
+                    {% trans "reply" %}</a>
+                {% else %}
+                <a class="btn btn-light btn-sm text-muted" id="reply-btn{{ comment.pk }}"
+                    href="{% url 'account_login' %}?next={{ request.path }}">
+                    {% trans "reply" %}</a>
+                {% endif %}
             </div>
             {{ comment.comment_html|safe }}
         </div>
