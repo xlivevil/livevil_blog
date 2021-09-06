@@ -79,11 +79,6 @@ p {
     letter-spacing: 0.01em;
 }
 
-#single p,
-#page p {
-    margin-bottom: 25px;
-}
-
 .page-title {
     text-align: center;
 }
@@ -918,17 +913,20 @@ img {
 .comment-item {
     border-bottom: 1px #ccc solid;
     padding: 5px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     background: rgba(255, 255, 255, 0.3);
 }
 
 .comment-item:not(:last-child) {
 }
 
-.comment-item .nickname,
-.comment-item .submit-date {
+.comment-item .nickname {
+
+}
+
+.comment-item .comment-time {
     color: #777;
-    font-size: 14px;
+    /* font-size: 14px; */
 }
 
 .comment-item .nickname:after {
@@ -937,7 +935,25 @@ img {
 
 .comment-item .text {
     padding-top: 5px;
-    font-size: 16px;
+    /* font-size: 16px; */
+}
+
+
+.reply {
+    border-top: 1px #ccc solid;
+    padding: 1px;
+}
+
+.quote {
+    margin: 1rem;
+}
+
+.comment-time{
+    font-size: 0.1rem;
+}
+
+dl.children {
+    margin-left: 2rem;
 }
 
 /**
@@ -1034,12 +1050,6 @@ img {
 
 .editormd-fullscreen {
     z-index: 1000;
-}
-
-.reply {
-    float: right;
-    position: relative;
-    height: auto;
 }
 
 .signup p {
