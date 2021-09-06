@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-29 16:03+0800\n"
+"POT-Creation-Date: 2021-09-04 20:51+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,12 +18,101 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: .\api\serializers.py:56 .\blog\templates\single.html:126
+msgid "文章目录"
+msgstr ""
+
+#: .\api\serializers.py:57
+msgid "文章内容"
+msgstr ""
+
+#: .\api\urls.py:25
+msgid "测试工程API"
+msgstr ""
+
+#: .\api\urls.py:27
+msgid "测试工程接口文档"
+msgstr ""
+
+#: .\api\views.py:130
+msgid "归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。"
+msgstr ""
+
+#: .\api\views.py:210
+msgid "搜索关键词"
+msgstr ""
+
 #: .\blog\apps.py:7
 msgid "博客"
 msgstr ""
 
-#: .\blog\models.py:142
+#: .\blog\models.py:23 .\blog\models.py:24 .\blog\models.py:88
+msgid "分类"
+msgstr ""
+
+#: .\blog\models.py:45 .\blog\models.py:46 .\blog\models.py:90
+msgid "标签"
+msgstr ""
+
+#: .\blog\models.py:63 .\blog\models.py:76
+msgid "正文"
+msgstr ""
+
+#: .\blog\models.py:72
+msgid "标题"
+msgstr ""
+
+#: .\blog\models.py:73
+msgid "短网址"
+msgstr ""
+
+#: .\blog\models.py:80 .\comments\models.py:33 .\netdisk\models.py:12
+#: .\users\models.py:15
+msgid "创建时间"
+msgstr ""
+
+#: .\blog\models.py:81
+msgid "修改时间"
+msgstr ""
+
+#: .\blog\models.py:84
+msgid "摘要"
+msgstr ""
+
+#: .\blog\models.py:94
+msgid "作者"
+msgstr ""
+
+#: .\blog\models.py:97
+msgid "获赞数"
+msgstr ""
+
+#: .\blog\models.py:99
+msgid "隐藏"
+msgstr ""
+
+#: .\blog\models.py:101
+msgid "置顶"
+msgstr ""
+
+#: .\blog\models.py:146 .\blog\models.py:147 .\blog\models.py:174
+msgid "文章"
+msgstr ""
+
+#: .\blog\models.py:161
 msgid "浏览量"
+msgstr ""
+
+#: .\blog\models.py:176
+msgid "浏览时间"
+msgstr ""
+
+#: .\blog\models.py:179
+msgid "请求头"
+msgstr ""
+
+#: .\blog\models.py:186 .\blog\models.py:187
+msgid "浏览记录"
 msgstr ""
 
 #: .\blog\templates\about.html:17
@@ -40,17 +129,13 @@ msgstr ""
 #: .\blog\templates\about.html:27
 msgid ""
 "\n"
-"                    本站基于python3.7，使用django2.2框架。主要用于个人学习编"
+"                    本站基于python3.9，使用django3.2框架。主要用于个人学习编"
 "程的技术实践与经验记录。\n"
 "                "
 msgstr ""
 
 #: .\blog\templates\about.html:32
 msgid "Social"
-msgstr ""
-
-#: .\blog\templates\base.html:203
-msgid "Languages"
 msgstr ""
 
 #: .\blog\templates\contact_form\contact_form.html:16
@@ -69,15 +154,15 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: .\blog\templates\single.html:69
+#: .\blog\templates\single.html:89
 msgid "发表评论"
 msgstr ""
 
-#: .\blog\templates\single.html:75
+#: .\blog\templates\single.html:96
 msgid "请登录"
 msgstr ""
 
-#: .\blog\templates\single.html:84
+#: .\blog\templates\single.html:105
 #, python-format
 msgid ""
 "\n"
@@ -86,57 +171,53 @@ msgid ""
 "                    "
 msgstr ""
 
-#: .\blog\templates\single.html:91
+#: .\blog\templates\single.html:112
 msgid "暂无评论"
 msgstr ""
 
-#: .\blog\templates\single.html:105
-msgid "文章目录"
-msgstr ""
-
-#: .\blog\views.py:88
+#: .\blog\views.py:93
 msgid "请输入搜索关键字"
 msgstr ""
 
-#: .\comments\admin.py:27
+#: .\comments\admin.py:29
 msgid "Content"
 msgstr ""
 
-#: .\comments\admin.py:31
+#: .\comments\admin.py:33
 msgid "Metadata"
 msgstr ""
 
-#: .\comments\admin.py:59
+#: .\comments\admin.py:68
 msgid "flagged"
 msgid_plural "flagged"
 msgstr[0] ""
 msgstr[1] ""
 
-#: .\comments\admin.py:61
+#: .\comments\admin.py:70
 msgid "Flag selected comments"
 msgstr ""
 
-#: .\comments\admin.py:65
+#: .\comments\admin.py:74
 msgid "approved"
 msgid_plural "approved"
 msgstr[0] ""
 msgstr[1] ""
 
-#: .\comments\admin.py:67
+#: .\comments\admin.py:76
 msgid "Approve selected comments"
 msgstr ""
 
-#: .\comments\admin.py:71
+#: .\comments\admin.py:80 .\netdisk\models.py:26
 msgid "removed"
 msgid_plural "removed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: .\comments\admin.py:73
+#: .\comments\admin.py:82
 msgid "Remove selected comments"
 msgstr ""
 
-#: .\comments\admin.py:85
+#: .\comments\admin.py:94
 #, python-format
 msgid "%(count)s comment was successfully %(action)s."
 msgid_plural "%(count)s comments were successfully %(action)s."
@@ -147,19 +228,15 @@ msgstr[1] ""
 msgid "评论"
 msgstr ""
 
-#: .\comments\models.py:31
-msgid "创建时间"
-msgstr ""
-
-#: .\comments\models.py:35
+#: .\comments\models.py:37
 msgid "父评论"
 msgstr ""
 
-#: .\comments\models.py:44
+#: .\comments\models.py:46
 msgid "comment"
 msgstr ""
 
-#: .\comments\models.py:45
+#: .\comments\models.py:47
 msgid "comments"
 msgstr ""
 
@@ -225,8 +302,9 @@ msgstr ""
 msgid "Post"
 msgstr ""
 
-#: .\comments\templates\comments\list.html:16
-#: .\comments\templates\comments\list.html:21
+#: .\comments\templates\comments\list.html:18
+#: .\comments\templates\comments\list.html:24
+#: .\comments\templates\comments\list.html:28
 msgid "reply"
 msgstr ""
 
@@ -268,16 +346,56 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:140
+#: .\livevil_blog\settings\common.py:143
 msgid "中文简体"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:141
+#: .\livevil_blog\settings\common.py:143
 msgid "English"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:142
+#: .\livevil_blog\settings\common.py:143
 msgid "日本語"
+msgstr ""
+
+#: .\netdisk\apps.py:7
+msgid "网盘"
+msgstr ""
+
+#: .\netdisk\models.py:11
+msgid "文件"
+msgstr ""
+
+#: .\netdisk\models.py:15
+msgid "uploader"
+msgstr ""
+
+#: .\netdisk\models.py:20
+msgid "is public"
+msgstr ""
+
+#: .\netdisk\models.py:22
+msgid "not pubic"
+msgstr ""
+
+#: .\netdisk\models.py:23
+msgid "is removed"
+msgstr ""
+
+#: .\users\models.py:11
+msgid "昵称"
+msgstr ""
+
+#: .\users\models.py:16
+msgid "个人网址"
+msgstr ""
+
+#: .\users\models.py:22
+msgid "电子邮箱"
+msgstr ""
+
+#: .\users\models.py:25
+msgid "电子邮箱已存在"
 msgstr ""
 
 #: .\users\templates\account\account_inactive.html:5
