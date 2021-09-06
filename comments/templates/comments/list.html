@@ -13,10 +13,19 @@
         <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
         {% endif %}
         <span class="nickname">{{ comment.user.username }}</span>
-        <time class="created_time" datetime="{{ comment.created_time }}">{{ comment.created_time|naturaltime }}</time>
+        <time class="comment-time" datetime="{{ comment.created_time }}">{{ comment.created_time|naturaltime }}</time>
 
-        {% if comment.parent %}<span>{% trans "reply" %} {{ comment.parent }}</span>{% endif %}
-        <div class="text">
+    </dt>
+    <dd class="comment-item" id="c{{ comment.id }}t">
+        <a  href="#c{{ comment.parent.id }}">
+        <div class="quote">
+        {% if comment.parent %}<span>{{ comment.parent.comment_html|safe|truncatechars_html:30 }}</span>{% endif %}
+        </div>
+        </a>
+
+        {{ comment.comment_html|safe }}
+
+
             <div class="reply">
                 {% if user.is_authenticated %}
                 <a class="btn btn-light btn-sm text-muted" id="reply-btn{{ comment.pk }}"
@@ -28,14 +37,10 @@
                     {% trans "reply" %}</a>
                 {% endif %}
             </div>
-            {{ comment.comment_html|safe }}
-        </div>
-        {# reply form #}
-        <!--{% url 'comments:post_comments_reply' comment.pk %}-->
-    </dt>
+    </dd>
 
     {% if not comment.is_leaf_node %}
-    <dl class="children" style="margin-left: 40px">
+    <dl class="children">
         {{ children }}
     </dl>
     {% endif %}
@@ -45,14 +50,14 @@
 
 <script type="text/javascript">
     function showReply(x) {
-        const box = document.getElementById("c" + x);
+        const box = document.getElementById("c" + x + "t");
         if (document.getElementById("iframe"+x)){
             let oldbox = document.getElementById("iframe"+x);
             oldbox.remove();
             return
         };
         const newiframe = document.createElement('iframe');
-        newiframe.style.cssText = "class:reply-box;height:500;width:100%;frameborder:0;scrolling:0;";
+        newiframe.style.cssText = "class:reply-box;height:270px;width:100%;frameborder:0;scrolling:0;";
         newiframe.id = "iframe"+x;
         newiframe.name = "reply_iframe";
         newiframe.src = "/zh-hans/comments/reply/" + x;
