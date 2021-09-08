@@ -1,15 +1,17 @@
 from datetime import datetime
+
 from django.conf import settings
 from django.core.cache import cache
 from django.db import models
+from django.db.models.signals import post_delete, post_save
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from django.db.models.signals import post_delete, post_save
 from djongo import models as mongomodels
+
 from utils.rich_content import generate_rich_content
 
 
@@ -28,7 +30,7 @@ class Category(models.Model):
 
 
 def change_category_updated_at(sender=None, instance=None, *args, **kwargs):
-    cache.set("category_updated_at", datetime.utcnow())
+    cache.set('category_updated_at', datetime.utcnow())
 
 
 post_save.connect(receiver=change_category_updated_at, sender=Category)
@@ -50,7 +52,7 @@ class Tag(models.Model):
 
 
 def change_tag_updated_at(sender=None, instance=None, *args, **kwargs):
-    cache.set("tag_updated_at", datetime.utcnow())
+    cache.set('tag_updated_at', datetime.utcnow())
 
 
 post_save.connect(receiver=change_tag_updated_at, sender=Category)
@@ -102,16 +104,16 @@ class Post(models.Model):
 
     @property
     def toc(self):
-        return self.rich_content.get("toc", "")
+        return self.rich_content.get('toc', '')
 
     @property
     def body_html(self):
-        return self.rich_content.get("content", "")
+        return self.rich_content.get('content', '')
 
     @cached_property
     def rich_content(self):
-        ud = self.modified_time.strftime("%Y%m%d%H%M%S")
-        md_key = 'post{}_md_{}'.format(self.id, ud)
+        ud = self.modified_time.strftime('%Y%m%d%H%M%S')
+        md_key = f'post{self.id}_md_{ud}'
         cache_md = cache.get(md_key)
         if cache_md:
             rich_content = cache_md
@@ -128,13 +130,13 @@ class Post(models.Model):
         self.modified_time = timezone.now()
 
         if self.excerpt == '':
-            body = self.rich_content.get("content", "")
+            body = self.rich_content.get('content', '')
             self.excerpt = strip_tags(body)[:200]
 
         if self.slug == '':
             slug = slugify(self.title, allow_unicode=True)[:20]
             if Post.objects.filter(slug=slug).exists():
-                self.slug = "{}-{}".format(
+                self.slug = '{}-{}'.format(
                     slug,
                     Post.objects.filter(slug__startswith=slug).count() + 1)
             else:
@@ -148,21 +150,20 @@ class Post(models.Model):
         ordering = ['-create_time']
 
     def __str__(self):
-        return "blog-" + self.title
+        return 'blog-' + self.title
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={'pk': self.pk})
 
-    # @property
+    @property
     def view_num(self):
         # '浏览量'
         num = self.postviewinfo_set.count()
         return num
-    view_num.short_description = _('浏览量')
 
 
 def change_post_updated_at(sender=None, instance=None, *args, **kwargs):
-    cache.set("post_updated_at", datetime.utcnow())
+    cache.set('post_updated_at', datetime.utcnow())
 
 
 post_save.connect(receiver=change_post_updated_at, sender=Post)
@@ -171,7 +172,9 @@ post_delete.connect(receiver=change_post_updated_at, sender=Post)
 
 class PostViewInfo(models.Model):
 
-    post = models.ForeignKey(Post, verbose_name=_('文章'), on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,
+                             verbose_name=_('文章'),
+                             on_delete=models.CASCADE)
 
     view_time = models.DateTimeField(_('浏览时间'), default=timezone.now)
 

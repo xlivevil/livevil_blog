@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load highlight %}
+{% load comments_extras i18n %}
+{% load comments i18n %}
 {% block head_title %}
     Xlivevil {% endblock %}
 {% block extra_js %}
@@ -11,7 +13,7 @@
     </style>
 {% endblock %}
 {% block bodyid %}
-    <body>
+    id="search"
 {% endblock %}
 {% block container %}
     {{ block.super }}
@@ -21,7 +23,7 @@
     <form method="get" action="." class="col-lg-12">
 
         {{ form.q }}
-        <input type="submit" value="搜索">
+        <input type="submit" value="{% trans "搜索" %}">
     </form>
     <main class="col-md-auto">
         {% if query %}
@@ -35,15 +37,19 @@
                     <span class="post-category">
                         <a href="{% url 'blog:category' result.object.category.name %}">
                             {{ result.object.category.name }}</a></span>
-                            <span class="post-date"><a href="#">
-                            <time class="entry-date" datetime="{{ result.object.create_time|date:'Y-m-d' }}">
-                                {{ result.object.create_time|date:'Y-m-d' }}</time></a></span>
 
-                            <span class="comments-link">
-                        <a href="{{ result.object.get_absolute_url }}#comment-area">
-                            {{ result.object.comment_set.count }} 评论</a></span>
-                            <span class="views-count"><a
-                                    href="{{ result.object.get_absolute_url }}">{{ result.object.view_num }} 阅读</a></span>
+                            <span class="post-date"><a href="{{ post.get_absolute_url }}">
+                                    <time class="entry-date ion-calendar"
+                                        datetime="{{ result.object.create_time|date:'Y-m-d' }}">
+                                        {{ result.object.create_time|date:'Y-m-d' }}</time></a></span>
+
+                            {% get_comment_count for result.object as comment_count %}
+                            <span class="comments-link"><a href="{{ result.object.get_absolute_url }}#comment-list"
+                                            class="ion-chatbubble"> {{ comment_count }}</a></span>
+                            <span class="views-count"><a href="{{ result.object.get_absolute_url }}" class="ion-eye">
+                                            {{ result.object.view_num }}</a></span>
+                            <span class="post-likes"><a href="{{ result.object.get_absolute_url }}" class="ion-android-favorite">
+                                            {{ result.object.likes }}</a></span>
                         </div>
                     </header>
                     <div class="entry-content clearfix">
@@ -51,13 +57,13 @@
                             <p>{% highlight result.object.body with query %}</p>
                         </a>
                         <div class="read-more cl-effect-14">
-                            <a href="{{ result.object.get_absolute_url }}" class="more-link">继续阅读 <span
+                            <a href="{{ result.object.get_absolute_url }}" class="more-link">{% trans "继续阅读" %}<span
                                     class="meta-nav">→</span></a>
                         </div>
                     </div>
                 </article>
             {% empty %}
-                <div class="post no-post">没有搜索到你想要的结果！</div>
+                <div class="post no-post">{% trans "没有搜索到你想要的结果！" %}</div>
             {% endfor %}
 
             {% if page.has_previous or page.has_next %}
@@ -72,7 +78,7 @@
             {% endif %}
         {% else %}
             <div class="post no-post">
-                请输入搜索关键词，例如 django
+                {% trans "请输入搜索关键词，例如 django" %}
             </div>
         {% endif %}
     </main>

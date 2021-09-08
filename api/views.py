@@ -1,38 +1,54 @@
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_haystack.filters import HaystackAutocompleteFilter
+from drf_haystack.viewsets import HaystackViewSet
+from drf_yasg import openapi
+from drf_yasg.inspectors import FilterInspector
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import response, status
 from rest_framework.decorators import action
 from rest_framework.fields import DateField
 from rest_framework.generics import ListAPIView
-from rest_framework.mixins import (ListModelMixin, RetrieveModelMixin,
-                                   CreateModelMixin)
-from rest_framework.pagination import (PageNumberPagination,
-                                       LimitOffsetPagination)
+from rest_framework.mixins import (
+    CreateModelMixin,
+    ListModelMixin,
+    RetrieveModelMixin,
+)
+from rest_framework.pagination import (
+    LimitOffsetPagination,
+    PageNumberPagination,
+)
 from rest_framework.permissions import AllowAny
-from rest_framework.settings import api_settings
-from rest_framework.views import APIView
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.settings import api_settings
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 from rest_framework_extensions.cache.decorators import cache_response
-from drf_haystack.viewsets import HaystackViewSet
-from drf_haystack.filters import HaystackAutocompleteFilter
-from drf_yasg import openapi
-from drf_yasg.inspectors import FilterInspector
-from drf_yasg.utils import swagger_auto_schema
+
 from api.filter import PostFilter
-from api.serializers import (CategorySerializer, PostHaystackSerializer,
-                             PostListSerializer, PostSerializer,
-                             CommentSerializer, TagSerializer)
+from api.serializers import (
+    CategorySerializer,
+    CommentSerializer,
+    PostHaystackSerializer,
+    PostListSerializer,
+    PostSerializer,
+    TagSerializer,
+)
 from blog.models import Category, Post, Tag
 from comments.models import PostComment
-from .cache import (CategoryKeyConstructor, CommentListKeyConstructor,
-                    PostListKeyConstructor, PostObjectKeyConstructor,
-                    TagKeyConstructor)
-from django.utils.translation import gettext_lazy as _
+
+from .cache import (
+    CategoryKeyConstructor,
+    CommentListKeyConstructor,
+    PostListKeyConstructor,
+    PostObjectKeyConstructor,
+    TagKeyConstructor,
+)
 
 
 class View(APIView):  # pragma: no cover
@@ -106,8 +122,8 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     """
     serializer_class = PostSerializer
     serializer_class_table = {
-        "list": PostListSerializer,
-        "retrieve": PostSerializer,
+        'list': PostListSerializer,
+        'retrieve': PostSerializer,
     }
     queryset = Post.objects.all()
     permission_classes = [AllowAny]
@@ -148,7 +164,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         url_path='comments',
         url_name='comment',
         filter_backends=[],
-        suffix="List",
+        suffix='List',
         pagination_class=LimitOffsetPagination,
         serializer_class=CommentSerializer,
     )
@@ -244,7 +260,7 @@ class TagViewSet(ListModelMixin, GenericViewSet):
     def get_queryset(self):
         return Tag.objects.all().order_by('name')
 
-    # @cache_response(timeout=5 * 60, key_func=TagKeyConstructor())
+    @cache_response(timeout=5 * 60, key_func=TagKeyConstructor())
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
@@ -256,6 +272,6 @@ class CategoryViewSet(ListModelMixin, GenericViewSet):
     def get_queryset(self):
         return Category.objects.all().order_by('name')
 
-    # @cache_response(timeout=5 * 60, key_func=CategoryKeyConstructor())
+    @cache_response(timeout=5 * 60, key_func=CategoryKeyConstructor())
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)

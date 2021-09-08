@@ -1,16 +1,17 @@
 import json
+
 from django.contrib import messages
 from django.db.models import Q
 from django.http.response import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from django.views.decorators.cache import cache_page
-from django.views.generic import ListView, DetailView
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.cache import cache_page
+from django.views.generic import DetailView, ListView
 from django.views.generic.base import View
 from pure_pagination import PaginationMixin
 
-from blog.models import Post, Category, Tag, PostViewInfo
+from blog.models import Category, Post, PostViewInfo, Tag
 
 
 class IndexView(PaginationMixin, ListView):
@@ -53,7 +54,7 @@ class PostDetailView(DetailView):
     context_object_name = 'post'
 
     def get(self, request, *args, **kwargs):
-        response = super(PostDetailView, self).get(request, *args, **kwargs)
+        response = super().get(request, *args, **kwargs)
         # 重写get方法
         # 阅读数增加操作
         if kwargs.get('pk'):
@@ -77,7 +78,7 @@ class IncreaseLikesView(View):
         data = json.loads(request.body)
         post = Post.objects.get(id=data.get('id'))
         post.likes += 1
-        post.save()
+        post.save(update_fields=['likes'])
         return HttpResponse('success')
 
 
