@@ -1,8 +1,9 @@
 from django.contrib import admin
-
+from django.db.models import Count
+from django.utils.translation import gettext_lazy as _
 from reversion.admin import VersionAdmin
 
-from blog.models import Post, Category, Tag, PostViewInfo, PostBody
+from blog.models import Category, Post, PostBody, PostViewInfo, Tag
 
 
 @admin.register(Post)
@@ -11,7 +12,7 @@ class PostAdmin(VersionAdmin):
     date_hierarchy = 'create_time'
     # 显示列表显示项
     list_display = ('title', 'create_time', 'modified_time', 'category',
-                    'author', 'view_num')
+                    'author', 'postview_count', 'likes')
     # 过滤器
     list_filter = (
         'create_time',
@@ -34,9 +35,20 @@ class PostAdmin(VersionAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
+        qs = qs.annotate(_postview_count=Count('postviewinfo'), )
         if request.user.is_superuser:
             return qs
         return qs.filter(author=request.user)
+
+    @admin.display(
+        ordering='_postview_count',
+        description=_('浏览量'),
+    )
+    def postview_count(self, obj):
+        return obj._postview_count
+
+    # postview_count.admin_order_field = '_postview_count'
+    # postview_count.short_description = _('浏览量')
 
 
 @admin.register(PostViewInfo)

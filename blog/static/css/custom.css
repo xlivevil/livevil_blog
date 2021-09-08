@@ -261,7 +261,7 @@ img {
 .entry-content {
     padding: 10px;
     font-size: 18px;
-    line-height: 1.9;
+    /* line-height: 1.9; */
     font-weight: 300;
     color: #000;
     word-wrap: break-word;
@@ -278,7 +278,8 @@ img {
 .post-category::after,
 .post-date::after,
 .post-author::after,
-.comments-link::after {
+.comments-link::after,
+.views-count::after {
     content: ' ·';
     color: #000;
 }

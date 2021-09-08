@@ -10,7 +10,7 @@
     Xlivevil{% endblock %}
 {#    TODO: 加入赞赏功能#}
 {% block extra_css %}
-    <link href="https://lib.baomitu.com/highlight.js/9.15.10/styles/zenburn.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.18.3/styles/zenburn.min.css" rel="stylesheet">
     {% compress css %}
         <style type="text/css">
             /* for block of numbers */
@@ -24,23 +24,21 @@
 
                 text-align: center;
                 color: #ccc;
-            {#border-right: 1px solid #CCC; #} vertical-align: top;
+                border-right: 1px solid #CCC;
+                vertical-align: top;
                 padding-right: 5px !important;
 
                 /* your custom style here */
             }
 
             /* for block of code */
-            {#.hljs-ln-code {#}
-            {#    padding-left: 10px;#}
-            {#{#}
-
+            .hljs-ln-code {
+                padding-left: 10px!important;
+            }
         </style>
     {% endcompress %}
 {% endblock %}
-{% block bodyid %}
-    id="single"
-{% endblock %}
+{% block bodyid %}id="single"{% endblock %}
 {% block container %}
     {{ block.super }}
 {% endblock %}
@@ -53,11 +51,13 @@
                     <span class="post-category"><a href="#">{{ post.category }}</a></span>
                     <span class="post-date"><a href="#"><time class="entry-date ion-calendar"
                                                               datetime="{{ post.create_time|date:'Y-m-d' }}"> {{ post.create_time|date:'Y-m-d' }}</time></a></span>
-                    {#                    <span class="post-author"><a href="#">{{ post.author }}</a></span>#}
+                    {# <span class="post-author"><a href="#">{{ post.author }}</a></span> #}
                     {% get_comment_count for post as comment_count %}
                     <span class="comments-link"><a href="#comment-list"
                                                    class="ion-chatbubble"> {{ comment_count }} </a></span>
                     <span class="views-count"><a href="#" class="ion-eye"> {{ post.view_num }}</a></span>
+                    <span class="post-likes"><a href="#" class="ion-android-favorite">
+                                            {{ post.likes }}</a></span>
                 </div>
             </header>
             <div class="entry-content clearfix">
@@ -73,7 +73,7 @@
                      {{ post.id }},
                      {{ post.likes }}
                      )">
-            <span>点赞</span>
+            <span>{% trans "点赞" %}</span>
             <span>
                 <i class="fas fa-heart"></i>
             </span>
@@ -87,13 +87,13 @@
         <section class="comment-area" id="comment-area ">
             <hr>
             <h3>{% trans "发表评论" %}</h3>
-            {#        TODO: 修改editor.md手机端emoji 代码块 符号 预览 全屏 及大小 手机层次在导航之上#}
+            {# TODO: 修改editor.md手机端emoji 代码块 符号 预览 全屏 及大小 手机层次在导航之上 #}
             {% if user.is_authenticated %}
                 {% render_post_comment_form for post %}
 
             {% else %}
-            {# TODO: 登陆后回到之前页面 #}
-                <div><a href="{% url 'account_login' %}"> <span>{% trans "请登录" %}</span></a></div>
+            {# TODO: 修改样式 #}
+                <div><a href="{% url 'account_login' %}?next={{ request.path }}"> <span>{% trans "请登录" %}</span></a></div>
             {% endif %}
 
             <hr>
@@ -145,8 +145,8 @@
 {% block footer %}
     {% include 'footer.html' %}
 
-    <script src="https://lib.baomitu.com/highlight.js/9.15.10/highlight.min.js"></script>
-    <script src="https://lib.baomitu.com/highlightjs-line-numbers.js/2.7.0/highlightjs-line-numbers.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
     <script>
         hljs.initHighlightingOnLoad();
         hljs.initLineNumbersOnLoad();
