@@ -93,7 +93,7 @@
         </li>
     {% endcache %}
 
-<li class="nav-item">
+<li class="nav-item dropdown">
     <a class="nav-link dropdown" href="#" id="setLangDropdown" role="button"
            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <svg xmlns="http://www.w3.org/2000/svg" width="1.6rem" height="1.6rem" fill="currentColor" class="bi bi-globe2"
@@ -111,8 +111,9 @@
                 <input name="next" type="hidden" value="{{ redirect_to }}" />
                 <input name="language" type="hidden" value="{{ lang.0 }}" />
                 <a class="dropdown-item" href="javascript:document.language{{ forloop.counter }}.submit()">
-                <img class="language-img" src="{% get_static_prefix %}img/languages/{{ lang.0 }}.svg" %}" alt='{{ lang.0 }}' />
-                        {{ lang.1 }}</a>
+                <img class="language-img" src="{% get_static_prefix %}img/languages/{{ lang.0 }}.svg"
+                    alt='{{ lang.0 }}' />
+                {{ lang.1 }}</a>
             </form>
         </li>
         {% endfor %}
@@ -226,7 +227,7 @@
         </div>
     </div>
 </div>
-{# TODO: language selector change style  #}
+
 {% comment %}
 <form name="langform" id="langform" method='post'>{% csrf_token %}
     <select id="language" name="language" onchange="selectlang(this)">
