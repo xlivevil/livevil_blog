@@ -295,3 +295,6 @@ nginx/logs
 node_modules
 package.json
 package-lock.json
+
+.bluemix
+local_test_ibm_cos.py

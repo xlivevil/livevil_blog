@@ -41,6 +41,7 @@ ibm-cos-sdk = "^2.10.0"
 djangorestframework-simplejwt = "^4.8.0"
 django-cors-headers = "^3.8.0"
 crispy-bootstrap5 = "^0.5"
+django-storages = "^1.11.1"
 
 [tool.poetry.dev-dependencies]
 Faker = "^8.1.4"
@@ -61,10 +62,14 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
 skip=[".tox", "migrations"]
-multi_line_output="3"
+multi_line_output="8"
 known_third_party="django"
 include_trailing_comma = "true"
 
-[tool.flake8]
-exclude = "*migrations*"
-max-line-length = "119"
+[tool.yapf]
+based_on_style = "pep8"
+spaces_before_comment = "4"
+split_before_logical_operator = "true"
+column_limit = "119"
+split_penalty_import_names = "1"
+indent_closing_brackets = "true"

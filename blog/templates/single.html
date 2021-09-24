@@ -93,7 +93,9 @@
 
             {% else %}
             {# TODO: 修改样式 #}
-                <div><a href="{% url 'account_login' %}?next={{ request.path }}"> <span>{% trans "请登录" %}</span></a></div>
+                <div><a href="{% url 'account_login' %}?next={{ request.path }}"> <span
+                            class="fs-5">{% trans "请登录" %}</span></a>
+                </div>
             {% endif %}
 
             <hr>

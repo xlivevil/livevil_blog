@@ -16,11 +16,11 @@ from rest_framework.mixins import (
     CreateModelMixin,
     ListModelMixin,
     RetrieveModelMixin,
-)
+    )
 from rest_framework.pagination import (
     LimitOffsetPagination,
     PageNumberPagination,
-)
+    )
 from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -38,7 +38,7 @@ from api.serializers import (
     PostListSerializer,
     PostSerializer,
     TagSerializer,
-)
+    )
 from blog.models import Category, Post, Tag
 from comments.models import PostComment
 
@@ -48,10 +48,10 @@ from .cache import (
     PostListKeyConstructor,
     PostObjectKeyConstructor,
     TagKeyConstructor,
-)
+    )
 
 
-class View(APIView):  # pragma: no cover
+class View(APIView):    # pragma: no cover
 
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
     parser_classes = api_settings.DEFAULT_PARSER_CLASSES
@@ -66,24 +66,24 @@ class View(APIView):  # pragma: no cover
         pk = kwargs.get('pk')
         if pk:
             try:
-                obj = Post.objects.get(pk=pk, is_delete=False)
+                obj = Post.objects.get(pk=pk, is_hidden=False)
                 data = PostSerializer(obj).data
             except Exception as e:
                 print(e)
                 return Response({
                     'status': 404,
                     'msg': '没有找到',
-                })
+                    })
         else:
-            query = Post.objects.filter(is_delete=False).all()
+            query = Post.objects.filter(is_hidden=False).all()
             data = PostSerializer(query, many=True).data
         return Response({'status': 200, 'msg': 'ok', 'result': data})
 
     def post(self, request, *args, **kwargs):
         request_data = request.data
-        if isinstance(request_data, dict):  # 单增
+        if isinstance(request_data, dict):    # 单增
             many = False
-        elif isinstance(request_data, list):  # 群增
+        elif isinstance(request_data, list):    # 群增
             many = True
         ser = PostSerializer(data=request_data)
 
@@ -95,7 +95,7 @@ class View(APIView):  # pragma: no cover
         pass
 
 
-class IndexAPIView(ListModelMixin, GenericViewSet):  # pragma: no cover
+class IndexAPIView(ListModelMixin, GenericViewSet):    # pragma: no cover
     # 没有使用, 功能已整合进PostViewSet
     serializer_class = PostSerializer
     queryset = Post.objects.all()
@@ -124,15 +124,14 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     serializer_class_table = {
         'list': PostListSerializer,
         'retrieve': PostSerializer,
-    }
+        }
     queryset = Post.objects.all()
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
     filterset_class = PostFilter
 
     def get_serializer_class(self):
-        return self.serializer_class_table.get(self.action,
-                                               super().get_serializer_class())
+        return self.serializer_class_table.get(self.action, super().get_serializer_class())
 
     # @cache_response(timeout=5 * 60, key_func=PostListKeyConstructor())
     def list(self, request, *args, **kwargs):
@@ -142,8 +141,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
-    @swagger_auto_schema(
-        responses={200: _("归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。")})
+    @swagger_auto_schema(responses={200: _("归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。")})
     @action(
         methods=['GET'],
         detail=False,
@@ -151,7 +149,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         url_name='archive-date',
         filter_backends=[],
         pagination_class=None,
-    )
+        )
     def list_archive_dates(self, request, *args, **kwargs):
         dates = Post.objects.dates('create_time', 'month', order='DESC')
         date_field = DateField(format='%Y-%m')
@@ -167,16 +165,13 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         suffix='List',
         pagination_class=LimitOffsetPagination,
         serializer_class=CommentSerializer,
-    )
+        )
     def list_comments(self, request, *args, **kwargs):
         # 根据 URL 传入的参数值（文章 id）获取到博客文章记录
         post = self.get_object()
         # 获取文章下关联的全部评论 self.object.content_object  self.object.pk
-        content_type = ContentType.objects.get(app_label=post._meta.app_label,
-                                               model=post._meta.model_name)
-        queryset = PostComment.objects.filter(
-            content_type=content_type,
-            object_pk=post.pk).order_by('-created_time')
+        content_type = ContentType.objects.get(app_label=post._meta.app_label, model=post._meta.model_name)
+        queryset = PostComment.objects.filter(content_type=content_type, object_pk=post.pk).order_by('-created_time')
         # 对评论列表进行分页，根据 URL 传入的参数获取指定页的评论
         page = self.paginate_queryset(queryset)
         # 序列化评论
@@ -225,15 +220,13 @@ class PostSearchFilterInspector(FilterInspector):
                 required=True,
                 description=_('搜索关键词'),
                 type=openapi.TYPE_STRING,
-            )
-        ]
+                )
+            ]
 
 
 # @method_decorator(name='retrieve',
 #                   decorator=swagger_auto_schema(auto_schema=None, ))
-@method_decorator(name='list',
-                  decorator=swagger_auto_schema(
-                      filter_inspectors=[PostSearchFilterInspector]))
+@method_decorator(name='list', decorator=swagger_auto_schema(filter_inspectors=[PostSearchFilterInspector]))
 class PostSearchView(HaystackViewSet):
     """
     搜索视图集
