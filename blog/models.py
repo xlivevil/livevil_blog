@@ -86,15 +86,11 @@ class Post(models.Model):
     excerpt = models.CharField(_('摘要'), max_length=200, blank=True)
 
     # 分类关系和标签关系
-    category = models.ForeignKey(Category,
-                                 verbose_name=_('分类'),
-                                 on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, verbose_name=_('分类'), on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, verbose_name=_('标签'), blank=True)
 
     # 作者关系
-    author = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               verbose_name=_('作者'),
-                               on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('作者'), on_delete=models.CASCADE)
     # 点赞数
     likes = models.PositiveIntegerField(_('获赞数'), default=0)
 
@@ -122,11 +118,7 @@ class Post(models.Model):
             cache.set(md_key, rich_content, 60 * 60 * 12)
         return rich_content
 
-    def save(self,
-             force_insert=False,
-             force_update=False,
-             using=None,
-             update_fields=None):
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.modified_time = timezone.now()
 
         if self.excerpt == '':
@@ -136,9 +128,7 @@ class Post(models.Model):
         if self.slug == '':
             slug = slugify(self.title, allow_unicode=True)[:20]
             if Post.objects.filter(slug=slug).exists():
-                self.slug = '{}-{}'.format(
-                    slug,
-                    Post.objects.filter(slug__startswith=slug).count() + 1)
+                self.slug = f'{slug}-{Post.objects.filter(slug__startswith=slug).count() + 1}'
             else:
                 self.slug = slug
 
@@ -157,9 +147,7 @@ class Post(models.Model):
 
     @property
     def view_num(self):
-        # '浏览量'
-        num = self.postviewinfo_set.count()
-        return num
+        return self.postviewinfo_set.count()
 
 
 def change_post_updated_at(sender=None, instance=None, *args, **kwargs):
@@ -172,9 +160,7 @@ post_delete.connect(receiver=change_post_updated_at, sender=Post)
 
 class PostViewInfo(models.Model):
 
-    post = models.ForeignKey(Post,
-                             verbose_name=_('文章'),
-                             on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, verbose_name=_('文章'), on_delete=models.CASCADE)
 
     view_time = models.DateTimeField(_('浏览时间'), default=timezone.now)
 
@@ -183,7 +169,7 @@ class PostViewInfo(models.Model):
         max_length=200,
     )
 
-    ip = models.GenericIPAddressField('IP', )
+    ip = models.GenericIPAddressField('IP',)
 
     class Meta:
         verbose_name = _('浏览记录')

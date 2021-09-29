@@ -12,6 +12,7 @@ from ..models import Category, Post, Tag
 
 
 class BlogDataTestCase(TestCase):
+
     def setUp(self):
         apps.get_app_config('haystack').signal_processor.teardown()
 
@@ -32,7 +33,7 @@ class BlogDataTestCase(TestCase):
             body='测试内容一',
             category=self.cate1,
             author=self.user,
-            )
+        )
         self.post1.tags.add(self.tag1)
         self.post1.save()
 
@@ -42,10 +43,11 @@ class BlogDataTestCase(TestCase):
             category=self.cate2,
             author=self.user,
             create_time=timezone.now() - timedelta(days=100)
-            )
+        )
 
 
 class CategoryViewTestCase(BlogDataTestCase):
+
     def setUp(self):
         super().setUp()
         self.url = reverse('blog:category', kwargs={'name': self.cate1.name})
@@ -77,6 +79,7 @@ class CategoryViewTestCase(BlogDataTestCase):
 
 
 class PostDetailViewTestCase(BlogDataTestCase):
+
     def setUp(self):
         super().setUp()
         self.md_post = Post.objects.create(
@@ -84,7 +87,7 @@ class PostDetailViewTestCase(BlogDataTestCase):
             body='# 标题',
             category=self.cate1,
             author=self.user,
-            )
+        )
         self.url = reverse('blog:detail', kwargs={'pk': self.md_post.pk})
 
     def test_good_view(self):
@@ -99,14 +102,14 @@ class PostDetailViewTestCase(BlogDataTestCase):
         response = self.client.get(url, HTTP_USER_AGENT='Mozilla/5.0')
         self.assertEqual(response.status_code, 404)
 
-    def test_get_view_num(self):
-        self.client.get(self.url, HTTP_USER_AGENT='Mozilla/5.0')
-        self.md_post.refresh_from_db()
-        self.assertEqual(self.md_post.view_num(), 1)
+    def test_view_num(self):
+        self._view_and_get_view_num(1)
+        self._view_and_get_view_num(2)
 
+    def _view_and_get_view_num(self, arg):
         self.client.get(self.url, HTTP_USER_AGENT='Mozilla/5.0')
         self.md_post.refresh_from_db()
-        self.assertEqual(self.md_post.view_num(), 2)
+        self.assertEqual(self.md_post.view_num, arg)
 
     def test_markdownify_post_body_and_set_toc(self):
         response = self.client.get(self.url, HTTP_USER_AGENT='Mozilla/5.0')
@@ -119,6 +122,7 @@ class PostDetailViewTestCase(BlogDataTestCase):
 
 
 class AdminTestCase(BlogDataTestCase):
+
     def setUp(self):
         super().setUp()
         self.test_user = User.objects.create_superuser(username='test', email='test@test.com', password='test')
@@ -145,14 +149,9 @@ class AdminTestCase(BlogDataTestCase):
         test_response = self.client.post(self.url, data=data)
         self.assertEqual(test_response.status_code, 200)
 
-        post = Post.objects.all()
-
-        self.assertEqual(post.author, self.user)
-        self.assertEqual(post.title, data.get('title'))
-        self.assertEqual(post.category, self.cate1)
-
 
 class RSSTestCase(BlogDataTestCase):
+
     def setUp(self):
         super().setUp()
         self.url = reverse('rss')

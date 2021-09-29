@@ -16,70 +16,14 @@ from django.utils.deconstruct import deconstructible
 from django.utils.encoding import filepath_to_uri
 from django.utils.timezone import is_naive, make_naive
 from storages.base import BaseStorage
-from storages.utils import (
-    check_location,
-    clean_name,
-    get_available_overwrite_name,
-    safe_join,
-    setting,
-    to_bytes,
-    )
+from storages.utils import check_location, clean_name, get_available_overwrite_name, safe_join, setting, to_bytes
 
 try:
     import ibm_boto3.session
     from ibm_botocore.client import Config
     from ibm_botocore.exceptions import ClientError
-    from ibm_botocore.signers import CloudFrontSigner
 except ImportError as e:
     raise ImproperlyConfigured(f"Could not load IBM_Boto3's S3 bindings. {e}")
-
-
-# NOTE: these are defined as functions so both can be tested
-def _use_cryptography_signer():
-    # https://cryptography.io as an RSA backend
-    from cryptography.hazmat.backends import default_backend
-    from cryptography.hazmat.primitives import hashes
-    from cryptography.hazmat.primitives.asymmetric import padding
-    from cryptography.hazmat.primitives.serialization import (
-        load_pem_private_key,
-        )
-
-    def _cloud_front_signer_from_pem(key_id, pem):
-        if isinstance(pem, str):
-            pem = pem.encode('ascii')
-        key = load_pem_private_key(pem, password=None, backend=default_backend())
-
-        return CloudFrontSigner(key_id, lambda x: key.sign(x, padding.PKCS1v15(), hashes.SHA1()))
-
-    return _cloud_front_signer_from_pem
-
-
-def _use_rsa_signer():
-    # https://stuvel.eu/rsa as an RSA backend
-    import rsa
-
-    def _cloud_front_signer_from_pem(key_id, pem):
-        if isinstance(pem, str):
-            pem = pem.encode('ascii')
-        key = rsa.PrivateKey.load_pkcs1(pem)
-        return CloudFrontSigner(key_id, lambda x: rsa.sign(x, key, 'SHA-1'))
-
-    return _cloud_front_signer_from_pem
-
-
-for _signer_factory in (_use_cryptography_signer, _use_rsa_signer):
-    try:
-        _cloud_front_signer_from_pem = _signer_factory()
-        break
-    except ImportError:
-        pass
-else:
-
-    def _cloud_front_signer_from_pem(key_id, pem):
-        raise ImproperlyConfigured(
-            'An RSA backend is required for signing cloudfront URLs.\n'
-            'Supported backends are packages: cryptography and rsa.'
-            )
 
 
 @deconstructible
@@ -97,6 +41,7 @@ class S3Boto3StorageFile(File):
     order to properly write the file to S3. Be sure to close the file
     in your application.
     """
+
     def __init__(self, name, mode, storage, buffer_size=None):
         if 'r' in mode and 'w' in mode:
             raise ValueError("Can't combine 'r' and 'w' in mode.")
@@ -129,7 +74,7 @@ class S3Boto3StorageFile(File):
                 max_size=self._storage.max_memory_size,
                 suffix='.S3Boto3StorageFile',
                 dir=setting('FILE_UPLOAD_TEMP_DIR')
-                )
+            )
             if 'r' in self._mode:
                 self._is_dirty = False
                 self.obj.download_fileobj(self._file)
@@ -250,68 +195,65 @@ class IBMCloudObjectStorage(BaseStorage):
         self._bucket = None
         self._connections = threading.local()
 
-    def get_cloudfront_signer(self, key_id, key):
-        return _cloud_front_signer_from_pem(key_id, key)
-
     def get_default_settings(self):
         return {
             'ibm_api_key_id':
-            setting('COS_API_KEY_ID'),
+                setting('COS_API_KEY_ID'),
             'ibm_service_instance_id':
-            setting('COS_SERVICE_CRN'),
+                setting('COS_SERVICE_CRN'),
             'ibm_auth_endpoint':
-            setting('COS_AUTH_ENDPOINT'),
+                setting('COS_AUTH_ENDPOINT'),
             'file_overwrite':
-            setting('IBM_COS_FILE_OVERWRITE', True),
+                setting('IBM_COS_FILE_OVERWRITE', True),
             'object_parameters':
-            setting('IBM_COS_OBJECT_PARAMETERS', {}),
+                setting('IBM_COS_OBJECT_PARAMETERS', {}),
             'bucket_name':
-            setting('COS_BUCKET_NAME'),
+                setting('COS_BUCKET_NAME'),
             'querystring_auth':
-            setting('IBM_QUERYSTRING_AUTH', True),
+                setting('IBM_QUERYSTRING_AUTH', True),
             'querystring_expire':
-            setting('IBM_QUERYSTRING_EXPIRE', 3600),
+                setting('IBM_QUERYSTRING_EXPIRE', 3600),
             'signature_version':
-            setting('COS_SIGNATURE_VERSION'),
+                setting('COS_SIGNATURE_VERSION'),
             'location':
-            setting('IBM_LOCATION', ''),
+                setting('IBM_LOCATION', ''),
             'custom_domain':
-            setting('COS_CUSTOM_DOMAIN'),
+                setting('COS_CUSTOM_DOMAIN'),
             'addressing_style':
-            setting('IBM_COS_ADDRESSING_STYLE'),
+                setting('IBM_COS_ADDRESSING_STYLE'),
             'secure_urls':
-            setting('IBM_COS_SECURE_URLS', True),
+                setting('IBM_COS_SECURE_URLS', True),
             'file_name_charset':
-            setting('IBM_COS_FILE_NAME_CHARSET', 'utf-8'),
+                setting('IBM_COS_FILE_NAME_CHARSET', 'utf-8'),
             'gzip':
-            setting('IBM_IS_GZIPPED', False),
+                setting('IBM_IS_GZIPPED', False),
             'gzip_content_types':
-            setting(
-                'GZIP_CONTENT_TYPES', (
-                    'text/css',
-                    'text/javascript',
-                    'application/javascript',
-                    'application/x-javascript',
-                    'image/svg+xml',
+                setting(
+                    'GZIP_CONTENT_TYPES', (
+                        'text/css',
+                        'text/javascript',
+                        'application/javascript',
+                        'application/x-javascript',
+                        'image/svg+xml',
                     )
                 ),
             'url_protocol':
-            setting('IBM_COS_URL_PROTOCOL', 'http:'),
+                setting('IBM_COS_URL_PROTOCOL', 'http:'),
             'endpoint_url':
-            setting('COS_ENDPOINT'),
+                setting('COS_ENDPOINT'),
             'proxies':
-            setting('AWS_S3_PROXIES'),
+                setting('AWS_S3_PROXIES'),
             'region_name':
-            setting('AWS_S3_REGION_NAME'),
+                setting('AWS_S3_REGION_NAME'),
             'use_ssl':
-            setting('AWS_S3_USE_SSL', True),
+                setting('AWS_S3_USE_SSL', True),
             'verify':
-            setting('AWS_S3_VERIFY', None),
+                setting('AWS_S3_VERIFY', None),
             'max_memory_size':
-            setting('AWS_S3_MAX_MEMORY_SIZE', 0),
+                setting('AWS_S3_MAX_MEMORY_SIZE', 0),
             'default_acl':
-            setting('AWS_DEFAULT_ACL', None),
-            }
+                setting('AWS_DEFAULT_ACL', None),
+        }
 
     def __getstate__(self):
         state = self.__dict__.copy()
@@ -336,7 +278,7 @@ class IBMCloudObjectStorage(BaseStorage):
                 endpoint_url=self.endpoint_url,
                 ibm_auth_endpoint=self.ibm_auth_endpoint,
                 config=Config(signature_version='oauth'),
-                )
+            )
         return self._connections.connection
 
     @property
@@ -501,7 +443,7 @@ class IBMCloudObjectStorage(BaseStorage):
             'awsaccesskeyid',
             'expires',
             'signature',
-            }
+        }
         filtered_qs = ((key, val) for key, val in qs if key.lower() not in blacklist)
         # Note: Parameters that did not have a value in the original query string will have
         # an '=' sign appended to it, e.g ?foo&bar becomes ?foo=&bar=
@@ -552,6 +494,7 @@ class IBMCOSManifestStaticStorage(ManifestFilesMixin, IBMCOSStaticStorage):
     which does not play nicely with boto3 automatically closing the file.
     See: https://github.com/boto/s3transfer/issues/80#issuecomment-562356142
     """
+
     def _save(self, name, content):
         content.seek(0)
         with tempfile.SpooledTemporaryFile() as tmp:

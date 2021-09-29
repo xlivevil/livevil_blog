@@ -8,6 +8,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 class VerifyCode:
+
     def __init__(self, dj_quest):
         self.dj_request = dj_quest
         self.code_len = 6
@@ -23,13 +24,13 @@ class VerifyCode:
         font_path = os.path.join(settings.BASE_DIR, 'static', 'timesbi.ttf')
         im = Image.new('RGB', (self.img_width, self.img_height), bg_color)
         draw = ImageDraw.Draw(im)
-        for i in range(random.randrange(1, int(self.code_len / 2) + 1)):
+        for _ in range(random.randrange(1, int(self.code_len / 2) + 1)):
             line_color = random.choice(font_color)
             point = (
                 random.randrange(0, self.img_width * 0.2), random.randrange(0, self.img_height),
                 random.randrange(self.img_width - self.img_width * 0.2,
                                  self.img_width), random.randrange(0, self.img_height)
-                )
+            )
             width = random.randrange(1, 4)
             draw.line(point, fill=line_color, width=width)
 
@@ -47,8 +48,7 @@ class VerifyCode:
     def _get_vcode(self):
         random_str = 'ABCDEFGHJKLMPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'
         code_list = random.sample(list(random_str), self.code_len)
-        code = ''.join(code_list)
-        return code
+        return ''.join(code_list)
 
     def validate_code(self, code):
         code = str(code).lower()
