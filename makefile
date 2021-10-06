@@ -10,6 +10,7 @@ all:
 		make run : run the django application \n\
 		make shell : start a poetry shell with all required packages available in the environment \n\
 		make lint : runs linters on all project files and shows the changes \n\
+		make typecheck : run the static type check  \n\
 		make test : run the test suite  \n\
 		make coverage : runs tests and creates a report of the coverage \n\
 		make production : run the the django application by docker-compose \n\
@@ -54,12 +55,16 @@ lint:
 	poetry run isort livevil_blog --diff
 	poetry run isort livevil_blog --atomic
 
+typecheck:
+	@echo 'Running static type check'
+	poetry run mypy livevl_blog
+
 coverage:
 	@echo 'Running tests and making coverage files'
 	poetry run coverage run manage.py test
 	poetry run coverage report
 	poetry run coverage html
-	@echo 'to see the complete report, open ./htmlcov/index.html on the htmlcov folder'
+	@echo 'to see the complete report, open ./coverage_html_report/index.html on the coverage_html_report folder'
 
 adminuser:
 	test $(password) || (echo '>> password is not set. (e.g password=mysecretpassword)'; exit 1)

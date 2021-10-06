@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from django.core.cache import cache
 from django.db import models
 from django.db.models.signals import post_delete, post_save
@@ -15,10 +16,11 @@ from utils.rich_content import generate_rich_content
 
 
 class BlogCommentQuerySet(TreeQuerySet):
-    def visible(self):
+
+    def visible(self) -> TreeQuerySet:
         return self.filter(is_public=True, is_removed=False)
 
-    def roots(self):
+    def roots(self) -> TreeQuerySet:
         return self.visible().filter(parent__isnull=True)
 
 
@@ -33,18 +35,15 @@ class PostComment(MPTTModel, CommentAbstractModel):
     created_time = models.DateTimeField(_('创建时间'), default=timezone.now)
 
     # 层级关系
-    parent = TreeForeignKey('self',
-                            verbose_name=_('父评论'),
-                            null=True,
-                            blank=True,
-                            on_delete=models.DO_NOTHING,
-                            related_name='children')
+    parent = TreeForeignKey(
+        'self', verbose_name=_('父评论'), null=True, blank=True, on_delete=models.DO_NOTHING, related_name='children'
+    )
 
     objects = BlogCommentManager.from_queryset(BlogCommentQuerySet)()
 
     class Meta(CommentAbstractModel.Meta):
-        verbose_name = _("comment")
-        verbose_name_plural = _("comments")
+        verbose_name = _('comment')
+        verbose_name_plural = _('comments')
         db_table = 'Blog_comments'
 
     class MPTTMeta:
@@ -52,7 +51,7 @@ class PostComment(MPTTModel, CommentAbstractModel):
         # 确保 select_related user 时 user_id 字段已经 load，否则会报错：
         # Field %s.%s cannot be both deferred and traversed
         # using select_related at the same time.
-        order_insertion_by = ["-submit_date", "user_id"]
+        order_insertion_by = ['-submit_date', 'user_id']
 
     def __str__(self):
         return f'{self.user}: {self.comment[:40]}'
@@ -64,33 +63,33 @@ class PostComment(MPTTModel, CommentAbstractModel):
 
         This dict will have ``name``, ``email``, and ``url`` fields.
         """
-        if not hasattr(self, "_userinfo"):
+        if not hasattr(self, '_userinfo'):
             userinfo = {
-                "name": self.user_name,
-                "email": self.user_email,
-                "url": self.user_url,
+                'name': self.user_name,
+                'email': self.user_email,
+                'url': self.user_url,
             }
             if self.user_id:
                 u = self.user
                 if u.email:
-                    userinfo["email"] = u.email
+                    userinfo['email'] = u.email
                 if u.nickname:
-                    userinfo["name"] = u.nickname
+                    userinfo['name'] = u.nickname
                 elif not self.user_name:
-                    userinfo["name"] = u.get_username()
+                    userinfo['name'] = u.get_username()
                 if u.url:
-                    userinfo["url"] = u.url
+                    userinfo['url'] = u.url
             self._userinfo = userinfo
         return self._userinfo
 
     @property
     def comment_html(self):
-        return self.rich_content.get("content", "")
+        return self.rich_content.get('content', '')
 
     @cached_property
     def rich_content(self):
-        ud = self.submit_date.strftime("%Y%m%d%H%M%S")
-        md_key = 'comment{}_md_{}'.format(self.id, ud)
+        ud = self.submit_date.strftime('%Y%m%d%H%M%S')
+        md_key = f'comment{self.id}_md_{ud}'
         cache_md = cache.get(md_key)
         if cache_md:
             rich_content = cache_md
@@ -101,7 +100,7 @@ class PostComment(MPTTModel, CommentAbstractModel):
 
 
 def change_comment_updated_at(sender=None, instance=None, *args, **kwargs):
-    cache.set("tag_updated_at", datetime.utcnow())
+    cache.set('tag_updated_at', datetime.utcnow())
 
 
 post_save.connect(receiver=change_comment_updated_at, sender=PostComment)
