@@ -6,7 +6,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 COPY ./pyproject.toml ./
-RUN pip3 install poetry
+RUN pip install poetry
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 RUN pip wheel --no-cache-dir --wheel-dir /usr/src/app/wheels -r requirements.txt
@@ -20,6 +20,7 @@ WORKDIR $APP_HOME
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 
+RUN pip install --upgrade pip
 RUN pip install --no-cache --no-deps /wheels/*
 
 COPY . $APP_HOME

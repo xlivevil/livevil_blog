@@ -1,12 +1,8 @@
-from django_comments.abstracts import BaseCommentAbstractModel
-from django_comments.forms import CommentForm
-
-
-def get_model() -> BaseCommentAbstractModel:
+def get_model():
     from comments.models import PostComment
     return PostComment
 
 
-def get_form() -> CommentForm:
+def get_form():
     from comments.forms import PostCommentForm
     return PostCommentForm

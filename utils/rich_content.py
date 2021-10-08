@@ -1,7 +1,7 @@
 import re
 
 from markdown import Markdown
-from markdown.extensions.toc import TocExtension
+from markdown.extensions.toc import TocExtension, slugify_unicode
 
 
 def generate_rich_content(value) -> dict[str, str]:
@@ -11,7 +11,7 @@ def generate_rich_content(value) -> dict[str, str]:
             'markdown.extensions.extra',
             'markdown.extensions.admonition',
             'markdown.extensions.codehilite',
-            TocExtension(slugify='slugify_unicode'),
+            TocExtension(slugify=slugify_unicode),
         ]
     )
     content = md.convert(value)

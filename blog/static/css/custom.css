@@ -284,6 +284,11 @@ img {
     color: #000;
 }
 
+.tag {
+    border:1px solid #ddd;
+    padding:0 3px;
+}
+
 /**
  * 4.1 - Read More Button CSS 3 style
  */
@@ -955,6 +960,10 @@ img {
 
 dl.children {
     margin-left: 2rem;
+}
+
+.pre-and-next {
+    /*  */
 }
 
 /**

@@ -54,7 +54,23 @@ class PostDetailView(DetailView):
     context_object_name = 'post'
 
     def get(self, request, *args, **kwargs):
-        response = super().get(request, *args, **kwargs)
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        # 过滤出所有的id比当前文章小的文章
+        pre_article = Post.objects.filter(id__lt=self.object.id).order_by('-id')
+        # 过滤出id大的文章
+        next_article = Post.objects.filter(id__gt=self.object.id).order_by('id')
+
+        # 取出相邻前一篇文章
+        pre_article = pre_article[0] if pre_article.count() > 0 else None
+        # 取出相邻后一篇文章
+        next_article = next_article[0] if next_article.count() > 0 else None
+        # 需要传递给模板的对象
+        context.update({
+            'pre_article': pre_article,
+            'next_article': next_article,
+        })
+        response = self.render_to_response(context)
         # 重写get方法
         # 阅读数增加操作
         if kwargs.get('pk'):
