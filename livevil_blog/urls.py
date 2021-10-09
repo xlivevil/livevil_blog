@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Any, Dict, Union
 
+import notifications.urls
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
@@ -26,7 +27,8 @@ urlpatterns = [
             'blog': GenericSitemap(info_dict, priority=0.6)
         }},
         name='django.contrib.sitemaps.views.sitemap'
-    )
+    ),
+    path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
 ]
 
 urlpatterns += i18n_patterns(
@@ -42,6 +44,7 @@ urlpatterns += i18n_patterns(
     path('netdisk/', include('netdisk.urls')),
     path('wiki/', include('wiki.urls')),
     path('contact/', include('contact_form.urls')),
+    path('notice/', include('notice.urls')),
     path('', include('blog.urls')),
 )
 

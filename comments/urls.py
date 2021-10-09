@@ -1,11 +1,10 @@
-from django.urls import path, include
+from django.urls import include, path
 
-from comments import views
+from comments.views import ReplyView
 
 app_name = 'comments'
 urlpatterns = [
-    path('', include('django_comments.urls')),
-    path('reply/<int:parent>',
-         views.ReplyView.as_view(),
-         name='post_comments_reply'),
+    # path('', include('django_comments.urls')),
+    # path('post/', post_comment_notice, name='post-comment'),
+    path('reply/<int:parent>', ReplyView.as_view(), name='post_comments_reply'),
 ]

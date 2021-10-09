@@ -140,7 +140,7 @@ class Post(models.Model):
         ordering = ['-create_time']
 
     def __str__(self):
-        return 'blog-' + self.title
+        return _('blog-') + self.title
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={'pk': self.pk})

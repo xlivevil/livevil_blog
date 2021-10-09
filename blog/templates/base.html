@@ -4,6 +4,8 @@
 {% load comments_extras i18n %}
 {% load comments i18n %}
 {% load compress %}
+{% load notifications_tags %}
+{% notifications_unread as unread_count %}
 {# TODO: 完善head meta信息 关键字 摘要 #}
 {# TODO: editor.md 移动端切换模式 #}
 <!DOCTYPE html>
@@ -125,6 +127,11 @@
         <a class="nav-link dropdown-toggle ion-log-out" href="#" id="navbarDropdown" role="button"
            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'notice:list' %}?next={{ request.path }}">{% trans "通知" %}
+            {% if unread_count %}
+            <span class="badge bg-danger">{{ unread_count }}</span>
+            {% endif %}
+            </a>
             <a class="dropdown-item" href="{% url 'users:profile' %}?next={{ request.path }}">{% trans "用户信息" %}</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'account_logout' %}?next={{ request.path }}">{% trans "退出登录" %}</a>

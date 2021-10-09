@@ -42,6 +42,7 @@ djangorestframework-simplejwt = "^4.8.0"
 django-cors-headers = "^3.8.0"
 crispy-bootstrap5 = "^0.5"
 django-storages = "^1.11.1"
+django-notifications-hq = "^1.6.0"
 
 [tool.poetry.dev-dependencies]
 Faker = "^8.1.4"
