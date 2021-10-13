@@ -52,7 +52,7 @@
 </head>
 
 <body {% block bodyid %} {% endblock %}>
-
+<div id="wrapper">
 {% block container %}
 
     <div class="container">
@@ -258,6 +258,8 @@ function selectlang(obj) {
 
 <a href="#" class="cd-top text-replace js-cd-top">Top</a>
 {% include 'mobile menu.html' %}
+<div id="push"></div>
+    </div>
 {% block footer %}
     {% include 'footer.html' %}
 {% endblock %}

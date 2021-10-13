@@ -53,9 +53,6 @@ class PostComment(MPTTModel, CommentAbstractModel):
         # using select_related at the same time.
         order_insertion_by = ['-submit_date', 'user_id']
 
-    def __str__(self):
-        return f'{self.user}: {self.comment[:40]}'
-
     def _get_userinfo(self):
         """
         Get a dictionary that pulls together information about the poster

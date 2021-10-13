@@ -37,7 +37,7 @@ def comment_preview(request, pk):
 def comment_notice(sender, **kwargs):
     comment = kwargs.pop('comment')
     request = kwargs.pop('request')
-    if comment.parent:
+    if comment.parent and request.user != comment.parent.user:
 
         notify.send(
             request.user,
@@ -47,15 +47,15 @@ def comment_notice(sender, **kwargs):
             action_object=comment,
             description=comment.comment[:40]
         )
-
-    notify.send(
-        request.user,
-        recipient=comment.content_object.author,
-        verb='回复了你',
-        target=comment.content_object,
-        action_object=comment,
-        description=comment.comment[:40]
-    )
+    if request.user != comment.content_object.author:
+        notify.send(
+            request.user,
+            recipient=comment.content_object.author,
+            verb='回复了你',
+            target=comment.content_object,
+            action_object=comment,
+            description=comment.comment[:40]
+        )
 
 
 class ReplyView(FormMixin, DetailView):
