@@ -22,37 +22,39 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blog',
-        'USER': 'django',
-        'PASSWORD': os.environ['DJANGO_MYSQL_PASSWORD'],
-        'HOST': '172.17.0.1',
-        'PORT': '3306',
-        'OPTION': {
-            'charset': 'utf8mb4',
-            'autocommit': True,
-            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
-        }
-    },
-    'mongodb': {
-        'ENGINE': 'djongo',
-        'ENFORCE_SCHEMA': True,
-        'LOGGING': {
-            'version': 1,
-            'loggers': {
-                'djongo': {
-                    'level': 'DEBUG',
-                    'propogate': False,
-                }
-            },
+    'default':
+        {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'blog',
+            'USER': 'django',
+            'PASSWORD': os.environ['DJANGO_MYSQL_PASSWORD'],
+            'HOST': '172.17.0.1',
+            'PORT': '3306',
+            'OPTION': {
+                'charset': 'utf8mb4',
+                'autocommit': True,
+                'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
+            }
         },
-        'NAME': 'djongo',
-        'CLIENT': {
-            'host': '172.17.0.1',
-            'port': 27017,
+    'mongodb':
+        {
+            'ENGINE': 'djongo',
+            'ENFORCE_SCHEMA': True,
+            'LOGGING': {
+                'version': 1,
+                'loggers': {
+                    'djongo': {
+                        'level': 'DEBUG',
+                        'propogate': False,
+                    }
+                },
+            },
+            'NAME': 'djongo',
+            'CLIENT': {
+                'host': '172.17.0.1',
+                'port': 27017,
+            }
         }
-    }
 }
 
 CSRF_COOKIE_SECURE = True
@@ -69,11 +71,12 @@ SESSION_COOKIE_SECURE = True
 
 # haystack
 HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'blog.elasticsearch5_ik_backend.Elasticsearch5IkSearchEngine',
-        'URL': 'http://livevil_blog_elasticsearch:9200/',
-        'INDEX_NAME': 'xlivevil'
-    },
+    'default':
+        {
+            'ENGINE': 'blog.elasticsearch5_ik_backend.Elasticsearch5IkSearchEngine',
+            'URL': 'http://livevil_blog_elasticsearch:9200/',
+            'INDEX_NAME': 'xlivevil'
+        },
 }
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
@@ -94,13 +97,14 @@ SERVER_MAIL = 'xlivevil@aliyun.com'
 
 # redis缓存
 CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': os.environ['DJANGO_REDIS_LOCATION'],
-        'OPTION': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+    'default':
+        {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': os.environ['DJANGO_REDIS_LOCATION'],
+            'OPTION': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            }
         }
-    }
 }
 
 # 日志配置
@@ -108,51 +112,56 @@ CACHES = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
+    'formatters':
+        {
+            'verbose': {
+                'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+                'style': '{',
+            },
+            'simple': {
+                'format': '{levelname} {message}',
+                'style': '{',
+            },
         },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
     'filters': {
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue',
         },
     },
-    'handlers': {
-        'console': {
-            'level': 'INFO',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
+    'handlers':
+        {
+            'console':
+                {
+                    'level': 'INFO',
+                    'filters': ['require_debug_true'],
+                    'class': 'logging.StreamHandler',
+                    'formatter': 'simple'
+                },
+            'file':
+                {
+                    'level': 'WARNING',
+                    'class': 'logging.FileHandler',
+                    'filename': os.path.join(BASE_DIR, 'debug.log'),
+                    'formatter': 'verbose',
+                },
+            'mail_admins': {
+                'level': 'ERROR',
+                'class': 'django.utils.log.AdminEmailHandler',
+                'formatter': 'verbose',
+            }
         },
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'debug.log'),
-            'formatter': 'verbose',
+    'loggers':
+        {
+            'django': {
+                'handlers': ['console'],
+                'propagate': True,
+            },
+            'django': {
+                'handlers': ['file', 'mail_admins'],
+                'level': 'WARNING',
+                'propagate': True,
+            },
         },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'formatter': 'verbose',
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'propagate': True,
-        },
-        'django': {
-            'handlers': ['file', 'mail_admins'],
-            'level': 'WARNING',
-            'propagate': True,
-        },
-    },
 }
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
@@ -175,8 +184,8 @@ sentry_sdk.init(
 )
 
 # Django_storage
-DEFAULT_FILE_STORAGE = 'netdisk.ibm_cos.IBMCloudObjectStorage'
-STATICFILES_STORAGE = 'netdisk.ibm_cos.IBMCOSStaticStorage'
+DEFAULT_FILE_STORAGE = 'netdisk.ibm_cos.MediaStorage'
+STATICFILES_STORAGE = 'netdisk.ibm_cos.StaticStorage'
 
 COS_BUCKET_NAME = os.environ['COS_BUCKET_NAME']
 COS_ENDPOINT = os.environ['COS_ENDPOINT']

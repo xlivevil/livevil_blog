@@ -139,8 +139,6 @@ class S3Boto3StorageFile(File):
             f = storage.open("file.txt", mode="w")
             f.close()
         """
-        assert 'w' in self._mode
-        assert self._raw_bytes_written == 0
 
         try:
             # Check if the object exists on the server; if so, don't do anything
@@ -500,3 +498,11 @@ class IBMCOSManifestStaticStorage(ManifestFilesMixin, IBMCOSStaticStorage):
         with tempfile.SpooledTemporaryFile() as tmp:
             tmp.write(content.read())
             return super()._save(name, tmp)
+
+
+class MediaStorage(IBMCloudObjectStorage):
+    location = 'media'
+
+
+class StaticStorage(IBMCOSStaticStorage):
+    location = 'static'
