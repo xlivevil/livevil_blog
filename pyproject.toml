@@ -76,7 +76,7 @@ spaces_before_comment = "4"
 column_limit = "119"
 dedent_closing_brackets = "true"
 i18n_function_call = ['_']
-split_penalty_import_names = 350
+split_penalty_import_names = 0
 
 [tool.yapfignore]
 ignore_patterns = [

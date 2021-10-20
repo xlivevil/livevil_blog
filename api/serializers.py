@@ -114,6 +114,13 @@ class UserRegisterSerializer(serializers.ModelSerializer[User]):
         return super().update(instance, validated_data)
 
 
+class UserDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'last_name', 'first_name', 'email', 'last_login', 'date_joined']
+
+
 class CommentSerializer(serializers.ModelSerializer[PostComment]):
 
     class Meta:

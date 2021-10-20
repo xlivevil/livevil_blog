@@ -139,6 +139,8 @@ class S3Boto3StorageFile(File):
             f = storage.open("file.txt", mode="w")
             f.close()
         """
+        # assert "w" in self._mode
+        # assert self._raw_bytes_written == 0
 
         try:
             # Check if the object exists on the server; if so, don't do anything

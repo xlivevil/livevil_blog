@@ -12,43 +12,31 @@ from rest_framework import response, status
 from rest_framework.decorators import action
 from rest_framework.fields import DateField
 from rest_framework.generics import ListAPIView
-from rest_framework.mixins import (
-    CreateModelMixin,
-    ListModelMixin,
-    RetrieveModelMixin,
-    )
-from rest_framework.pagination import (
-    LimitOffsetPagination,
-    PageNumberPagination,
-    )
-from rest_framework.permissions import AllowAny
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.pagination import LimitOffsetPagination, PageNumberPagination
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from rest_framework.views import APIView
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework_extensions.cache.decorators import cache_response
 
 from api.filter import PostFilter
+from api.permissions import IsSelfOrReadOnly
 from api.serializers import (
-    CategorySerializer,
-    CommentSerializer,
-    PostHaystackSerializer,
-    PostListSerializer,
-    PostSerializer,
-    TagSerializer,
-    )
+    CategorySerializer, CommentSerializer, PostHaystackSerializer, PostListSerializer, PostSerializer, TagSerializer,
+    UserDetailSerializer, UserRegisterSerializer,
+)
 from blog.models import Category, Post, Tag
 from comments.models import PostComment
+from users.models import User
 
 from .cache import (
-    CategoryKeyConstructor,
-    CommentListKeyConstructor,
-    PostListKeyConstructor,
-    PostObjectKeyConstructor,
+    CategoryKeyConstructor, CommentListKeyConstructor, PostListKeyConstructor, PostObjectKeyConstructor,
     TagKeyConstructor,
-    )
+)
 
 
 class View(APIView):    # pragma: no cover
@@ -73,7 +61,7 @@ class View(APIView):    # pragma: no cover
                 return Response({
                     'status': 404,
                     'msg': '没有找到',
-                    })
+                })
         else:
             query = Post.objects.filter(is_hidden=False).all()
             data = PostSerializer(query, many=True).data
@@ -124,7 +112,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     serializer_class_table = {
         'list': PostListSerializer,
         'retrieve': PostSerializer,
-        }
+    }
     queryset = Post.objects.all()
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
@@ -149,7 +137,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         url_name='archive-date',
         filter_backends=[],
         pagination_class=None,
-        )
+    )
     def list_archive_dates(self, request, *args, **kwargs):
         dates = Post.objects.dates('create_time', 'month', order='DESC')
         date_field = DateField(format='%Y-%m')
@@ -165,7 +153,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         suffix='List',
         pagination_class=LimitOffsetPagination,
         serializer_class=CommentSerializer,
-        )
+    )
     def list_comments(self, request, *args, **kwargs):
         # 根据 URL 传入的参数值（文章 id）获取到博客文章记录
         post = self.get_object()
@@ -212,6 +200,7 @@ class PostSearchFilterInspector(FilterInspector):
     """
     swagger text 字段提示
     """
+
     def get_filter_parameters(self, filter_backend):
         return [
             openapi.Parameter(
@@ -220,8 +209,8 @@ class PostSearchFilterInspector(FilterInspector):
                 required=True,
                 description=_('搜索关键词'),
                 type=openapi.TYPE_STRING,
-                )
-            ]
+            )
+        ]
 
 
 # @method_decorator(name='retrieve',
@@ -268,3 +257,35 @@ class CategoryViewSet(ListModelMixin, GenericViewSet):
     @cache_response(timeout=5 * 60, key_func=CategoryKeyConstructor())
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
+
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserRegisterSerializer
+    lookup_field = 'username'
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = [AllowAny]
+        else:
+            self.permission_classes = [IsAuthenticatedOrReadOnly, IsSelfOrReadOnly]
+
+        return super().get_permissions()
+
+    @action(detail=True, methods=['get'])
+    def info(self, request, username=None):
+        queryset = User.objects.get(username=username)
+        serializer = UserDetailSerializer(queryset, many=False)
+        return Response(serializer.data)
+
+    @action(detail=False)
+    def sorted(self, request):
+        users = User.objects.all().order_by('-username')
+
+        page = self.paginate_queryset(users)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(users, many=True)
+        return Response(serializer.data)

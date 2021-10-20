@@ -29,6 +29,7 @@ urlpatterns = [
         name='django.contrib.sitemaps.views.sitemap'
     ),
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
+    path('api/', include('api.urls')),
 ]
 
 urlpatterns += i18n_patterns(
@@ -39,7 +40,6 @@ urlpatterns += i18n_patterns(
     path('comments/', include('comments.urls')),
     path('comments/', include('django_comments.urls')),
     path('all/rss', AllPostsRssFeed(), name='rss'),
-    path('api/', include('api.urls')),
     path('todo/', include('todo.urls')),
     path('netdisk/', include('netdisk.urls')),
     path('wiki/', include('wiki.urls')),
