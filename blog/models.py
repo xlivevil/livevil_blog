@@ -22,8 +22,8 @@ class Category(models.Model):
     name = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = _('分类')
-        verbose_name_plural = _('分类')
+        verbose_name = _('category')
+        verbose_name_plural = _('categories')
 
     def __str__(self):
         return self.name
@@ -44,8 +44,8 @@ class Tag(models.Model):
     name = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = _('标签')
-        verbose_name_plural = _('标签')
+        verbose_name = _('tag')
+        verbose_name_plural = _('tags')
 
     def __str__(self):
         return self.name

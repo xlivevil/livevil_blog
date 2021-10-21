@@ -20,10 +20,7 @@ class TagSerializer(serializers.ModelSerializer[Tag]):
 
     class Meta:
         model = Tag
-        fields = [
-            'id',
-            'name',
-        ]
+        fields = ['id', 'name']
 
 
 class UserSerializer(serializers.ModelSerializer[User]):
@@ -101,8 +98,8 @@ class UserRegisterSerializer(serializers.ModelSerializer[User]):
 
     class Meta:
         model = User
-        fields = ['url', 'id', 'username', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['url', 'id', 'username', 'password', 'is_superuser']
+        extra_kwargs = {'password': {'write_only': True}, 'is_superuser': {'read_only': True}}
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
