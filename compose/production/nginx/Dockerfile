@@ -4,4 +4,5 @@ FROM nginx:1.18.0
 
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./compose/production/nginx/livevil_blog.conf /etc/nginx/conf.d/livevil_blog.conf
+COPY ./compose/production/nginx/conf/ /etc/nginx/xlivevil/
 COPY ./compose/production/nginx/ssl/ /etc/nginx/
