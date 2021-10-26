@@ -1,3 +1,6 @@
+ifeq ($(OS),Windows_NT)     # is Windows_NT on XP, 2000, 7, Vista, 10...
+    SHELL=cmd.exe
+endif
 all:
 	@echo "Available commands: \n\
 		make installdeps : to install poetry and other dependent packages\n\
@@ -57,7 +60,7 @@ lint:
 
 typecheck:
 	@echo 'Running static type check'
-	poetry run mypy livevl_blog
+	poetry run mypy livevil_blog
 
 coverage:
 	@echo 'Running tests and making coverage files'

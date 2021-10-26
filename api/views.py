@@ -91,7 +91,6 @@ class IndexAPIView(ListModelMixin, GenericViewSet):    # pragma: no cover
     permission_classes = [AllowAny]
 
 
-# TODO: post category tags 都是传id 改为传字段
 class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     """
     PostViewSet
@@ -161,6 +160,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         content_type = ContentType.objects.get(app_label=post._meta.app_label, model=post._meta.model_name)
         queryset = PostComment.objects.filter(content_type=content_type, object_pk=post.pk).order_by('-created_time')
         # 对评论列表进行分页，根据 URL 传入的参数获取指定页的评论
+        # FIXME: 此处分页未考虑子评论关系
         page = self.paginate_queryset(queryset)
         # 序列化评论
         serializer = self.get_serializer(page, many=True)

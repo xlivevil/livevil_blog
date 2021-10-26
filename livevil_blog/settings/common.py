@@ -136,8 +136,8 @@ TIME_ZONE = 'Asia/Shanghai'
 USE_I18N = True
 
 USE_L10N = True
-# TODO: 解决本地数据库timezone问题
-USE_TZ = False
+
+USE_TZ = False    # MySQL 不支持Django的timezone
 
 LANGUAGES = (('zh-hans', _('中文简体')), ('en', _('English')), ('ja', _('日本語')))
 

@@ -111,7 +111,7 @@ class UserRegisterSerializer(serializers.ModelSerializer[User]):
         return super().update(instance, validated_data)
 
 
-class UserDetailSerializer(serializers.ModelSerializer):
+class UserDetailSerializer(serializers.ModelSerializer[User]):
 
     class Meta:
         model = User
@@ -123,8 +123,8 @@ class CommentSerializer(serializers.ModelSerializer[PostComment]):
     class Meta:
         model = PostComment
         fields = [
-            'user_id', 'user_name', 'user_email', 'user_url', 'comment', 'created_time', 'parent', 'content_type',
-            'object_pk', 'comment_html'
+            'id', 'user_id', 'user_name', 'user_email', 'user_url', 'comment', 'created_time', 'parent',
+            'content_type', 'object_pk', 'comment_html'
         ]
         read_only_fields = ['created_time', 'comment_html']
         extra_kwargs = {'post': {'write_only': True}}
