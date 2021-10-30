@@ -1,6 +1,7 @@
 ifeq ($(OS),Windows_NT)     # is Windows_NT on XP, 2000, 7, Vista, 10...
     SHELL=cmd.exe
 endif
+
 all:
 	@echo "Available commands: \n\
 		make installdeps : to install poetry and other dependent packages\n\
@@ -49,7 +50,7 @@ shell:
 	poetry shell
 
 lint:
-	# starts a poetry shell, shows autopep8 diff and then fixes the files
+	# starts a poetry shell, shows yapf diff and then fixes the files
 	# does the same for isort
 	@echo '---Running yapf---'
 	poetry run yapf livevil_blog -r -d

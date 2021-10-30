@@ -1,10 +1,10 @@
-from livevil_blog.websocket import websocket_application
 import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                      'livevil_blog.settings.production')
+from livevil_blog.websocket import websocket_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'livevil_blog.settings.production')
 
 http_application = get_asgi_application()
 
