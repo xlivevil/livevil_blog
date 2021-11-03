@@ -57,6 +57,7 @@ jobs:
         run: |
             mv ./livevil_blog/settings/action.py ./livevil_blog/settings/local.py
             make install
+            poetry run python manage.py compress
 
       - name: run coverage
         run: |
