@@ -52,11 +52,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-poetry-
       - name: install package manager and dependencies
-        run: make install
+        run: |
+            mv ./livevil_blog/settings/action.py ./livevil_blog/settings/local.py
+            make install
 
       - name: run coverage
         run: |
-            mv ./livevil_blog/settings/action.py ./livevil_blog/settings/local.py
             make coverage
             poetry run coverage xml
 
