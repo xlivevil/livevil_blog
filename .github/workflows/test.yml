@@ -16,6 +16,19 @@ jobs:
           MYSQL_DATABASE: test
         ports:
           - 3306:3306
+      mongodb:
+        image: mongo
+        ports:
+          - 27017:27017
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+      elasticsearch:
+        image: elasticsearch:5.6
+        ports:
+          - 9200:9200
+
     strategy:
       matrix:
         # To tests more versions or os, see https://docs.github.com/en/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
@@ -26,6 +39,8 @@ jobs:
       MYSQL_USER: root
       MYSQL_PASSWORD: test
       MYSQL_HOST: '127.0.0.1'
+      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+      EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
@@ -39,7 +54,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-poetry-
       - name: install package manager and dependencies
-        run: make install
+        run: |
+            mv ./livevil_blog/settings/action.py ./livevil_blog/settings/local.py
+            make install
+            poetry run python manage.py compress
 
       - name: run coverage
         run: |
