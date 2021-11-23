@@ -1,16 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
 # Create your views here.
 from users.forms import ProfileForm
 
 
-@login_required  # 判断用户是否登录
+@login_required    # 判断用户是否登录
 def profile(request):
     """ 个人资料 """
     user = request.user
-    return render(request, 'profile.html', {'user': user, })
+    return render(request, 'users/profile.html', {'user': user})
 
 
 @login_required
@@ -23,4 +23,4 @@ def change_profile(request):
     else:
         form = ProfileForm(instance=request.user)
 
-    return render(request, 'profile.html', context={'form': form})
+    return render(request, 'users/profile.html', context={'form': form})

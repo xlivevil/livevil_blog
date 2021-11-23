@@ -16,7 +16,7 @@ from blog.models import Category, Post, PostViewInfo, Tag
 
 class IndexView(PaginationMixin, ListView):
     model = Post
-    template_name = 'index.html'
+    template_name = 'blog/index.html'
     ordering = '-create_time'
     context_object_name = 'post_list'
     # 内置分页器
@@ -50,7 +50,7 @@ class TagView(IndexView):
 
 class PostDetailView(DetailView):
     model = Post
-    template_name = 'single.html'
+    template_name = 'blog/single.html'
     context_object_name = 'post'
 
     def get(self, request, *args, **kwargs):
@@ -100,7 +100,7 @@ def search(request):
     """
     Search in posts
 
-    Search by keyword, return list of post using template 'index.html'
+    Search by keyword, return list of post using template 'blog/index.html'
     """
     q = request.GET.get('q')
 
@@ -110,16 +110,16 @@ def search(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q)).filter(is_hidden=False)
-    return render(request, 'index.html', {'post_list': post_list})
+    return render(request, 'blog/index.html', {'post_list': post_list})
 
 
 @cache_page(60 * 15)
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'blog/about.html')
 
 
 class FullWidthView(IndexView):
-    template_name = 'full-width.html'
+    template_name = 'blog/full-width.html'
 
 
 def blank(request):

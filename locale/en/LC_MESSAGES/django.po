@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-04 20:51+0800\n"
+"POT-Creation-Date: 2021-11-08 18:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\api\serializers.py:56 .\blog\templates\single.html:126
+#: .\api\serializers.py:57 .\blog\templates\single.html:149
 msgid "文章目录"
 msgstr ""
 
-#: .\api\serializers.py:57
+#: .\api\serializers.py:58
 msgid "文章内容"
 msgstr ""
 
-#: .\api\urls.py:25
+#: .\api\urls.py:22
 msgid "测试工程API"
 msgstr ""
 
-#: .\api\urls.py:27
+#: .\api\urls.py:24
 msgid "测试工程接口文档"
 msgstr ""
 
-#: .\api\views.py:130
+#: .\api\views.py:131
 msgid "归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。"
 msgstr ""
 
@@ -42,76 +42,96 @@ msgstr ""
 msgid "搜索关键词"
 msgstr ""
 
-#: .\blog\apps.py:7
+#: .\blog\admin.py:45
+msgid "浏览量"
+msgstr ""
+
+#: .\blog\apps.py:7 .\blog\templates\base.html:75
 msgid "博客"
 msgstr ""
 
-#: .\blog\models.py:23 .\blog\models.py:24 .\blog\models.py:88
-msgid "分类"
+#: .\blog\models.py:25
+msgid "category"
 msgstr ""
 
-#: .\blog\models.py:45 .\blog\models.py:46 .\blog\models.py:90
-msgid "标签"
+#: .\blog\models.py:26
+msgid "categories"
 msgstr ""
 
-#: .\blog\models.py:63 .\blog\models.py:76
+#: .\blog\models.py:47
+msgid "tag"
+msgstr ""
+
+#: .\blog\models.py:48
+msgid "tags"
+msgstr ""
+
+#: .\blog\models.py:65 .\blog\models.py:78
 msgid "正文"
 msgstr ""
 
-#: .\blog\models.py:72
+#: .\blog\models.py:74
 msgid "标题"
 msgstr ""
 
-#: .\blog\models.py:73
+#: .\blog\models.py:75
 msgid "短网址"
 msgstr ""
 
-#: .\blog\models.py:80 .\comments\models.py:33 .\netdisk\models.py:12
+#: .\blog\models.py:82 .\comments\models.py:35 .\netdisk\models.py:12
 #: .\users\models.py:15
 msgid "创建时间"
 msgstr ""
 
-#: .\blog\models.py:81
+#: .\blog\models.py:83
 msgid "修改时间"
 msgstr ""
 
-#: .\blog\models.py:84
+#: .\blog\models.py:86
 msgid "摘要"
 msgstr ""
 
-#: .\blog\models.py:94
+#: .\blog\models.py:89
+msgid "分类"
+msgstr ""
+
+#: .\blog\models.py:90
+msgid "标签"
+msgstr ""
+
+#: .\blog\models.py:93
 msgid "作者"
 msgstr ""
 
-#: .\blog\models.py:97
+#: .\blog\models.py:95
 msgid "获赞数"
 msgstr ""
 
-#: .\blog\models.py:99
+#: .\blog\models.py:97
 msgid "隐藏"
 msgstr ""
 
-#: .\blog\models.py:101
+#: .\blog\models.py:99
 msgid "置顶"
 msgstr ""
 
-#: .\blog\models.py:146 .\blog\models.py:147 .\blog\models.py:174
+#: .\blog\models.py:138 .\blog\models.py:139 .\blog\models.py:163
 msgid "文章"
 msgstr ""
 
-#: .\blog\models.py:161
-msgid "浏览量"
+#: .\blog\models.py:143
+msgid "blog-"
 msgstr ""
 
-#: .\blog\models.py:176
+#: .\blog\models.py:165
 msgid "浏览时间"
 msgstr ""
 
-#: .\blog\models.py:179
+#: .\blog\models.py:168
 msgid "请求头"
 msgstr ""
 
-#: .\blog\models.py:186 .\blog\models.py:187
+#: .\blog\models.py:175 .\blog\models.py:176
 msgid "浏览记录"
 msgstr ""
 
@@ -138,6 +158,55 @@ msgstr ""
 msgid "Social"
 msgstr ""
 
+#: .\blog\templates\base.html:72
+msgid "首页"
+msgstr ""
+
+#: .\blog\templates\base.html:78
+msgid "关于"
+msgstr ""
+
+#: .\blog\templates\base.html:81
+msgid "联系"
+msgstr ""
+
+#: .\blog\templates\base.html:89 .\blog\templates\search\search.html:26
+msgid "搜索"
+msgstr ""
+
+#: .\blog\templates\base.html:130 .\notice\apps.py:8
+msgid "通知"
+msgstr ""
+
+#: .\blog\templates\base.html:135 .\users\templates\profile.html:6
+#: .\users\templates\profile.html:21
+msgid "用户信息"
+msgstr ""
+
+#: .\blog\templates\base.html:137
+msgid "退出登录"
+msgstr ""
+
+#: .\blog\templates\base.html:143
+msgid "登录"
+msgstr ""
+
+#: .\blog\templates\base.html:144
+msgid "注册"
+msgstr ""
+
+#: .\blog\templates\base.html:200 .\blog\templates\search\search.html:60
+msgid "继续阅读"
+msgstr ""
+
+#: .\blog\templates\base.html:205
+msgid "暂时还没有文章"
+msgstr ""
+
+#: .\blog\templates\base.html:229
+msgid "RSS 订阅"
+msgstr ""
+
 #: .\blog\templates\contact_form\contact_form.html:16
 msgid "Contact"
 msgstr ""
@@ -154,15 +223,27 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: .\blog\templates\single.html:89
+#: .\blog\templates\search\search.html:66
+msgid "没有搜索到你想要的结果！"
+msgstr ""
+
+#: .\blog\templates\search\search.html:81
+msgid "请输入搜索关键词，例如 django"
+msgstr ""
+
+#: .\blog\templates\single.html:81
+msgid "点赞"
+msgstr ""
+
+#: .\blog\templates\single.html:110
 msgid "发表评论"
 msgstr ""
 
-#: .\blog\templates\single.html:96
+#: .\blog\templates\single.html:118
 msgid "请登录"
 msgstr ""
 
-#: .\blog\templates\single.html:105
+#: .\blog\templates\single.html:128
 #, python-format
 msgid ""
 "\n"
@@ -171,11 +252,11 @@ msgid ""
 "                    "
 msgstr ""
 
-#: .\blog\templates\single.html:112
+#: .\blog\templates\single.html:135
 msgid "暂无评论"
 msgstr ""
 
-#: .\blog\views.py:93
+#: .\blog\views.py:108
 msgid "请输入搜索关键字"
 msgstr ""
 
@@ -228,15 +309,15 @@ msgstr[1] ""
 msgid "评论"
 msgstr ""
 
-#: .\comments\models.py:37
+#: .\comments\models.py:39
 msgid "父评论"
 msgstr ""
 
-#: .\comments\models.py:46
+#: .\comments\models.py:45
 msgid "comment"
 msgstr ""
 
-#: .\comments\models.py:47
+#: .\comments\models.py:46
 msgid "comments"
 msgstr ""
 
@@ -297,14 +378,13 @@ msgstr ""
 msgid "Thanks for flagging"
 msgstr ""
 
-#: .\comments\templates\comments\form.html:42
+#: .\comments\templates\comments\form.html:38
 #: .\comments\templates\comments\preview.html:37
 msgid "Post"
 msgstr ""
 
-#: .\comments\templates\comments\list.html:18
-#: .\comments\templates\comments\list.html:24
-#: .\comments\templates\comments\list.html:28
+#: .\comments\templates\comments\list.html:37
+#: .\comments\templates\comments\list.html:41
 msgid "reply"
 msgstr ""
 
@@ -346,15 +426,15 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:143
+#: .\livevil_blog\settings\common.py:142
 msgid "中文简体"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:143
+#: .\livevil_blog\settings\common.py:142
 msgid "English"
 msgstr ""
 
-#: .\livevil_blog\settings\common.py:143
+#: .\livevil_blog\settings\common.py:142
 msgid "日本語"
 msgstr ""
 
@@ -686,14 +766,14 @@ msgstr ""
 msgid "Signup"
 msgstr ""
 
-#: .\users\templates\account\signup.html:11
-#: .\users\templates\account\signup.html:22
+#: .\users\templates\account\signup.html:10
+#: .\users\templates\account\signup.html:21
 #: .\users\templates\socialaccount\signup.html:8
 #: .\users\templates\socialaccount\signup.html:20
 msgid "Sign Up"
 msgstr ""
 
-#: .\users\templates\account\signup.html:13
+#: .\users\templates\account\signup.html:12
 #, python-format
 msgid ""
 "Already have an account? Then please\n"
@@ -763,27 +843,23 @@ msgstr ""
 msgid "OpenID Sign In"
 msgstr ""
 
-#: .\users\templates\profile.html:6 .\users\templates\profile.html:23
-msgid "用户信息"
-msgstr ""
-
-#: .\users\templates\profile.html:25
+#: .\users\templates\profile.html:23
 msgid "用户名："
 msgstr ""
 
-#: .\users\templates\profile.html:26
+#: .\users\templates\profile.html:24
 msgid "电子邮箱："
 msgstr ""
 
-#: .\users\templates\profile.html:27
+#: .\users\templates\profile.html:25
 msgid "修改"
 msgstr ""
 
-#: .\users\templates\profile.html:28
+#: .\users\templates\profile.html:26
 msgid "修改密码"
 msgstr ""
 
-#: .\users\templates\profile.html:30
+#: .\users\templates\profile.html:28
 msgid "第三方账号绑定"
 msgstr ""
 
