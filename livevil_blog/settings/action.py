@@ -91,3 +91,11 @@ CACHES = {
             }
         }
 }
+
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+# grappelli
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'grappelli/'
+# 把admin的静态文件,由原来的admin目录,改为映射到static目录下的
+GRAPPELLI_ADMIN_TITLE = '后台管理系统'    # 更改grappelli的登入title
