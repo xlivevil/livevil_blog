@@ -56,7 +56,8 @@ jobs:
       - name: install package manager and dependencies
         run: |
             mv ./livevil_blog/settings/action.py ./livevil_blog/settings/local.py
-            make install
+            make installdeps
+            make migrate
             poetry run python manage.py compress
 
       - name: run coverage
