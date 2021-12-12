@@ -59,12 +59,12 @@ def deploy(c):
 
     # 进入项目根目录，启动docker-compose
     with c.cd(project_root_path):
-        # cmd = 'docker-compose -f production.yml up'
-        cmd = 'supervisord -c ~/etc/supervisord.conf'
+        cmd = 'docker-compose -f production.yml up'
+        # cmd = 'supervisord -c ~/etc/supervisord.conf'
         c.run(cmd)
 
-    # 进入项目根目录，启动certbot
-    with c.cd(project_root_path):
-        cmd = 'docker exec -it livevil_blog_nginx certbot --nginx -{} -A -y -2 -2'.format(
-            certbot_email)
-        c.run(cmd)
+    # 进入项目根目录，启动certbot(已不再使用，改用了服务器商提供的长期证书)
+    # with c.cd(project_root_path):
+    #     cmd = 'docker exec -it livevil_blog_nginx certbot --nginx -{} -A -y -2 -2'.format(
+    #         certbot_email)
+    #     c.run(cmd)

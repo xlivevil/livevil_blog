@@ -43,7 +43,7 @@ urlpatterns += i18n_patterns(
     path('todo/', include('todo.urls')),
     path('netdisk/', include('netdisk.urls')),
     path('wiki/', include('wiki.urls')),
-    path('contact/', include('contact_form.urls')),
+    path('contact/', include('contact_form.akismet_urls')),
     path('notice/', include('notice.urls')),
     path('', include('blog.urls')),
 )

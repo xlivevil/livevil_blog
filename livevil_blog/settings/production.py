@@ -196,3 +196,11 @@ COS_CUSTOM_DOMAIN = os.environ['COS_CUSTOM_DOMAIN']
 
 COMPRESS_URL = os.environ['COMPRESS_URL']
 COMPRESS_STORAGE = STATICFILES_STORAGE
+
+STATIC_URL = COS_CUSTOM_DOMAIN + '/static/'
+MEDIA_URL = COS_CUSTOM_DOMAIN + '/media/'
+
+# grappelli
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'grappelli/'
+# 把admin的静态文件,由原来的admin目录,改为映射到static目录下的
+GRAPPELLI_ADMIN_TITLE = '后台管理系统'    # 更改grappelli的登入title

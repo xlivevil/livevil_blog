@@ -143,13 +143,6 @@ LANGUAGES = (('zh-hans', _('中文简体')), ('en', _('English')), ('ja', _('日
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_URL = '/static/'
-
-MEDIA_URL = '/media/'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 X_FRAME_OPTIONS = 'sameorigin'
@@ -289,11 +282,6 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.cssmin.CSSMinFilter'
 ]
 COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.JSMinFilter']
-
-# grappelli
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'grappelli/'
-# 把admin的静态文件,由原来的admin目录,改为映射到static目录下的
-GRAPPELLI_ADMIN_TITLE = '后台管理系统'    # 更改grappelli的登入title
 
 # session的存储配置
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
