@@ -118,12 +118,20 @@ class UserDetailSerializer(serializers.ModelSerializer[User]):
         fields = ['id', 'username', 'last_name', 'first_name', 'email', 'last_login', 'date_joined']
 
 
+class RecursiveCommentSerializer(serializers.Serializer):
+
+    def to_representation(self, value):
+        serializer = self.parent.parent.__class__(value, context=self.context)
+        return serializer.data
+
+
 class CommentSerializer(serializers.ModelSerializer[PostComment]):
+    children = RecursiveCommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = PostComment
         fields = [
-            'id', 'user_id', 'user_name', 'user_email', 'user_url', 'comment', 'created_time', 'parent',
+            'id', 'user_id', 'user_name', 'user_email', 'user_url', 'comment', 'created_time', 'parent', 'children',
             'content_type', 'object_pk', 'comment_html'
         ]
         read_only_fields = ['created_time', 'comment_html']
