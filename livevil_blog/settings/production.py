@@ -197,8 +197,8 @@ COS_CUSTOM_DOMAIN = os.environ['COS_CUSTOM_DOMAIN']
 COMPRESS_URL = os.environ['COMPRESS_URL']
 COMPRESS_STORAGE = STATICFILES_STORAGE
 
-STATIC_URL = 'https://' + COS_CUSTOM_DOMAIN + '/static/'
-MEDIA_URL = 'https://' + COS_CUSTOM_DOMAIN + '/media/'
+STATIC_URL = os.environ['STATIC_URL']
+MEDIA_URL = os.environ['MEDIA_URL']
 
 # grappelli
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'grappelli/'
