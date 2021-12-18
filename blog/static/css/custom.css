@@ -980,12 +980,18 @@ dl.children {
  * 13.0 - Pagination
  */
 .pagination-simple {
-    padding-left: 30px;
     font-size: 16px;
+}
+
+.pagination{
+    width: 100%;
 }
 
 .pagination ul {
     list-style: none;
+    padding: 0;
+    flex: auto;
+    justify-content:center;
 }
 
 .pagination ul li {
@@ -994,7 +1000,7 @@ dl.children {
     margin-right: 5px;
 }
 
-.current a {
+.active a {
     color: red;
 }
 /**
