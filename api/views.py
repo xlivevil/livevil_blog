@@ -23,7 +23,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework_extensions.cache.decorators import cache_response
 
-from api.filter import PostFilter
+from api.filter import CommentFilter, PostFilter
 from api.permissions import IsSelfOrReadOnly
 from api.serializers import (
     CategorySerializer, CommentSerializer, PostHaystackSerializer, PostListSerializer, PostSerializer, TagSerializer,
@@ -174,6 +174,8 @@ index = PostViewSet.as_view({'get': 'list'})
 
 class CommentViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     serializer_class = CommentSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = CommentFilter
 
     def get_queryset(self):
         return PostComment.objects.all()
