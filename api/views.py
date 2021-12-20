@@ -1,5 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend
@@ -24,7 +26,7 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework_extensions.cache.decorators import cache_response
 
 from api.filter import CommentFilter, PostFilter
-from api.permissions import IsSelfOrReadOnly
+from api.permissions import IsOwnerOrReadOnly, IsSelfOrReadOnly
 from api.serializers import (
     CategorySerializer, CommentSerializer, PostHaystackSerializer, PostListSerializer, PostSerializer, TagSerializer,
     UserDetailSerializer, UserRegisterSerializer,
@@ -176,9 +178,13 @@ class CommentViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     serializer_class = CommentSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = CommentFilter
+    permission_classes = [IsOwnerOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user, submit_date=timezone.now(), site=get_current_site(self.request))
 
     def get_queryset(self):
-        return PostComment.objects.all()
+        return PostComment.objects.visible()
 
     @cache_response(timeout=5 * 60, key_func=CommentListKeyConstructor())
     def list(self, request, *args, **kwargs):
@@ -189,14 +195,14 @@ class PostSearchAnonRateThrottle(AnonRateThrottle):
     """
     游客搜索频率限制
     """
-    THROTTLE_RATES = {'anon': '5/min'}
+    THROTTLE_RATES = {'anon': '10/min'}
 
 
 class PostSearchUserRateThrottle(UserRateThrottle):
     """
     用户搜索频率限制
     """
-    THROTTLE_RATES = {'user': '10/min'}
+    THROTTLE_RATES = {'user': '20/min'}
 
 
 class PostSearchFilterInspector(FilterInspector):

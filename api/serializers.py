@@ -126,16 +126,16 @@ class RecursiveCommentSerializer(serializers.Serializer):
 
 
 class CommentSerializer(serializers.ModelSerializer[PostComment]):
+    user = UserSerializer(read_only=True)
     children = RecursiveCommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = PostComment
         fields = [
-            'id', 'user_id', 'user_name', 'user_email', 'user_url', 'comment', 'created_time', 'parent', 'children',
-            'content_type', 'object_pk', 'comment_html'
+            'id', 'user', 'name', 'email', 'url', 'comment', 'created_time', 'parent', 'children', 'content_type',
+            'object_pk', 'comment_html'
         ]
-        read_only_fields = ['created_time', 'comment_html']
-        extra_kwargs = {'post': {'write_only': True}}
+        read_only_fields = ['id', 'created_time', 'comment_html', 'created_time', 'name', 'email', 'url', 'children']
 
 
 class HighlightedCharField(CharField):
