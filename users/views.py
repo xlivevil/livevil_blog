@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext_lazy as _
 
-# Create your views here.
 from users.forms import ProfileForm
 
 
@@ -18,7 +18,7 @@ def change_profile(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=request.user)
         if form.is_vaild():
-            messages.add_message(request, messages.SUCCESS, '个人信息更新成功')
+            messages.add_message(request, messages.SUCCESS, _('个人信息更新成功'))
             return redirect('users:profile')
     else:
         form = ProfileForm(instance=request.user)
