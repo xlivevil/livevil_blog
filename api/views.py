@@ -130,7 +130,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
-    @swagger_auto_schema(responses={200: _("归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。")})
+    @swagger_auto_schema(responses={200: "归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。"})
     @action(
         methods=['GET'],
         detail=False,
@@ -152,11 +152,10 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         url_name='comment',
         filter_backends=[],
         suffix='List',
-        pagination_class=LimitOffsetPagination,
+        pagination_class=PageNumberPagination,
         serializer_class=CommentSerializer,
     )
     def list_comments(self, request, *args, **kwargs):
-        # 根据 URL 传入的参数值（文章 id）获取到博客文章记录
         post = self.get_object()
         # 获取文章下关联的全部评论 self.object.content_object  self.object.pk
         content_type = ContentType.objects.get(app_label=post._meta.app_label, model=post._meta.model_name)

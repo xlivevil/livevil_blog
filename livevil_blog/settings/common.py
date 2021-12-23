@@ -69,6 +69,8 @@ INSTALLED_APPS = [
     'contact_form',
     'corsheaders',
     'notifications',
+    'drf_spectacular',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -252,7 +254,7 @@ REST_FRAMEWORK = {
             'rest_framework.parsers.FormParser',
             'rest_framework.parsers.MultiPartParser',
         ],
-    'EXCEPTION_HANDLER': ['rest_framework.views.exception_handler'],
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
     'DEFAULT_VERSION': 'v1',
     # 限流
@@ -262,7 +264,9 @@ REST_FRAMEWORK = {
         'anon': '20/min',
         'user': '30/min'
     },
-    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',)
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny',]
 }
 
 STATICFILES_FINDERS = (
@@ -294,4 +298,13 @@ SESSION_COOKIE_AGE = 60 * 30
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+}
+
+# DRF_SPECTACULAR
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your Project API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SCHEMA_PATH_PREFIX': '/api/',
+    'COMPONENT_SPLIT_REQUEST': True,
 }
