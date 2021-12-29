@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 18:36+0800\n"
+"POT-Creation-Date: 2021-12-20 15:10+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: .\api\serializers.py:57 .\blog\templates\single.html:149
+#: .\api\serializers.py:57 .\blog\templates\blog\single.html:149
 msgid "文章目录"
 msgstr ""
 
@@ -34,11 +34,11 @@ msgstr ""
 msgid "测试工程接口文档"
 msgstr ""
 
-#: .\api\views.py:131
+#: .\api\views.py:133
 msgid "归档日期列表，时间倒序排列。例如：['2020-08', '2020-06']。"
 msgstr ""
 
-#: .\api\views.py:210
+#: .\api\views.py:218
 msgid "搜索关键词"
 msgstr ""
 
@@ -135,29 +135,6 @@ msgstr ""
 msgid "浏览记录"
 msgstr ""
 
-#: .\blog\templates\about.html:17
-msgid "About Me"
-msgstr "关于"
-
-#: .\blog\templates\about.html:23
-msgid ""
-"\n"
-"                    我是一名python学习者\n"
-"                "
-msgstr ""
-
-#: .\blog\templates\about.html:27
-msgid ""
-"\n"
-"                    本站基于python3.9，使用django3.2框架。主要用于个人学习编"
-"程的技术实践与经验记录。\n"
-"                "
-msgstr ""
-
-#: .\blog\templates\about.html:32
-msgid "Social"
-msgstr "社交帐号"
-
 #: .\blog\templates\base.html:72
 msgid "首页"
 msgstr ""
@@ -178,8 +155,8 @@ msgstr ""
 msgid "通知"
 msgstr ""
 
-#: .\blog\templates\base.html:135 .\users\templates\profile.html:6
-#: .\users\templates\profile.html:21
+#: .\blog\templates\base.html:135 .\users\templates\users\profile.html:6
+#: .\users\templates\users\profile.html:21
 msgid "用户信息"
 msgstr ""
 
@@ -207,6 +184,54 @@ msgstr ""
 msgid "RSS 订阅"
 msgstr ""
 
+#: .\blog\templates\blog\about.html:17
+msgid "About Me"
+msgstr "关于"
+
+#: .\blog\templates\blog\about.html:23
+msgid ""
+"\n"
+"                    我是一名python学习者\n"
+"                "
+msgstr ""
+
+#: .\blog\templates\blog\about.html:27
+msgid ""
+"\n"
+"                    本站基于python3.9，使用django3.2框架。主要用于个人学习编"
+"程的技术实践与经验记录。\n"
+"                "
+msgstr ""
+
+#: .\blog\templates\blog\about.html:32
+msgid "Social"
+msgstr "社交帐号"
+
+#: .\blog\templates\blog\single.html:81
+msgid "点赞"
+msgstr ""
+
+#: .\blog\templates\blog\single.html:110
+msgid "发表评论"
+msgstr ""
+
+#: .\blog\templates\blog\single.html:118
+msgid "请登录"
+msgstr ""
+
+#: .\blog\templates\blog\single.html:128
+#, python-format
+msgid ""
+"\n"
+"                        <h3>评论列表，共 <span>%(comment_count)s </span> 条评"
+"论</h3>\n"
+"                    "
+msgstr ""
+
+#: .\blog\templates\blog\single.html:135
+msgid "暂无评论"
+msgstr ""
+
 #: .\blog\templates\contact_form\contact_form.html:16
 msgid "Contact"
 msgstr "联系我"
@@ -223,37 +248,28 @@ msgstr "默认头像图标来自"
 msgid "from"
 msgstr ""
 
+#: .\blog\templates\pure_pagination\pagination.html:6
+#: .\blog\templates\pure_pagination\pagination.html:8
+#: .\blog\templates\pure_pagination\pagination.html:15
+msgid "previous page"
+msgstr "前一页"
+
+#: .\blog\templates\pure_pagination\pagination.html:24
+msgid "current page"
+msgstr "当前页"
+
+#: .\blog\templates\pure_pagination\pagination.html:40
+#: .\blog\templates\pure_pagination\pagination.html:41
+#: .\blog\templates\pure_pagination\pagination.html:48
+msgid "next page"
+msgstr "后一页"
+
 #: .\blog\templates\search\search.html:66
 msgid "没有搜索到你想要的结果！"
 msgstr ""
 
 #: .\blog\templates\search\search.html:81
 msgid "请输入搜索关键词，例如 django"
-msgstr ""
-
-#: .\blog\templates\single.html:81
-msgid "点赞"
-msgstr ""
-
-#: .\blog\templates\single.html:110
-msgid "发表评论"
-msgstr ""
-
-#: .\blog\templates\single.html:118
-msgid "请登录"
-msgstr ""
-
-#: .\blog\templates\single.html:128
-#, python-format
-msgid ""
-"\n"
-"                        <h3>评论列表，共 <span>%(comment_count)s </span> 条评"
-"论</h3>\n"
-"                    "
-msgstr ""
-
-#: .\blog\templates\single.html:135
-msgid "暂无评论"
 msgstr ""
 
 #: .\blog\views.py:108
@@ -273,36 +289,31 @@ msgstr ""
 #: .\comments\admin.py:68
 msgid "flagged"
 msgid_plural "flagged"
-msgstr[0] ""
+msgstr[0] "标记"
 
 #: .\comments\admin.py:70
-#, fuzzy
 #| msgid "Flag this comment"
 msgid "Flag selected comments"
 msgstr "标记这个评论"
 
 #: .\comments\admin.py:74
-#, fuzzy
 #| msgid "Approve"
 msgid "approved"
 msgid_plural "approved"
 msgstr[0] "核准"
 
 #: .\comments\admin.py:76
-#, fuzzy
 #| msgid "Approve a comment"
 msgid "Approve selected comments"
 msgstr "核准评论"
 
 #: .\comments\admin.py:80 .\netdisk\models.py:26
-#, fuzzy
 #| msgid "Remove"
 msgid "removed"
 msgid_plural "removed"
 msgstr[0] "删除"
 
 #: .\comments\admin.py:82
-#, fuzzy
 #| msgid "Remove a comment"
 msgid "Remove selected comments"
 msgstr "删除评论"
@@ -316,6 +327,10 @@ msgstr[0] "%(count)s 的评论成功 %(action)s."
 #: .\comments\apps.py:7
 msgid "评论"
 msgstr ""
+
+#: .\comments\forms.py:13
+msgid "Your message was classified as spam."
+msgstr "你的消息被归类为垃圾消息"
 
 #: .\comments\models.py:39
 msgid "父评论"
@@ -519,11 +534,11 @@ msgstr "未验证"
 
 #: .\users\templates\account\email.html:35
 msgid "Primary"
-msgstr ""
+msgstr "主邮箱"
 
 #: .\users\templates\account\email.html:42
 msgid "Make Primary"
-msgstr ""
+msgstr "作为主邮箱"
 
 #: .\users\templates\account\email.html:44
 msgid "Re-send Verification"
@@ -561,6 +576,12 @@ msgid ""
 "\n"
 "To confirm this is correct, go to %(activate_url)s\n"
 msgstr ""
+"来自 %(site_name)s 的问候!\n"
+"\n"
+"您收到这风邮件是因为 用户 %(user_display)s 将这个邮箱作为地址链接到他的账号。\n"
+"\n"
+"验证邮箱，前往 %(activate_url)s\n"
+msgstr ""
 
 #: .\users\templates\account\email\email_confirmation_message.txt:7
 #, python-format
@@ -568,10 +589,12 @@ msgid ""
 "Thank you from %(site_name)s!\n"
 "%(site_domain)s"
 msgstr ""
+"来自 %(site_name)s 的感谢!\n"
+"%(site_domain)s"
 
 #: .\users\templates\account\email\email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
-msgstr ""
+msgstr "请验证您的电子邮箱地址"
 
 #: .\users\templates\account\email\password_reset_key_message.txt:1
 #, python-format
@@ -599,10 +622,12 @@ msgid ""
 "Thank you for using %(site_name)s!\n"
 "%(site_domain)s"
 msgstr ""
+"感谢使用 %(site_name)s!\n"
+"%(site_domain)s"
 
 #: .\users\templates\account\email\password_reset_key_subject.txt:3
 msgid "Password Reset E-mail"
-msgstr ""
+msgstr "密码重置邮件"
 
 #: .\users\templates\account\email_confirm.html:6
 #: .\users\templates\account\email_confirm.html:11
@@ -617,6 +642,10 @@ msgid ""
 "address for user %(user_display)s\n"
 "                ."
 msgstr ""
+"请验证\n"
+"                <a href=\"mailto:%(email)s\">%(email)s</a> 是 "
+"用户 %(user_display)s 的邮箱\n"
+"                ."
 
 #: .\users\templates\account\email_confirm.html:23
 msgid "Confirm"
@@ -662,12 +691,12 @@ msgstr "登出"
 
 #: .\users\templates\account\logout.html:12
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "你确认要登出码？"
 
 #: .\users\templates\account\messages\cannot_delete_primary_email.txt:2
 #, python-format
 msgid "You cannot remove your primary e-mail address (%(email)s)."
-msgstr ""
+msgstr "您不能删除您的主邮箱 (%(email)s)。"
 
 #: .\users\templates\account\messages\email_confirmation_sent.txt:2
 #, python-format
@@ -677,12 +706,12 @@ msgstr "确认邮件已发送至 %(email)s"
 #: .\users\templates\account\messages\email_confirmed.txt:2
 #, python-format
 msgid "You have confirmed %(email)s."
-msgstr ""
+msgstr "您已确认邮箱 %(email)s"
 
 #: .\users\templates\account\messages\email_deleted.txt:2
 #, python-format
 msgid "Removed e-mail address %(email)s."
-msgstr ""
+msgstr "已删除电子邮箱 %(email)s"
 
 #: .\users\templates\account\messages\logged_in.txt:4
 #, python-format
@@ -703,11 +732,11 @@ msgstr "密码已设置"
 
 #: .\users\templates\account\messages\primary_email_set.txt:2
 msgid "Primary e-mail address set."
-msgstr ""
+msgstr "设置主邮箱"
 
 #: .\users\templates\account\messages\unverified_primary_email.txt:2
 msgid "Your primary e-mail address must be verified."
-msgstr ""
+msgstr "您必须验证您的主邮箱"
 
 #: .\users\templates\account\password_change.html:5
 #: .\users\templates\account\password_change.html:10
@@ -738,7 +767,7 @@ msgstr "重置您的密码"
 
 #: .\users\templates\account\password_reset.html:23
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
+msgstr "如果您在重置密码时遇到任何问题，请联系我"
 
 #: .\users\templates\account\password_reset_done.html:16
 msgid ""
@@ -860,26 +889,6 @@ msgstr ""
 msgid "OpenID Sign In"
 msgstr ""
 
-#: .\users\templates\profile.html:23
-msgid "用户名："
-msgstr ""
-
-#: .\users\templates\profile.html:24
-msgid "电子邮箱："
-msgstr ""
-
-#: .\users\templates\profile.html:25
-msgid "修改"
-msgstr ""
-
-#: .\users\templates\profile.html:26
-msgid "修改密码"
-msgstr ""
-
-#: .\users\templates\profile.html:28
-msgid "第三方账号绑定"
-msgstr ""
-
 #: .\users\templates\socialaccount\authentication_error.html:5
 #: .\users\templates\socialaccount\authentication_error.html:8
 msgid "Social Network Login Failure"
@@ -941,4 +950,24 @@ msgid ""
 "You are about to use your\n"
 "        %(provider_name)s account to login to\n"
 "        %(site_name)s. As a final step, please complete the following form:"
+msgstr ""
+
+#: .\users\templates\users\profile.html:23
+msgid "用户名："
+msgstr ""
+
+#: .\users\templates\users\profile.html:24
+msgid "电子邮箱："
+msgstr ""
+
+#: .\users\templates\users\profile.html:25
+msgid "修改"
+msgstr ""
+
+#: .\users\templates\users\profile.html:26
+msgid "修改密码"
+msgstr ""
+
+#: .\users\templates\users\profile.html:28
+msgid "第三方账号绑定"
 msgstr ""
