@@ -160,7 +160,7 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         # 获取文章下关联的全部评论 self.object.content_object  self.object.pk
         content_type = ContentType.objects.get(app_label=post._meta.app_label, model=post._meta.model_name)
         queryset = PostComment.objects.roots().filter(content_type=content_type,
-                                                      object_pk=post.pk).order_by('-created_time')
+                                                      object_pk=post.pk).order_by('-submit_date')
         # 对评论列表进行分页，根据 URL 传入的参数获取指定页的评论
         # FIXME: 此处分页未考虑子评论关系
         page = self.paginate_queryset(queryset)

@@ -13,7 +13,7 @@
         <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
         {% endif %}
         <span class="nickname">{{ comment.user.username }}</span>
-        <time class="comment-time" datetime="{{ comment.created_time }}">{{ comment.created_time|naturaltime }}</time>
+        <time class="comment-time" datetime="{{ comment.submit_date }}">{{ comment.submit_date|naturaltime }}</time>
 
     </dt>
     <dd class="comment-item" id="c{{ comment.id }}t">

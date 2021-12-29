@@ -19,11 +19,11 @@ class PostFilter(drf_filters.FilterSet):
 
 class CommentFilter(drf_filters.FilterSet):
 
-    created_year = drf_filters.NumberFilter(field_name='created_time', lookup_expr='year', help_text='年份')
-    created_month = drf_filters.NumberFilter(field_name='created_time', lookup_expr='month', help_text='月份')
-    create_daterange = drf_filters.DateRangeFilter(field_name='created_time')
-    start_date = drf_filters.DateFilter(field_name='created_time', lookup_expr='gte')
-    end_date = drf_filters.DateFilter(field_name='created_time', lookup_expr='lte')
+    created_year = drf_filters.NumberFilter(field_name='submit_date', lookup_expr='year', help_text='年份')
+    created_month = drf_filters.NumberFilter(field_name='submit_date', lookup_expr='month', help_text='月份')
+    create_daterange = drf_filters.DateRangeFilter(field_name='submit_date')
+    start_date = drf_filters.DateFilter(field_name='submit_date', lookup_expr='gte')
+    end_date = drf_filters.DateFilter(field_name='submit_date', lookup_expr='lte')
 
     class Meta:
         model = PostComment

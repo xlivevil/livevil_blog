@@ -1,10 +1,10 @@
-from comments.models import PostComment
 from django.contrib import admin
-from django.utils.translation import gettext_lazy as _, ngettext
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _, ngettext
+from django_comments.views.moderation import perform_approve, perform_delete, perform_flag
 from reversion.admin import VersionAdmin
-from django_comments.views.moderation import (perform_flag, perform_approve,
-                                              perform_delete)
+
+from comments.models import PostComment
 
 
 class UsernameSearch:
@@ -13,6 +13,7 @@ class UsernameSearch:
     a mechanism for issuing the equivalent of a .filter(user__username=...)
     search in CommentAdmin.
     """
+
     def __str__(self):
         return 'user__%s' % get_user_model().USERNAME_FIELD
 
@@ -20,15 +21,14 @@ class UsernameSearch:
 @admin.register(PostComment)
 class CommentAdmin(VersionAdmin):
     # 排序
-    date_hierarchy = 'created_time'
+    date_hierarchy = 'submit_date'
     # 显示项
     fieldsets = (
         (None, {
             'fields': ('content_type', 'object_pk', 'site', 'parent')
         }),
         (_('Content'), {
-            'fields':
-            ('user', 'user_name', 'user_email', 'user_url', 'comment')
+            'fields': ('user', 'user_name', 'user_email', 'user_url', 'comment')
         }),
         (_('Metadata'), {
             'fields': ('submit_date', 'ip_address', 'is_public', 'is_removed')
@@ -46,11 +46,10 @@ class CommentAdmin(VersionAdmin):
     )
     list_filter = ('user', 'submit_date', 'site', 'is_public', 'is_removed')
     date_hierarchy = 'submit_date'
-    ordering = ('-submit_date', )
-    raw_id_fields = ('user', )
-    search_fields = ('comment', UsernameSearch(), 'user_name', 'user_email',
-                     'user_url', 'ip_address')
-    actions = ["flag_comments", "approve_comments", "remove_comments"]
+    ordering = ('-submit_date',)
+    raw_id_fields = ('user',)
+    search_fields = ('comment', UsernameSearch(), 'user_name', 'user_email', 'user_url', 'ip_address')
+    actions = ['flag_comments', 'approve_comments', 'remove_comments']
     list_per_page = 20
 
     # 左右多选框
@@ -64,22 +63,19 @@ class CommentAdmin(VersionAdmin):
         return qs.filter(author=request.user)
 
     def flag_comments(self, request, queryset):
-        self._bulk_flag(request, queryset, perform_flag,
-                        lambda n: ngettext('flagged', 'flagged', n))
+        self._bulk_flag(request, queryset, perform_flag, lambda n: ngettext('flagged', 'flagged', n))
 
-    flag_comments.short_description = _("Flag selected comments")
+    flag_comments.short_description = _('Flag selected comments')
 
     def approve_comments(self, request, queryset):
-        self._bulk_flag(request, queryset, perform_approve,
-                        lambda n: ngettext('approved', 'approved', n))
+        self._bulk_flag(request, queryset, perform_approve, lambda n: ngettext('approved', 'approved', n))
 
-    approve_comments.short_description = _("Approve selected comments")
+    approve_comments.short_description = _('Approve selected comments')
 
     def remove_comments(self, request, queryset):
-        self._bulk_flag(request, queryset, perform_delete,
-                        lambda n: ngettext('removed', 'removed', n))
+        self._bulk_flag(request, queryset, perform_delete, lambda n: ngettext('removed', 'removed', n))
 
-    remove_comments.short_description = _("Remove selected comments")
+    remove_comments.short_description = _('Remove selected comments')
 
     def _bulk_flag(self, request, queryset, action, done_message):
         """
@@ -91,11 +87,8 @@ class CommentAdmin(VersionAdmin):
             action(request, comment)
             n_comments += 1
 
-        msg = ngettext('%(count)s comment was successfully %(action)s.',
-                       '%(count)s comments were successfully %(action)s.',
-                       n_comments)
-        self.message_user(
-            request, msg % {
-                'count': n_comments,
-                'action': done_message(n_comments)
-            })
+        msg = ngettext(
+            '%(count)s comment was successfully %(action)s.', '%(count)s comments were successfully %(action)s.',
+            n_comments
+        )
+        self.message_user(request, msg % {'count': n_comments, 'action': done_message(n_comments)})

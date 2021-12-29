@@ -31,8 +31,7 @@ class BlogCommentManager(TreeManager, CommentManager):
 class PostComment(MPTTModel, CommentAbstractModel):
     # TODO: 加入点赞数
 
-    # 时间信息
-    created_time = models.DateTimeField(_('创建时间'), default=timezone.now)
+    modified_time = models.DateTimeField(_('修改时间'))
 
     # 层级关系
     parent = TreeForeignKey(
@@ -52,6 +51,10 @@ class PostComment(MPTTModel, CommentAbstractModel):
         # Field %s.%s cannot be both deferred and traversed
         # using select_related at the same time.
         order_insertion_by = ['-submit_date', 'user_id']
+
+    def save(self, *args, **kwargs):
+        self.modified_time = timezone.now()
+        super().save(*args, **kwargs)
 
     def _get_userinfo(self):
         """

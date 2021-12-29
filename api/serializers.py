@@ -132,10 +132,10 @@ class CommentSerializer(serializers.ModelSerializer[PostComment]):
     class Meta:
         model = PostComment
         fields = [
-            'id', 'user', 'name', 'email', 'url', 'comment', 'created_time', 'parent', 'children', 'content_type',
+            'id', 'user', 'name', 'email', 'url', 'comment', 'submit_date', 'parent', 'children', 'content_type',
             'object_pk', 'comment_html'
         ]
-        read_only_fields = ['id', 'created_time', 'comment_html', 'created_time', 'name', 'email', 'url', 'children']
+        read_only_fields = ['id', 'submit_date', 'comment_html', 'name', 'email', 'url', 'children']
 
 
 class HighlightedCharField(CharField):
