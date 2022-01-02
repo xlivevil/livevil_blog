@@ -4,7 +4,11 @@ source = .
 omit =
    _credentials.py
    fabfile.py
-   */migrations/*
+   manage.py
+   livevil_blog\wsgi.py
+   livevil_blog\asgi.py
+   livevil_blog\settings\*
+   *\migrations\*
    *tests*
 
 [report]

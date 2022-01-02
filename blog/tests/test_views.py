@@ -1,6 +1,8 @@
+import json
 from datetime import timedelta
 
 from django.apps import apps
+from django.core.cache import cache
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -76,6 +78,90 @@ class CategoryViewTestCase(BlogDataTestCase):
         self.assertEqual(response.context['post_list'].count(), 1)
         expected_qs = self.cate1.post_set.all().order_by('-create_time')
         self.assertQuerysetEqual(response.context['post_list'], [repr(p) for p in expected_qs])
+
+
+class ArchiveViewTestCase(BlogDataTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse(
+            'blog:archive', kwargs={
+                'year': self.post1.create_time.year,
+                'month': self.post1.create_time.month
+            }
+        )
+
+    def test_visit_archive_without_any_post(self):
+        Post.objects.all().delete()
+        cache.clear()
+        response = self.client.get(self.url, HTTP_USER_AGENT='Mozilla/5.0')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('blog/index.html')
+        self.assertContains(response, '暂时还没有文章')
+
+    def test_visit_archive_with_posts(self):
+        cache.clear()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('blog/index.html')
+        self.assertContains(response, self.post1.title)
+        self.assertIn('post_list', response.context)
+        self.assertIn('is_paginated', response.context)
+        self.assertIn('page_obj', response.context)
+        self.assertEqual(response.context['post_list'].count(), 1)
+        now = timezone.now()
+        expected_qs = Post.objects.filter(create_time__year=now.year, create_time__month=now.month)
+        self.assertQuerysetEqual(response.context['post_list'], [repr(p) for p in expected_qs])
+
+
+class TagViewTestCase(BlogDataTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('blog:tag', kwargs={'name': self.tag1.name})
+        self.url2 = reverse('blog:tag', kwargs={'name': self.tag2.name})
+
+    def test_visit_a_nonexistent_tag(self):
+        url = reverse('blog:tag', kwargs={'name': 'XX'})
+        response = self.client.get(url, HTTP_USER_AGENT='Mozilla/5.0')
+        self.assertEqual(response.status_code, 404)
+
+    def test_without_any_post(self):
+        Post.objects.all().delete()
+        response = self.client.get(self.url2, HTTP_USER_AGENT='Mozilla/5.0')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('blog/index.html')
+        self.assertContains(response, '暂时还没有文章')
+
+    def test_with_posts(self):
+        response = self.client.get(self.url, HTTP_USER_AGENT='Mozilla/5.0')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('blog/index.html')
+        self.assertContains(response, self.post1.title)
+        self.assertIn('post_list', response.context)
+        self.assertIn('is_paginated', response.context)
+        self.assertIn('page_obj', response.context)
+        self.assertEqual(response.context['post_list'].count(), 1)
+        expected_qs = self.tag1.post_set.all().order_by('-create_time')
+        self.assertQuerysetEqual(response.context['post_list'], [repr(p) for p in expected_qs])
+
+
+class IncreaseLikesViewTestCase(BlogDataTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('blog:increase_likes')
+
+    def test_increaselikes(self):
+        dict_data = {'object': 'post', 'id': self.post1.pk}
+        data = json.dumps(dict_data)
+        response = self.client.post(
+            self.url, data=data, content_type='application/json', HTTP_USER_AGENT='Mozilla/5.0'
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b'success')
+        self.post1.refresh_from_db()
+        self.assertEqual(self.post1.likes, 1)
 
 
 class PostDetailViewTestCase(BlogDataTestCase):

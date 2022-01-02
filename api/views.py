@@ -28,8 +28,8 @@ from rest_framework_extensions.cache.decorators import cache_response
 from api.filter import CommentFilter, PostFilter
 from api.permissions import IsOwnerOrReadOnly, IsSelfOrReadOnly
 from api.serializers import (
-    CategorySerializer, CommentSerializer, PostHaystackSerializer, PostListSerializer, PostSerializer, TagSerializer,
-    UserDetailSerializer, UserRegisterSerializer,
+    CategorySerializer, CommentSerializer, PostHaystackSerializer, PostListSerializer, PostSerializer,
+    SimpleCommentSerializer, TagSerializer, UserDetailSerializer, UserRegisterSerializer,
 )
 from blog.models import Category, Post, Tag
 from comments.models import PostComment
@@ -98,16 +98,16 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     PostViewSet
 
     list:
-    list posts
+        list posts
 
     retrieve:
-    get a post by id
+        get a post by id
 
     list_comments:
-    get a post's comments
+        get a post's comments
 
     list_archive_dates:
-    list posts's archive dates
+        list posts's archive dates
     """
     serializer_class = PostSerializer
     serializer_class_table = {
@@ -157,16 +157,15 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     )
     def list_comments(self, request, *args, **kwargs):
         post = self.get_object()
-        # 获取文章下关联的全部评论 self.object.content_object  self.object.pk
+
         content_type = ContentType.objects.get(app_label=post._meta.app_label, model=post._meta.model_name)
         queryset = PostComment.objects.roots().filter(content_type=content_type,
                                                       object_pk=post.pk).order_by('-submit_date')
-        # 对评论列表进行分页，根据 URL 传入的参数获取指定页的评论
-        # FIXME: 此处分页未考虑子评论关系
+
         page = self.paginate_queryset(queryset)
-        # 序列化评论
+
         serializer = self.get_serializer(page, many=True)
-        # 返回分页后的评论列表
+
         return self.get_paginated_response(serializer.data)
 
 
@@ -174,7 +173,7 @@ index = PostViewSet.as_view({'get': 'list'})
 
 
 class CommentViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
-    serializer_class = CommentSerializer
+    serializer_class = SimpleCommentSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = CommentFilter
     permission_classes = [IsOwnerOrReadOnly]
@@ -226,15 +225,13 @@ class PostSearchFilterInspector(FilterInspector):
 @method_decorator(name='list', decorator=swagger_auto_schema(filter_inspectors=[PostSearchFilterInspector]))
 class PostSearchView(HaystackViewSet):
     """
-    搜索视图集
+    PostSearchView
 
     retrieve:
-    search/42/?model=myapp.person
-    返回
+        search/42/?model=myapp.person
 
     list:
-    search/?text=key
-    返回搜索结果列表
+        search/?text=key
     """
 
     index_models = [Post]

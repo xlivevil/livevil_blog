@@ -138,6 +138,17 @@ class CommentSerializer(serializers.ModelSerializer[PostComment]):
         read_only_fields = ['id', 'submit_date', 'comment_html', 'name', 'email', 'url', 'children']
 
 
+class SimpleCommentSerializer(serializers.ModelSerializer[PostComment]):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = PostComment
+        fields = [
+            'id', 'user', 'name', 'email', 'url', 'comment', 'submit_date', 'content_type', 'object_pk', 'comment_html'
+        ]
+        read_only_fields = ['id', 'submit_date', 'comment_html', 'name', 'email', 'url']
+
+
 class HighlightedCharField(CharField):
 
     def to_representation(self, value):
