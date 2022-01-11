@@ -54,7 +54,7 @@ fabric = "^2.6.0"
 invoke = "^1.5.0"
 mypy = "^0.812"
 flake8 = "^3.9.2"
-yapf = "^0.31.0"
+yapf = "^0.32.0"
 coverage = {extras = ["toml"], version = "^6.1"}
 isort = "^5.8.0"
 django-stubs = "^1.8.0"
