@@ -11,8 +11,7 @@ class PostAdmin(VersionAdmin):
     # 排序
     date_hierarchy = 'create_time'
     # 显示列表显示项
-    list_display = ('title', 'create_time', 'modified_time', 'category',
-                    'author', 'postview_count', 'likes')
+    list_display = ('title', 'create_time', 'modified_time', 'category', 'author', 'postview_count', 'likes')
     # 过滤器
     list_filter = (
         'create_time',
@@ -22,11 +21,13 @@ class PostAdmin(VersionAdmin):
     # 每页显示
     list_per_page = 20
 
-    fields = ('title', 'slug', 'body', 'excerpt', 'category', 'tags',
-              'is_hidden', 'is_top')
+    fields = ('title', 'slug', 'body', 'excerpt', 'category', 'tags', 'is_hidden', 'is_top')
+
+    prepopulated_fields = {'slug': ('title',)}
+
     # 分类排列
     # fieldsets =
-    filter_horizontal = ('tags', )
+    filter_horizontal = ('tags',)
 
     def save_model(self, request, obj, form, change):
         obj.author = request.user
@@ -35,7 +36,7 @@ class PostAdmin(VersionAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        qs = qs.annotate(_postview_count=Count('postviewinfo'), )
+        qs = qs.annotate(_postview_count=Count('postviewinfo'),)
         if request.user.is_superuser:
             return qs
         return qs.filter(author=request.user)

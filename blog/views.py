@@ -2,7 +2,7 @@ import json
 
 from django.contrib import messages
 from django.db.models import Q
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -89,6 +89,8 @@ class PostDetailView(DetailView):
 class IncreaseLikesView(View):
 
     def post(self, request, *args, **kwargs):
+        if not request.is_ajax():
+            return HttpResponseBadRequest()
         data = json.loads(request.body)
         post = Post.objects.get(id=data.get('id'))
         post.likes += 1
@@ -125,11 +127,3 @@ class FullWidthView(IndexView):
 def blank(request):
     url = reverse('blog:index')
     return redirect(url)
-
-
-def page_not_found(request, exception):
-    return render(request, '404.html', status=404)
-
-
-def page_error(request, exception):
-    return render(request, '404.html', status=500)

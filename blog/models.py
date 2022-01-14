@@ -69,7 +69,6 @@ class Post(models.Model):
     """
 
     """
-    # TODO: 保存同时刷新缓存
     # 标题
     title = models.CharField(_('标题'), max_length=70)
     slug = models.SlugField(_('短网址'), unique=True, allow_unicode=True)
@@ -121,17 +120,18 @@ class Post(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.modified_time = timezone.now()
 
-        if self.excerpt == '':
+        if not self.excerpt:
             body = self.rich_content.get('content', '')
             self.excerpt = strip_tags(body)[:200]
 
-        if self.slug == '':
+        if not self.slug:
             slug = slugify(self.title, allow_unicode=True)[:20]
             if Post.objects.filter(slug=slug).exists():
                 self.slug = f'{slug}-{Post.objects.filter(slug__startswith=slug).count() + 1}'
             else:
                 self.slug = slug
-
+        elif Post.objects.filter(slug=self.slug).exists():
+            self.slug = f'{self.slug}-{Post.objects.filter(slug__startswith=self.slug).count() + 1}'
         super().save()
 
     class Meta:
