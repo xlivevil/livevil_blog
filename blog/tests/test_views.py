@@ -10,7 +10,7 @@ from django.utils import timezone
 from blog.feed import AllPostsRssFeed
 from users.models import User
 
-from ..models import Category, Post, Tag
+from blog.models import Category, Post, Tag
 
 
 class BlogDataTestCase(TestCase):
@@ -213,6 +213,8 @@ class AdminTestCase(BlogDataTestCase):
         super().setUp()
         self.test_user = User.objects.create_superuser(username='test', email='test@test.com', password='test')
         self.url = reverse('admin:blog_post_add')
+        self.url2 = reverse('admin:blog_post_change', args=(self.post1.pk,))
+        self.url3 = reverse('admin:blog_post_changelist')
 
     def test_set_author_after_publishing_the_post(self):
         data = {'title': '测试标题', 'body': '测试内容', 'category': self.cate1.pk, 'slug': '测试'}
@@ -235,6 +237,21 @@ class AdminTestCase(BlogDataTestCase):
         test_response = self.client.post(self.url, data=data)
         self.assertEqual(test_response.status_code, 200)
 
+    def test_change_post(self):
+        self.client.login(username=self.user.username, password='admin')
+        response = self.client.get(self.url2)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.post1.title)
+        self.assertContains(response, self.post1.body)
+        self.assertContains(response, self.post1.category.name)
+    
+    def test_change_list(self):
+        self.client.login(username=self.user.username, password='admin')
+        response = self.client.get(self.url3)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.post1.title)
+        self.assertContains(response, self.post1.category.name)
+        self.assertContains(response, f'<td class="field-postview_count">{self.post1.postviewinfo_set.count()}</td>')
 
 class RSSTestCase(BlogDataTestCase):
 
@@ -252,3 +269,5 @@ class RSSTestCase(BlogDataTestCase):
         self.assertContains(response, f'[{self.post2.category}] {self.post2.title}')
         self.assertContains(response, self.post1.body)
         self.assertContains(response, self.post2.body)
+
+

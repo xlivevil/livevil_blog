@@ -1,7 +1,7 @@
 from django import template
 from django.db.models.aggregates import Count
 
-from ..models import Category, Post, Tag
+from blog.models import Category, Post, Tag
 
 register = template.Library()
 
