@@ -45,10 +45,6 @@ class PostModelTestCase(TestCase):
         expected_url = reverse('blog:detail', kwargs={'pk': self.post.pk})
         self.assertEqual(self.post.get_absolute_url(), expected_url)
 
-    def test_search_index(self):
-        self.post.save()
-        self.assertTrue(NoteIndex.objects.filter(id=self.post.id).exists())
-
     def test_duplicate_slug(self):
         self.post2 = Post.objects.create(
             title=self.post.title,

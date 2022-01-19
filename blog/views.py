@@ -89,7 +89,7 @@ class PostDetailView(DetailView):
 class IncreaseLikesView(View):
 
     def post(self, request, *args, **kwargs):
-        if not request.is_ajax():
+        if not request.accepts('application/json'):
             return HttpResponseBadRequest()
         data = json.loads(request.body)
         post = Post.objects.get(id=data.get('id'))
