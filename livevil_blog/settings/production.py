@@ -123,11 +123,15 @@ LOGGING = {
                 'style': '{',
             },
         },
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
+    'filters':
+        {
+            'require_debug_true': {
+                '()': 'django.utils.log.RequireDebugTrue',
+            },
+            'missing_variable_error': {
+                '()': 'livevil_blog.utils.log_filters.MissingVariableErrorFilter',
+            }
         },
-    },
     'handlers':
         {
             'console':
@@ -156,10 +160,14 @@ LOGGING = {
                 'handlers': ['console'],
                 'propagate': True,
             },
-            'django': {
+            'django.file': {
                 'handlers': ['file', 'mail_admins'],
                 'level': 'WARNING',
                 'propagate': True,
+            },
+            'django.template': {
+                'level': 'DEBUG',
+                'filters': ['missing_variable_error'],
             },
         },
 }
