@@ -389,14 +389,14 @@ Django = ">=2.2"
 
 [[package]]
 name = "django-filter"
-version = "2.4.0"
+version = "22.1"
 description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
 category = "main"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.7"
 
 [package.dependencies]
-Django = ">=2.2"
+Django = ">=3.2"
 
 [[package]]
 name = "django-grappelli"
@@ -1685,7 +1685,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "c292a3ed3ca321626b794587aaadd77213017088ff68aa4f5e4b11a142b19461"
+content-hash = "9e7f63379e8775efc79ba17a752b451aee9824f72218f2041860fb4d47295dc1"
 
 [metadata.files]
 akismet = [
@@ -1927,8 +1927,8 @@ django-extensions = [
     {file = "django_extensions-3.1.5-py3-none-any.whl", hash = "sha256:9238b9e016bb0009d621e05cf56ea8ce5cce9b32e91ad2026996a7377ca28069"},
 ]
 django-filter = [
-    {file = "django-filter-2.4.0.tar.gz", hash = "sha256:84e9d5bb93f237e451db814ed422a3a625751cbc9968b484ecc74964a8696b06"},
-    {file = "django_filter-2.4.0-py3-none-any.whl", hash = "sha256:e00d32cebdb3d54273c48f4f878f898dced8d5dfaad009438fe61ebdf535ace1"},
+    {file = "django-filter-22.1.tar.gz", hash = "sha256:ed473b76e84f7e83b2511bb2050c3efb36d135207d0128dfe3ae4b36e3594ba5"},
+    {file = "django_filter-22.1-py3-none-any.whl", hash = "sha256:ed429e34760127e3520a67f415bec4c905d4649fbe45d0d6da37e6ff5e0287eb"},
 ]
 django-grappelli = [
     {file = "django-grappelli-2.15.5.tar.gz", hash = "sha256:84da7f1ab9051d3421255355a987544420dffef595b1a550f3032b5418017415"},
