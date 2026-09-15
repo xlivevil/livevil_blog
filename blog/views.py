@@ -1,12 +1,10 @@
 import json
 
-from django.contrib import messages
 from django.core.cache import cache
-from django.db.models import Count, F, Q
-from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect, JsonResponse
+from django.db.models import Count, F
+from django.http.response import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import View
@@ -95,23 +93,6 @@ class IncreaseLikesView(View):
         cache.set(liked_key, True, 60 * 60 * 24)
         post.refresh_from_db(fields=['likes'])
         return JsonResponse({'status': 'ok', 'likes': post.likes})
-
-
-def search(request):
-    """
-    Search in posts
-
-    Search by keyword, return list of post using template 'blog/index.html'
-    """
-    q = request.GET.get('q')
-
-    if not q:
-        error_msg = _('请输入搜索关键字')
-        messages.add_message(request, messages.ERROR, error_msg, extra_tags='danger')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-    post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q)).filter(is_hidden=False)
-    return render(request, 'blog/index.html', {'post_list': post_list})
 
 
 @cache_page(60 * 15)

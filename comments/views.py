@@ -1,10 +1,8 @@
-from django import apps
 from django.apps import apps
-from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.dispatch import receiver
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.utils.html import escape
 from django.utils.http import escape_leading_slashes
 from django.views.decorators.csrf import csrf_protect
@@ -12,37 +10,15 @@ from django.views.decorators.http import require_POST
 from django.views.generic import DetailView
 from django.views.generic.edit import FormMixin
 from django_comments import signals
-from django_comments.forms import CommentForm
 from django_comments.signals import comment_was_posted
 from django_comments.views.comments import CommentPostBadRequest
 from django_comments.views.utils import next_redirect
 from notifications.signals import notify
 
-from blog.models import Post
 from comments import get_form
 from comments.forms import PostCommentForm
 from comments.models import PostComment
 from utils.request import get_client_ip
-
-
-@require_POST
-def comment_preview(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    form = CommentForm(request.POST)
-    if form.is_valid():
-        comment = form.save(commit=False)
-        comment.post = post
-        comment.user = request.user
-        comment.save()
-        messages.add_message(request, messages.SUCCESS, '评论成功！', extra_tags='success')
-        return redirect(post)
-    else:
-        print(form)
-    context = {
-        'post': post,
-        'form': form,
-    }
-    return render(request, 'preview.html', context=context)
 
 
 @receiver(comment_was_posted)
