@@ -1,5 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.shortcuts import get_current_site
+from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -114,7 +115,11 @@ class PostViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         'list': PostListSerializer,
         'retrieve': PostSerializer,
     }
-    queryset = Post.objects.all()
+    # 预取关联并注解浏览量，避免列表序列化 N+1；隐藏文章不对外暴露
+    queryset = (
+        Post.objects.filter(is_hidden=False).select_related('category', 'author').prefetch_related('tags').annotate(
+            view_num=Count('postviewinfo', distinct=True))
+    )
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
     filterset_class = PostFilter

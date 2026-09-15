@@ -151,17 +151,38 @@ class IncreaseLikesViewTestCase(BlogDataTestCase):
     def setUp(self):
         super().setUp()
         self.url = reverse('blog:increase_likes')
+        # 点赞去重依赖 cache，测试间清理避免相互影响
+        cache.clear()
+
+    def _like(self, post_pk):
+        return self.client.post(
+            self.url, data=json.dumps({'object': 'post', 'id': post_pk}),
+            content_type='application/json', HTTP_USER_AGENT='Mozilla/5.0'
+        )
 
     def test_increaselikes(self):
-        dict_data = {'object': 'post', 'id': self.post1.pk}
-        data = json.dumps(dict_data)
-        response = self.client.post(
-            self.url, data=data, content_type='application/json', HTTP_USER_AGENT='Mozilla/5.0'
-        )
+        response = self._like(self.post1.pk)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, b'success')
+        self.assertJSONEqual(response.content, {'status': 'ok', 'likes': 1, 'duplicate': False})
         self.post1.refresh_from_db()
         self.assertEqual(self.post1.likes, 1)
+
+    def test_increaselikes_dedup_per_ip(self):
+        for _ in range(2):
+            response = self._like(self.post1.pk)
+            self.assertEqual(response.status_code, 200)
+        self.post1.refresh_from_db()
+        self.assertEqual(self.post1.likes, 1)
+
+    def test_increaselikes_hidden_post_returns_404(self):
+        self.post1.is_hidden = True
+        self.post1.save()
+        response = self._like(self.post1.pk)
+        self.assertEqual(response.status_code, 404)
+
+    def test_increaselikes_missing_post_returns_404(self):
+        response = self._like(9999)
+        self.assertEqual(response.status_code, 404)
 
 
 class PostDetailViewTestCase(BlogDataTestCase):

@@ -1,8 +1,9 @@
 import json
 
 from django.contrib import messages
-from django.db.models import Q
-from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.core.cache import cache
+from django.db.models import Count, F, Q
+from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -24,7 +25,11 @@ class IndexView(PaginationMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        return super().get_queryset().filter(is_hidden=False)
+        # 预取关联并注解浏览量，避免列表页 N+1；distinct 防止后续 M2M 过滤导致计数翻倍
+        return (
+            super().get_queryset().filter(is_hidden=False).select_related('category', 'author').prefetch_related(
+                'tags').annotate(view_num=Count('postviewinfo', distinct=True))
+        )
 
 
 class CategoryView(IndexView):
@@ -57,31 +62,13 @@ class PostDetailView(DetailView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
-        # 过滤出所有的id比当前文章小的文章
-        pre_article = Post.objects.filter(id__lt=self.object.id).order_by('-id')
-        # 过滤出id大的文章
-        next_article = Post.objects.filter(id__gt=self.object.id).order_by('id')
-
-        # 取出相邻前一篇文章
-        pre_article = pre_article[0] if pre_article.count() > 0 else None
-        # 取出相邻后一篇文章
-        next_article = next_article[0] if next_article.count() > 0 else None
-        # 需要传递给模板的对象
-        context.update({
-            'pre_article': pre_article,
-            'next_article': next_article,
-        })
+        # 相邻文章只在已发布文章中取，各一条查询
+        context['pre_article'] = Post.objects.filter(id__lt=self.object.id, is_hidden=False).order_by('-id').first()
+        context['next_article'] = Post.objects.filter(id__gt=self.object.id, is_hidden=False).order_by('id').first()
         response = self.render_to_response(context)
-        # 重写get方法
-        # 阅读数增加操作
-        if kwargs.get('pk'):
-            post_id = kwargs['pk']
-        if kwargs.get('slug'):
-            post_slug = kwargs['slug']
-            post_id = Post.objects.filter(slug=post_slug).first().pk
+        # 浏览记录：截断超长 UA，记录可信 IP（仅统计用途）
         header = (request.META.get('HTTP_USER_AGENT') or '')[:200]
-        post_view = PostViewInfo(post_id=post_id, header=header, ip=get_client_ip(request) or '0.0.0.0')
-        post_view.save()
+        PostViewInfo.objects.create(post=self.object, header=header, ip=get_client_ip(request) or '0.0.0.0')
         return response
 
 
@@ -90,11 +77,24 @@ class IncreaseLikesView(View):
     def post(self, request, *args, **kwargs):
         if not request.accepts('application/json'):
             return HttpResponseBadRequest()
-        data = json.loads(request.body)
-        post = Post.objects.get(id=data.get('id'))
-        post.likes += 1
-        post.save(update_fields=['likes'])
-        return HttpResponse('success')
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return HttpResponseBadRequest()
+        post = get_object_or_404(Post, pk=data.get('id'), is_hidden=False)
+        # 服务端去重：登录用户按用户计数，匿名访客按可信 IP 计数，24 小时内只能点赞一次
+        if request.user.is_authenticated:
+            voter = f'user-{request.user.pk}'
+        else:
+            voter = f'ip-{get_client_ip(request) or "unknown"}'
+        liked_key = f'blog:liked:{post.pk}:{voter}'
+        if cache.get(liked_key):
+            return JsonResponse({'status': 'ok', 'likes': post.likes, 'duplicate': True})
+        # F 表达式原子自增：并发不丢更新，且不触发信号/全量 save
+        Post.objects.filter(pk=post.pk).update(likes=F('likes') + 1)
+        cache.set(liked_key, True, 60 * 60 * 24)
+        post.refresh_from_db(fields=['likes'])
+        return JsonResponse({'status': 'ok', 'likes': post.likes})
 
 
 def search(request):
