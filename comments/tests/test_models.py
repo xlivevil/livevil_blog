@@ -44,3 +44,24 @@ class PostCommentModelTestCase(CommentDataTestCase):
         )
         self.assertEqual(sub_comment.parent, self.comment)
         self.assertEqual(self.comment.children.count(), 1)
+
+    def test_comment_html_strips_active_xss_payloads(self):
+        self.comment.comment = (
+            '正常文字<script>alert(1)</script><img src=x onerror=alert(1)>'
+            '<a href="javascript:alert(1)">坏链接</a><iframe src="https://evil.example"></iframe>'
+        )
+        self.comment.save()
+        html = self.comment.comment_html
+        self.assertNotIn('<script', html)
+        self.assertNotIn('onerror', html)
+        self.assertNotIn('javascript:', html)
+        self.assertNotIn('<iframe', html)
+        self.assertIn('正常文字', html)
+
+    def test_comment_html_keeps_safe_markdown(self):
+        self.comment.comment = '**加粗** 与 `代码` 以及 [链接](https://example.com)'
+        self.comment.save()
+        html = self.comment.comment_html
+        self.assertIn('<strong>加粗</strong>', html)
+        self.assertIn('<code>代码</code>', html)
+        self.assertIn('href="https://example.com"', html)

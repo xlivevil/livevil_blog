@@ -12,7 +12,7 @@ from mptt.managers import TreeManager
 from mptt.models import MPTTModel, TreeForeignKey
 from mptt.querysets import TreeQuerySet
 
-from utils.rich_content import generate_rich_content
+from utils.rich_content import generate_comment_content
 
 
 class BlogCommentQuerySet(TreeQuerySet):
@@ -89,12 +89,13 @@ class PostComment(MPTTModel, CommentAbstractModel):
     @cached_property
     def rich_content(self):
         ud = self.submit_date.strftime('%Y%m%d%H%M%S')
-        md_key = f'comment{self.id}_md_{ud}'
+        # key 带 v2：上线消毒后使旧的未消毒缓存失效
+        md_key = f'comment{self.id}_md_v2_{ud}'
         cache_md = cache.get(md_key)
         if cache_md:
             rich_content = cache_md
         else:
-            rich_content = generate_rich_content(self.comment)
+            rich_content = generate_comment_content(self.comment)
             cache.set(md_key, rich_content, 60 * 60 * 12)
         return rich_content
 
