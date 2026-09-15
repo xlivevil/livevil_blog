@@ -16,6 +16,9 @@ class PostCommentForm(CommentForm):
         self.user = kwargs.pop('user', None)
         self.parent = parent
         self.request = kwargs.pop('request', None)
+        # ReplyView 会传入这两个参数；渲染阶段用不到，弹出以避免传入 CommentForm 时报 TypeError
+        self.user_ip = kwargs.pop('user_ip', None)
+        self.user_agent = kwargs.pop('user_agent', None)
         if initial is None:
             initial = {}
         if parent:

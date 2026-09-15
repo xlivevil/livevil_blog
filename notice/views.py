@@ -1,9 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django.views.generic import ListView
-
-from blog.models import Post
 
 
 class CommentNoticeListView(LoginRequiredMixin, ListView):
@@ -20,19 +18,19 @@ class CommentNoticeListView(LoginRequiredMixin, ListView):
         return self.request.user.notifications.unread()
 
 
-class CommentNoticeUpdateView(View):
-    """更新通知状态"""
+class CommentNoticeUpdateView(LoginRequiredMixin, View):
+    """更新通知状态
 
-    # 处理 get 请求
-    def get(self, request):
-        # 获取未读消息
-        notice_id = request.GET.get('notice_id')
+    修改状态的操作只接受 POST：GET 链接会被浏览器预取/爬虫误触发。
+    """
+
+    def post(self, request):
+        notice_id = request.POST.get('notice_id')
         # 更新单条通知
         if notice_id:
-            post = Post.objects.get(id=request.GET.get('post_id'))
-            request.user.notifications.get(id=notice_id).mark_as_read()
-            return redirect(post)
+            notice = get_object_or_404(request.user.notifications.all(), id=notice_id)
+            notice.mark_as_read()
+            return redirect(notice.target)
         # 更新全部通知
-        else:
-            request.user.notifications.mark_all_as_read()
-            return redirect('notice:list')
+        request.user.notifications.mark_all_as_read()
+        return redirect('notice:list')

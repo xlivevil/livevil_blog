@@ -17,7 +17,8 @@ def profile(request):
 def change_profile(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=request.user)
-        if form.is_vaild():
+        if form.is_valid():
+            form.save()
             messages.add_message(request, messages.SUCCESS, _('个人信息更新成功'))
             return redirect('users:profile')
     else:

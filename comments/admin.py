@@ -45,7 +45,6 @@ class CommentAdmin(VersionAdmin):
         'is_removed',
     )
     list_filter = ('user', 'submit_date', 'site', 'is_public', 'is_removed')
-    date_hierarchy = 'submit_date'
     ordering = ('-submit_date',)
     raw_id_fields = ('user',)
     search_fields = ('comment', UsernameSearch(), 'user_name', 'user_email', 'user_url', 'ip_address')
@@ -60,7 +59,7 @@ class CommentAdmin(VersionAdmin):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(author=request.user)
+        return qs.filter(user=request.user)
 
     def flag_comments(self, request, queryset):
         self._bulk_flag(request, queryset, perform_flag, lambda n: ngettext('flagged', 'flagged', n))

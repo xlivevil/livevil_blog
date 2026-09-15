@@ -9,6 +9,10 @@ from users.models import User
 
 class ProfileForm(forms.ModelForm):
 
+    class Meta:
+        model = User
+        fields = ['nickname', 'first_name', 'last_name', 'link']
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()

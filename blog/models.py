@@ -55,8 +55,8 @@ def change_tag_updated_at(sender=None, instance=None, *args, **kwargs):
     cache.set('tag_updated_at', datetime.utcnow())
 
 
-post_save.connect(receiver=change_tag_updated_at, sender=Category)
-post_delete.connect(receiver=change_tag_updated_at, sender=Category)
+post_save.connect(receiver=change_tag_updated_at, sender=Tag)
+post_delete.connect(receiver=change_tag_updated_at, sender=Tag)
 
 
 class PostBody(mongomodels.Model):
@@ -117,22 +117,29 @@ class Post(models.Model):
             cache.set(md_key, rich_content, 60 * 60 * 12)
         return rich_content
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        self.modified_time = timezone.now()
+    def save(self, *args, **kwargs):
+        update_fields = kwargs.get('update_fields')
+        # 全量保存时才刷新时间戳/摘要/slug；指定字段保存（如点赞）时其余字段保持不动
+        if update_fields is None or 'modified_time' in update_fields:
+            self.modified_time = timezone.now()
 
-        if not self.excerpt:
-            body = self.rich_content.get('content', '')
-            self.excerpt = strip_tags(body)[:200]
+            if not self.excerpt:
+                body = self.rich_content.get('content', '')
+                self.excerpt = strip_tags(body)[:200]
 
-        if not self.slug:
-            slug = slugify(self.title, allow_unicode=True)[:20]
-            if Post.objects.filter(slug=slug).exists():
-                self.slug = f'{slug}-{Post.objects.filter(slug__startswith=slug).count() + 1}'
-            else:
-                self.slug = slug
-        elif Post.objects.filter(slug=self.slug).exists():
-            self.slug = f'{self.slug}-{Post.objects.filter(slug__startswith=self.slug).count() + 1}'
-        super().save()
+            if not self.slug:
+                self.slug = self._get_unique_slug(slugify(self.title, allow_unicode=True)[:20])
+            elif Post.objects.filter(slug=self.slug).exclude(pk=self.pk).exists():
+                self.slug = self._get_unique_slug(self.slug)
+        super().save(*args, **kwargs)
+
+    def _get_unique_slug(self, base):
+        # 逐个尝试候选值，避免并发或删除中间 slug 后产生唯一键冲突
+        candidate, counter = base or 'post', 1
+        while Post.objects.filter(slug=candidate).exclude(pk=self.pk).exists():
+            counter += 1
+            candidate = f'{base}-{counter}'
+        return candidate
 
     class Meta:
         verbose_name = _('文章')

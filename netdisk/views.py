@@ -6,6 +6,6 @@ from netdisk.models import Files
 
 
 def home(request):
-    files = Files.object.all()
+    files = Files.objects.all()
     context = {'files': files}
     return render(request, 'netdisk/files.html', context)
