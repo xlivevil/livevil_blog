@@ -81,16 +81,7 @@ class PostSerializer(serializers.ModelSerializer[Post]):
             'modified_time',
             'toc',
             'body_html',
-            'get_view_num',
         ]
-        extra_kwargs = {
-            'rich_content': {
-                'body_html': True
-            },
-            'toc': {
-                'body_html': True
-            },
-        }
 
 
 class UserRegisterSerializer(serializers.ModelSerializer[User]):
@@ -115,7 +106,8 @@ class UserDetailSerializer(serializers.ModelSerializer[User]):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'last_name', 'first_name', 'email', 'last_login', 'date_joined']
+        # 不输出 email：用户信息接口公开可读
+        fields = ['id', 'username', 'last_name', 'first_name', 'last_login', 'date_joined']
 
 
 class RecursiveCommentSerializer(serializers.Serializer):
@@ -131,11 +123,12 @@ class CommentSerializer(serializers.ModelSerializer[PostComment]):
 
     class Meta:
         model = PostComment
+        # 不输出 email：评论列表接口公开可读，评论者邮箱不应泄露
         fields = [
-            'id', 'user', 'name', 'email', 'url', 'comment', 'submit_date', 'parent', 'children', 'content_type',
+            'id', 'user', 'name', 'url', 'comment', 'submit_date', 'parent', 'children', 'content_type',
             'object_pk', 'comment_html'
         ]
-        read_only_fields = ['id', 'submit_date', 'comment_html', 'name', 'email', 'url', 'children']
+        read_only_fields = ['id', 'submit_date', 'comment_html', 'name', 'url', 'children']
 
 
 class SimpleCommentSerializer(serializers.ModelSerializer[PostComment]):
@@ -144,9 +137,9 @@ class SimpleCommentSerializer(serializers.ModelSerializer[PostComment]):
     class Meta:
         model = PostComment
         fields = [
-            'id', 'user', 'name', 'email', 'url', 'comment', 'submit_date', 'content_type', 'object_pk', 'comment_html'
+            'id', 'user', 'name', 'url', 'comment', 'submit_date', 'content_type', 'object_pk', 'comment_html'
         ]
-        read_only_fields = ['id', 'submit_date', 'comment_html', 'name', 'email', 'url']
+        read_only_fields = ['id', 'submit_date', 'comment_html', 'name', 'url']
 
 
 class HighlightedCharField(CharField):

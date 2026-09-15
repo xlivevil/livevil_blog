@@ -1,6 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.shortcuts import get_current_site
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -279,7 +279,7 @@ class UserViewSet(ModelViewSet):
 
     @action(detail=True, methods=['get'])
     def info(self, request, username=None):
-        queryset = User.objects.get(username=username)
+        queryset = get_object_or_404(User, username=username)
         serializer = UserDetailSerializer(queryset, many=False)
         return Response(serializer.data)
 
