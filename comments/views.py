@@ -22,6 +22,7 @@ from blog.models import Post
 from comments import get_form
 from comments.forms import PostCommentForm
 from comments.models import PostComment
+from utils.request import get_client_ip
 
 
 @require_POST
@@ -77,7 +78,7 @@ class ReplyView(FormMixin, DetailView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        user_ip = self.request.META.get('HTTP_X_FORWARDED_FOR') or self.request.META.get('REMOTE_ADDR')
+        user_ip = get_client_ip(self.request) or '127.0.0.1'
         user_agent = self.request.META.get('HTTP_USER_AGENT')
         kwargs.update(
             {
@@ -104,7 +105,7 @@ def post_comment(request, next=None, using=None):
     # Fill out some initial data fields from an authenticated user, if present
     data = request.POST.copy()
 
-    data['user_ip'] = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('REMOTE_ADDR')
+    data['user_ip'] = get_client_ip(request) or '127.0.0.1'
     data['user_agent'] = request.META.get('HTTP_USER_AGENT')
 
     if request.user.is_authenticated:

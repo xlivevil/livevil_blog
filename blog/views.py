@@ -12,6 +12,7 @@ from django.views.generic.base import View
 from pure_pagination import PaginationMixin
 
 from blog.models import Category, Post, PostViewInfo, Tag
+from utils.request import get_client_ip
 
 
 class IndexView(PaginationMixin, ListView):
@@ -78,10 +79,8 @@ class PostDetailView(DetailView):
         if kwargs.get('slug'):
             post_slug = kwargs['slug']
             post_id = Post.objects.filter(slug=post_slug).first().pk
-        header = request.META.get('HTTP_USER_AGENT')
-        ip = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('REMOTE_ADDR')
-
-        post_view = PostViewInfo(post_id=post_id, header=header, ip=ip)
+        header = (request.META.get('HTTP_USER_AGENT') or '')[:200]
+        post_view = PostViewInfo(post_id=post_id, header=header, ip=get_client_ip(request) or '0.0.0.0')
         post_view.save()
         return response
 
