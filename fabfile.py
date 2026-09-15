@@ -59,7 +59,7 @@ def deploy(c):
 
     # 进入项目根目录，启动docker-compose
     with c.cd(project_root_path):
-        cmd = 'docker-compose -f production.yml up'
+        cmd = 'docker-compose -f production.yml up -d'
         # cmd = 'supervisord -c ~/etc/supervisord.conf'
         c.run(cmd)
 

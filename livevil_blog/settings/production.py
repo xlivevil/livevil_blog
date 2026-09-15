@@ -10,9 +10,13 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+# debug_toolbar 只应在开发环境启用
+INSTALLED_APPS = [app for app in INSTALLED_APPS if app != 'debug_toolbar']
+MIDDLEWARE = [m for m in MIDDLEWARE if m != 'debug_toolbar.middleware.DebugToolbarMiddleware']
+
 ALLOWED_HOSTS = ['.xlivevil.com']
 
-INTERNAL_IPS = ['170.106.13.74']
+INTERNAL_IPS = ['127.0.0.1']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -30,7 +34,7 @@ DATABASES = {
             'PASSWORD': os.environ['DJANGO_MYSQL_PASSWORD'],
             'HOST': '172.17.0.1',
             'PORT': '3306',
-            'OPTION': {
+            'OPTIONS': {
                 'charset': 'utf8mb4',
                 'autocommit': True,
                 'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
@@ -45,7 +49,7 @@ DATABASES = {
                 'loggers': {
                     'djongo': {
                         'level': 'DEBUG',
-                        'propogate': False,
+                        'propagate': False,
                     }
                 },
             },
@@ -101,7 +105,7 @@ CACHES = {
         {
             'BACKEND': 'django_redis.cache.RedisCache',
             'LOCATION': os.environ['DJANGO_REDIS_LOCATION'],
-            'OPTION': {
+            'OPTIONS': {
                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             }
         }
@@ -157,17 +161,15 @@ LOGGING = {
     'loggers':
         {
             'django': {
-                'handlers': ['console'],
-                'propagate': True,
-            },
-            'django.file': {
-                'handlers': ['file', 'mail_admins'],
-                'level': 'WARNING',
-                'propagate': True,
+                'handlers': ['console', 'file', 'mail_admins'],
+                'level': 'INFO',
+                'propagate': False,
             },
             'django.template': {
+                'handlers': ['file'],
                 'level': 'DEBUG',
                 'filters': ['missing_variable_error'],
+                'propagate': False,
             },
         },
 }

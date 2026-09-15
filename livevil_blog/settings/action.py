@@ -26,7 +26,7 @@ DATABASES = {
             'PASSWORD': os.environ['MYSQL_PASSWORD'],
             'HOST': os.environ['MYSQL_HOST'],
             'PORT': '3306',
-            'OPTION': {
+            'OPTIONS': {
                 'charset': 'utf8mb4',
                 'autocommit': True,
                 'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
@@ -41,7 +41,7 @@ DATABASES = {
                 'loggers': {
                     'djongo': {
                         'level': 'DEBUG',
-                        'propogate': False,
+                        'propagate': False,
                     }
                 },
             },
@@ -86,7 +86,7 @@ CACHES = {
         {
             'BACKEND': 'django_redis.cache.RedisCache',
             'LOCATION': 'redis://@127.0.0.1:6379/0',
-            'OPTION': {
+            'OPTIONS': {
                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             }
         }

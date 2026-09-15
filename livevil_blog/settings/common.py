@@ -266,7 +266,8 @@ REST_FRAMEWORK = {
     },
     'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny',]
+    # 默认只读：需要写的接口在各 ViewSet 显式声明权限
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticatedOrReadOnly',]
 }
 
 STATICFILES_FINDERS = (

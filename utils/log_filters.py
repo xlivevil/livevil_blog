@@ -16,6 +16,7 @@ class MissingVariableErrorFilter(logging.Filter):
         if record.msg.startswith('Exception while resolving variable '):
             variable_name, template_name = record.args
             if not template_name.startswith(self.ignored_prefixes):
-                record.level = logging.ERROR
+                record.levelno = logging.ERROR
+                record.levelname = logging.getLevelName(logging.ERROR)
                 return True
         return False

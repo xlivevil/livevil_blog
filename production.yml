@@ -15,7 +15,7 @@ services:
     volumes:
       - esdata:/usr/share/elasticsearch/data
     ports:
-      - "9200:9200"
+      - "127.0.0.1:9200:9200"
     environment:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
@@ -34,11 +34,14 @@ services:
     image: livevil_blog_redis
     container_name: livevil_blog_redis
     working_dir: /apps
-    command: redis-server /usr/local/etc/redis/redis.conf
+    # 密码由部署机环境变量 REDIS_PASSWORD 注入（与 Django 侧 DJANGO_REDIS_LOCATION 保持一致），不得写入仓库
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?set REDIS_PASSWORD in .env or shell}
+    command: sh -c 'exec redis-server /usr/local/etc/redis/redis.conf --requirepass "$$REDIS_PASSWORD"'
     volumes:
       - ./compose/production/redis/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
 
   livevil_blog:
     build:
@@ -53,7 +56,7 @@ services:
     env_file:
       - .envs/.production
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     command: /start.sh
     links:
       - redis
