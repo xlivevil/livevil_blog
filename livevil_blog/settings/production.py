@@ -34,11 +34,12 @@ DATABASES = {
             'PASSWORD': os.environ['DJANGO_MYSQL_PASSWORD'],
             'HOST': '172.17.0.1',
             'PORT': '3306',
-            'OPTIONS': {
-                'charset': 'utf8mb4',
-                'autocommit': True,
-                'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
-            }
+            'OPTIONS':
+                {
+                    'charset': 'utf8mb4',
+                    'autocommit': True,
+                    'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
+                }
         },
     'mongodb':
         {
@@ -165,12 +166,13 @@ LOGGING = {
                 'level': 'INFO',
                 'propagate': False,
             },
-            'django.template': {
-                'handlers': ['file'],
-                'level': 'DEBUG',
-                'filters': ['missing_variable_error'],
-                'propagate': False,
-            },
+            'django.template':
+                {
+                    'handlers': ['file'],
+                    'level': 'DEBUG',
+                    'filters': ['missing_variable_error'],
+                    'propagate': False,
+                },
         },
 }
 
